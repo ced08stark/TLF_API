@@ -47,6 +47,9 @@ const options = {
       {
         url: "http://localhost:3500",
       },
+      {
+        url: "https://tcp-services-huga.onrender.com",
+      },
     ],
   },
   apis: ["./routes/api/*.js"],

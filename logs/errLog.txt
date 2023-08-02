@@ -1,0 +1,17 @@
+20230728	12:42:09	b8882a30-391c-4aff-8f80-553230bf888b	Error: not allow by CORS
+20230731	13:00:33	b3ff388e-02f7-4107-a428-22d5df87757b	TypeError: req.sendStatus is not a function
+20230731	13:00:59	9e54cb24-3a93-49b7-8610-8bd937526a33	TypeError: req.sendStatus is not a function
+20230731	13:00:59	de3c9609-d3ca-4a78-bd76-6bf403f9bab0	TypeError: req.sendStatus is not a function
+20230731	13:10:06	41f5394e-dfa2-41ef-a64e-367a9b316012	TypeError: req.sendStatus is not a function
+20230731	13:10:06	4162677c-71d3-475c-9553-f07fd05fd24f	TypeError: req.sendStatus is not a function
+20230731	13:11:00	63875614-53b0-4cd8-a03e-c132bdaa5879	TypeError: req.sendStatus is not a function
+20230731	13:11:00	1cd53af4-29c1-4968-97ca-ffe2ab6c7346	TypeError: req.sendStatus is not a function
+20230731	13:11:04	d7ec3799-4f55-4e9c-9383-befab8e82f3b	TypeError: req.sendStatus is not a function
+20230731	13:11:05	b3dc6808-d53d-4766-8f98-59ee36f4388b	TypeError: req.sendStatus is not a function
+20230731	13:12:37	bfaceff7-662e-4414-9008-f53f00e64b39	TypeError: req.status is not a function
+20230731	13:12:37	f4baf5d4-29c5-4406-b50a-88c5c3a95a90	TypeError: req.status is not a function
+20230731	13:12:40	6278cda9-f799-4e1d-853e-e3d111df9e7f	TypeError: req.status is not a function
+20230731	20:18:06	7549631e-4248-4fec-806b-28adadb33470	SyntaxError: Unexpected token ] in JSON at position 265
+20230731	20:36:55	15043645-c3ff-472c-a887-7db3dee2fd59	SyntaxError: Unexpected token ] in JSON at position 317
+20230731	20:37:57	765ff03f-1e97-4f67-975c-991c9b0ee04a	SyntaxError: Unexpected token ] in JSON at position 317
+20230802	03:53:57	32e94ffe-f0bd-4665-bfaa-0f86a5a33211	SyntaxError: Unexpected token { in JSON at position 125

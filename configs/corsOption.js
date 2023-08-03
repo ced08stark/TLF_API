@@ -1,7 +1,7 @@
 
 const whiteList = [
   "https://www.google.com",
-  "https://tcp-front-omega-vercel.app",
+  "https://tcp-front-omega.vercel.app",
   "https://localhost:3000",
   "https://localhost:3001",
   "http://127.0.0.1:5500",

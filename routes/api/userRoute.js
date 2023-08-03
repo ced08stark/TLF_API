@@ -41,7 +41,8 @@ const path = require("path");
  *         password: tony123
  *         phone: tony123
  *         role: client
- *         remain: 0
+ *         pays: cameroun
+ *         remain: null
  */
 
 /**

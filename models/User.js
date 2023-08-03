@@ -18,9 +18,13 @@ const userSchema = new Schema({
     type: String,
     require: true,
   },
-  remain: {
-    type: Number,
+  pays: {
+    type: String,
     require: true,
+  },
+  remain: {
+    type: Date,
+    require: false,
   },
 });
 

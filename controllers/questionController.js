@@ -45,7 +45,7 @@ const addQuestion = async (req, res) => {
     if (!currentUser)
       return res.status(400).json({ message: "Invalide User ID" });
 
-      console.log(req?.body?.suggestions);
+      
     const newQuestion = new Question({
       libelle: files[0].filename,
       consigne: req?.body?.consigne,
@@ -56,6 +56,7 @@ const addQuestion = async (req, res) => {
         // Ajoutez d'autres disciplines si nécessaire
       
     });
+    console.log(newQuestion);
     const result = await Question.create(newQuestion);
     res.status(201).json(result);
   } catch (err) {
@@ -71,14 +72,19 @@ const updateQuestion = async (req, res) => {
     if (!currentUser)
       return res.status(400).json({ message: "Invalide User ID" });
     const questionUpdate = new Question({
+      _id: id,
       libelle: files[0].filename,
       consigne: req?.body?.consigne,
       duree: parseInt(req?.body?.duree),
       categorie: req?.body?.categorie,
       suggestions: req?.body?.suggestions,
-      disciplines: req?.body?.disciplines,
+      discipline: req?.body?.discipline,
     });
-    const result = await Question.findByIdAndUpdate(id, questionUpdate, {new: true});
+    console.log(id)
+    const result = await Question.findByIdAndUpdate(id, questionUpdate,{
+      new: true, // Retourne l'utilisateur mis à jour
+      runValidators: true, // Exécute les validateurs de schéma définis dans le modèle
+    });
     res.status(201).json(result);
   } catch (err) {
     res.status(500).json({ message: err.message });

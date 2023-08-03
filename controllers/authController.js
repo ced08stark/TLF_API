@@ -54,7 +54,8 @@ const handleRegister = async (req, res) => {
       password: hashedPwd,
       role: req.body.role,
       phone: req.body.phone,
-      remain: 0,
+      pays: req.body.pays,
+      remain: null,
     });
     const result = await User.create(newUser);
     res

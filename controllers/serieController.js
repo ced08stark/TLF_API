@@ -76,6 +76,7 @@ const updateSerie = async (req, res) => {
     if (!currentUser)
       return res.status(400).json({ message: "Invalide User ID" });
     const serieUpdate = new Test({
+      _id: id,
       tests: req?.body?.tests,
       user: currentUser,
       resultat: req?.body?.resultat,

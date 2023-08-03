@@ -92,11 +92,13 @@ const updateUser = async (req, res) => {
       return res.status(400).json({ message: "Invalide User ID" });
     const hashedPwd = await bcrypt.hash(password, 10);
     const newUser = new User({
+      _id: id,
       email: req.body.email,
       password: hashedPwd,
       role: req.body.role,
       phone: req.body.phone,
-      remain: 0,
+      pays: req.body.pays,
+      remain: null,
     });
     const result = await User.findByIdAndUpdate(id, newUser, {
       new: true, // Retourne l'utilisateur mis à jour

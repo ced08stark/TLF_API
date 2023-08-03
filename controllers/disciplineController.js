@@ -63,6 +63,7 @@ const updateDiscipline = async (req, res) => {
     if (!currentUser)
       return res.status(400).json({ message: "Invalide User ID" });
     const newDiscipline = new Discipline({
+      _id: id,
       libelle: req?.body?.libelle,
       duree: parseInt(req?.body?.duree),
     });

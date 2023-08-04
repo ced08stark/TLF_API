@@ -4,6 +4,7 @@ const { ObjectId } = require("mongodb");
 const bcrypt = require("bcrypt");
 
 const getSeries = async (req, res) => {
+  console.log(req.userData.userId);
   try {
     const currentUser = await User.findOne({ _id: req.userData.userId }).exec();
     if (!currentUser)
@@ -35,7 +36,7 @@ const getSerie = async (req, res) => {
 };
 
 const getSerieCurrentUser = async (req, res) => {
-    console.log("currentSerie");
+   
   try {
     const currentUser = await User.findOne({ _id: req.userData.userId }).exec();
     if (!currentUser)
@@ -73,6 +74,7 @@ const updateSerie = async (req, res) => {
   const id = req?.params?.id
   try {
     const currentUser = await User.findOne({ _id: req.userData.userId }).exec();
+
     if (!currentUser)
       return res.status(400).json({ message: "Invalide User ID" });
     const serieUpdate = new Test({

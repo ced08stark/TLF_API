@@ -37,6 +37,28 @@ const handleLogin = async(req, res)=>{
     
 }
 
+const handleLogout = async (req, res) => {
+
+  const cookies = req.cookies;
+  console.log(cookies?.jwt);
+  if(!cookies?.jwt) return res.status(204).json({message: 'no content'});
+ 
+  
+  try {
+     const currentUser = await User.findOne({
+          _id: req?.userData?.userId,
+        }).exec();
+
+        if (!currentUser){
+          res.clearCookies('jwt', {httpOnly: true})
+          return res.status(400).json({ message: "Invalide User ID" });
+        } 
+        
+  } catch (err) {
+    res.status(500).json({ message: err });
+  }
+};
+
 const handleRegister = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password)
@@ -67,4 +89,4 @@ const handleRegister = async (req, res) => {
   }
 };
 
-module.exports = {handleLogin, handleRegister}
+module.exports = {handleLogin, handleRegister, handleLogout}

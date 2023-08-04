@@ -3,6 +3,7 @@ const router = express.Router()
 const authController = require('../../controllers/authController')
 //const verifyJWT = require("../../middlewares/verifyJWT");
 const path = require('path')
+const verifyJWT = require("../../middlewares/verifyJWT");
 
 /**
  * 
@@ -16,6 +17,7 @@ const path = require('path')
  *         - password
  *         - phone
  *         - role
+ *         - pays
  *         - remain
  *       properties:
  *         id:
@@ -42,7 +44,7 @@ const path = require('path')
  *         password: tony123
  *         phone: tony123
  *         role: client
- *         remain: 0
+ *         remain: null
  */
 
 /**
@@ -103,6 +105,8 @@ const path = require('path')
 router
   .route("/login")
   .post(authController.handleLogin)
+
+router.get("/logout", authController.handleLogout);
 
 router.route("/register").post(authController.handleRegister);
   

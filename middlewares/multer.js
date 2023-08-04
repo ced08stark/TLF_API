@@ -67,6 +67,8 @@ function getFileType(file) {
     return "images";
   } else if (["mp4", "avi", "mkv"].includes(extension)) {
     return "videos";
+  } else if (["mp3"].includes(extension)) {
+    return "audios";
   } else {
     return "autres";
   }

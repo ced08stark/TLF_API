@@ -68,6 +68,31 @@ const getUser = async (req, res) => {
     }
 };
 
+const checkRemain = async (req, res) => {
+  console.log('check remain')
+    try {
+      const currentUser = await User.findOne({
+        _id: req?.userData?.userId,
+      }).exec();
+      if (!currentUser)
+        return res.status(400).json({ message: "Invalide User ID" });
+      
+      if(!currentUser.remain || currentUser.remain < new Date(Date.now())) 
+        return res.status(201).json({ message: "this account is not subscride" });
+      
+      const currentDate = new Date();
+      const targetDate = new Date(currentUser.remain);
+      const timeDiff = targetDate.getTime() - currentDate.getTime();
+      const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      return res
+        .status(200)
+        .json({ message: `${daysDiff} remaining for this account`, remaining: daysDiff });
+
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+}
+
 
 const getCurrentUser = async (req, res) => {
     
@@ -83,36 +108,44 @@ const getCurrentUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   const id = req.params.id;
-  
+  console.log('update')
   try {
     const currentUser = await User.findOne({
       _id: req?.userData?.userId,
     }).exec();
     if (!currentUser)
       return res.status(400).json({ message: "Invalide User ID" });
-    const hashedPwd = await bcrypt.hash(password, 10);
     const newUser = new User({
       _id: id,
       email: req.body.email,
-      password: hashedPwd,
+      password: req.body.password,
       role: req.body.role,
       phone: req.body.phone,
       pays: req.body.pays,
-      remain: null,
+      remain: req.body.remain,
     });
+    console.log(newUser)
     const result = await User.findByIdAndUpdate(id, newUser, {
       new: true, // Retourne l'utilisateur mis à jour
-      runValidators: true, // Exécute les validateurs de schéma définis dans le modèle
     });
     res
       .status(201)
-      .json({ Success: `user ${email} update success`, result });
+      .json({ Success: `user ${newUser?.email} update success`, result });
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: err.message });
   }
 };
 
 
 
 
-module.exports = { getUser, getUsers, deleteUser, getCurrentUser, updateUser };
+
+
+module.exports = {
+  getUser,
+  getUsers,
+  deleteUser,
+  getCurrentUser,
+  updateUser,
+  checkRemain,
+};

@@ -177,11 +177,31 @@ const path = require("path");
  *        
  */
 
+
+/**
+ * @swagger
+ * /api/user/check-subscrire:
+ *   get:
+ *      tags:
+ *        - Users
+ *      summary: check remain date 
+ *      description: check remain and get remain day
+ *      responses:
+ *       200:
+ *         description: request success 
+ *       500:
+ *         description: bad request
+ *      security:
+ *          - bearerAuth: []
+ *        
+ */
+
 router.route("/users/user-info").get(userController.getCurrentUser);
 router.route("/users").get(userController.getUsers);
 router.route("/users/:id").get(userController.getUser);
 router.route("/users/:id").delete(userController.deleteUser);
 router.route("/users/:id").patch(userController.updateUser);
+router.route("/check-subscrire").get(userController.checkRemain);
 
 
 module.exports = router;

@@ -8,7 +8,7 @@ const errorHandle = require("./middlewares/errorHandle");
 const cors = require("cors");
 const corsOption = require("./configs/corsOption");
 const verifyJWT = require("./middlewares/verifyJWT");
-const cookieParse = require("cookie-parser");
+const cookieParser = require("cookie-parser");
 const connectDB = require('./configs/dbConn');
 const { default: mongoose } = require("mongoose");
 //const YAML = require('yamljs');
@@ -64,7 +64,7 @@ connectDB()
 app.use(logger);
 
 //middleware for cookies
-app.use(cookieParse());
+app.use(cookieParser());
 
 //cors origin ressource
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));

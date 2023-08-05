@@ -195,13 +195,13 @@ const path = require("path");
  *          - bearerAuth: []
  *        
  */
-
+router.route("/check-subscrire").get(userController.checkRemain);
 router.route("/users/user-info").get(userController.getCurrentUser);
 router.route("/users").get(userController.getUsers);
 router.route("/users/:id").get(userController.getUser);
 router.route("/users/:id").delete(userController.deleteUser);
 router.route("/users/:id").patch(userController.updateUser);
-router.route("/check-subscrire").get(userController.checkRemain);
+
 
 
 module.exports = router;

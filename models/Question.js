@@ -1,4 +1,5 @@
 const {Discipline, disciplineSchema} = require('./Discipline')
+const { categorieSchema } = require("./Categorie");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
@@ -25,13 +26,12 @@ const questionSchema = new Schema({
     required: true,
   },
   categorie: {
-    type: String,
-    enum: ["A1", "A2", "B1", "B2", "C1", "C2"],
+    type: categorieSchema,
     required: true,
   },
   duree: {
     type: Number,
-    require: true,
+    require: false,
   },
   discipline: {
     type: disciplineSchema,

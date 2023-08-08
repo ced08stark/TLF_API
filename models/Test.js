@@ -1,11 +1,11 @@
-const {questionSchema} = require("./Question");
+const {serieSchema} = require("./Serie");
 const { userSchema } = require("./User");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const testSchema = new Schema({
-  questions: {
-    type: [questionSchema],
+  serie: {
+    type: [serieSchema],
     require: true,
   },
   user: {

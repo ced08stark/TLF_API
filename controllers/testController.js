@@ -62,7 +62,7 @@ const addTest = async (req, res) => {
     if (!currentUser)
       return res.status(400).json({ message: "Invalide User ID" });
     const newTest = new Test({
-      questions: req?.body?.questions,
+      serie: req?.body?.serie,
       user: currentUser,
       resultat: req?.body?.resultat
       // Ajoutez d'autres disciplines si nécessaire
@@ -82,8 +82,9 @@ const updateTest = async (req, res) => {
       return res.status(400).json({ message: "Invalide User ID" });
     const testUpdate = new Test({
       _id: id,
-      questions: req?.body?.questions,
+      serie: req?.body?.serie,
       user: currentUser,
+      resultat: req?.body?.resultat,
     });
     const result = await Test.findByIdAndupdate(id, testUpdate, { new: true });
     res.status(201).json(result);

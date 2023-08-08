@@ -35,22 +35,6 @@ const getSerie = async (req, res) => {
   }
 };
 
-const getSerieCurrentUser = async (req, res) => {
-   
-  try {
-    const currentUser = await User.findOne({ _id: req.userData.userId }).exec();
-    if (!currentUser)
-      return res.status(400).json({ message: "Invalide User ID" });
-      console.log('currentSerie')
-    const serie = await Serie.findOne({
-      user: currentUser
-    }).exec();
-    if (!serie) return res.status(404).json({ message: `No Serie(s) found for user ${currentUser.email}` });
-    res.status(200).json(serie);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
 
 const addSerie = async (req, res) => {
   try {
@@ -58,9 +42,8 @@ const addSerie = async (req, res) => {
     if (!currentUser)
       return res.status(400).json({ message: "Invalide User ID" });
     const newSerie = new Serie({
-      tests: req?.body?.tests,
-      resultat: req?.body?.resultat,
-      user: currentUser
+      questions: req?.body?.questions,
+      libelle: req?.body?.libelle,
       // Ajoutez d'autres disciplines si nécessaire
     });
     const result = await Serie.create(newSerie);
@@ -77,11 +60,11 @@ const updateSerie = async (req, res) => {
 
     if (!currentUser)
       return res.status(400).json({ message: "Invalide User ID" });
-    const serieUpdate = new Test({
+    const serieUpdate = new Serie({
       _id: id,
-      tests: req?.body?.tests,
-      user: currentUser,
-      resultat: req?.body?.resultat,
+      questions: req?.body?.questions,
+      libelle: req?.body?.libelle,
+      // Ajoutez d'autres disciplines si nécessaire
     });
     const result = await Serie.findByIdAndUpdate(id, serieUpdate, {new: true});
     res.status(201).json(result);
@@ -116,6 +99,5 @@ module.exports = {
   getSeries,
   addSerie,
   deleteSerie,
-  updateSerie,
-  getSerieCurrentUser
+  updateSerie
 };

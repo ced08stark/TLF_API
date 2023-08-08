@@ -12,131 +12,77 @@ const path = require("path");
  *     Serie:
  *       type: object
  *       required:
- *         - test
- *         - user
- *         - resultat
+ *         - libelle
+ *         - questions
  *       properties:
  *         id:
  *           type: string
  *           description: The auto-generated id of the user
- *         tests:
- *            type: array
- *            items:
- *              type: object
- *              required:
- *                  - questions
- *                  - user
- *                  - resultat
- *              properties:
- *                  id:
- *                      type: string
- *                      description: The auto-generated id of the user
- *                  questions: 
- *                      type: array
- *                      items:
- *                          type: object
- *                          required:
+ *         libelle:
+ *           type: string
+ *           description: libelle of question
+ *         questions: 
+ *             type: array
+ *             items:
+ *                  type: object
+ *                  required:
+ *                      - libelle
+ *                      - consigne
+ *                      - suggestions
+ *                      - categorie
+ *                      - duree
+ *                      - discipline
+ *                  properties:
+ *                       libelle:
+ *                           type: string
+ *                           description: question description
+ *                       consigne:
+ *                           type: string
+ *                           description: question description
+ *                       suggestions:
+ *                           type: array
+ *                           items: 
+ *                              type: object
+ *                              required:
+ *                                  - text
+ *                                  - isTrue
+ *                              properties:
+ *                                 text:
+ *                                     type: string
+ *                                     description: suggestion text question
+ *                                 isTrue:
+ *                                     type: boolean
+ *                                     description: check validite question
+ *                       discpline:
+ *                           type: object
+ *                           require:
  *                              - libelle
- *                              - consigne
- *                              - suggestions
- *                              - categorie
  *                              - duree
- *                              - discipline
- *                      properties:
- *                          libelle:
- *                              type: string
- *                              description: question description
- *                          consigne:
- *                              type: string
- *                              description: question description
- *                          suggestions:
- *                              type: array
- *                              items: 
- *                                  type: object
- *                                  required:
- *                                      - text
- *                                      - isTrue
- *                                  properties:
- *                                      text:
- *                                          type: string
- *                                          description: suggestion text question
- *                                      isTrue:
- *                                          type: bool
- *                                          description: check validite question 
- *                                  discipline:
- *                                          type: object
- *                                          required:
- *                                              - libelle
- *                                              - duree
- *                                          properties:
- *                                              libelle:
- *                                              type: string
- *                                              description: discipline libelle
- *                                          duree:
- *                                              type: number
- *                                              description: duree of discipline
+ *                           properties:
+ *                                  libelle:
+ *                                      type: string
+ *                                      description: discipline libelle
  *                                  duree:
- *                                          type: number
- *                                          description: time of question
- *         user:
- *          type: object
- *          required:
- *              - email
- *              - password
- *              - phone
- *              - role
- *              - remain
- *          properties:
- *              id:
- *                  type: string
- *                  description: The auto-generated id of the user
- *              email:
- *                  type: string
- *                  description: The user email
- *              password:
- *                  type: string
- *                  description: The user password
- *              phone:
- *                  type: string
- *                  description: The user phone number
- *              role:
- *                  type: string
- *                  description: The user role
- *              remain:
- *                  type: number
- *                  description: The user remain
- *         resultat: 
- *              type: number
- *              description: resultat of test
- */
+ *                                      type: number
+ *                                      description: duree of discipline
+ *                       categorie:
+ *                              type: object
+ *                              required:
+ *                                     - libelle
+ *                                     - point
+ *                              properties:
+ *                                     libelle:
+ *                                           type: string
+ *                                           description: discipline libelle
+ *                                     point:
+ *                                           type: number
+ *                                           description: duree of Categorie
+ *                       duree:
+ *                              type: number
+ *                              description: time of question
+ */                 
 
-/**
- * @swagger
- * /api/serie/series/user-info:
- *   get:
- *      tags:
- *       - Series
- *      summary: Return a current user serie information
- *      description: get current user serie information 
- *      responses:
- *       responses: 
- *          200:    # status code
- *              description: Successul Response
- *              content:
- *                  application/json: 
- *                      schema:
- *                          type: array
- *                          items: 
- *                              $ref: '#/components/schemas/Serie'
- *       404:
- *         description: series was not found
- *      security:
- *          - bearerAuth: []
- *        
- */
-
-
-
+        
 /**
  * @swagger
  * /api/serie/series:
@@ -280,7 +226,6 @@ const path = require("path");
  *        
  */
 
-router.route("/series/user-info").get(serieController.getSerieCurrentUser);
 router.route("/series").get(serieController.getSeries);
 router.route("/series/:id").get(serieController.getSerie);
 router.route("/created").post(serieController.addSerie);

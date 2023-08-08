@@ -1,21 +1,18 @@
-const {Test, testSchema} = require("./Test");
-const { userSchema } = require("./User");
+const { questionSchema } = require("./Question");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const serieSchema = new Schema({
-  tests: {
-    type: [testSchema],
+  libelle: {
+    type: String,
     require: true,
+    index: true,
+    unique: true,
   },
-  user: {
-    type: userSchema,
-    require: true,
-  },
-  resultat: {
-    type: Number,
-    require: true,
-  },
+  questions: {
+    type: [questionSchema],
+    require: false,
+  }
 });
 
 

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const categorieController = require("../../controllers/categorieController");
-//const verifyJWT = require("../../middlewares/verifyJWT");
+const verifyJWT = require("../../middlewares/verifyJWT");
 const path = require("path");
 
 /**
@@ -160,10 +160,16 @@ const path = require("path");
  *
  */
 
-router.route("/categories").get(categorieController.getCategories);
-router.route("/categories/:id").get(categorieController.getCategorie);
-router.route("/created").post(categorieController.addCategorie);
-router.route("/categories/:id").delete(categorieController.deleteCategorie);
-router.route("/categories/:id").patch(categorieController.updateCategorie);
+router.route("/categories").get(verifyJWT, categorieController.getCategories);
+router
+  .route("/categories/:id")
+  .get(verifyJWT, categorieController.getCategorie);
+router.route("/created").post(verifyJWT, categorieController.addCategorie);
+router
+  .route("/categories/:id")
+  .delete(verifyJWT, categorieController.deleteCategorie);
+router
+  .route("/categories/:id")
+  .patch(verifyJWT, categorieController.updateCategorie);
 
 module.exports = router;

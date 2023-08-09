@@ -104,10 +104,8 @@ const verifyJWT = require("../../middlewares/verifyJWT");
 
 router
   .route("/login")
-  .post(authController.handleLogin)
-
+  .post(authController.handleLogin);
 router.get("/logout", authController.handleLogout);
-
 router.route("/register").post(authController.handleRegister);
   
 

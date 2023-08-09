@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const disciplineController = require("../../controllers/disciplineController");
-//const verifyJWT = require("../../middlewares/verifyJWT");
+const verifyJWT = require("../../middlewares/verifyJWT");
 const path = require("path");
 
 
@@ -164,11 +164,19 @@ const path = require("path");
  *        
  */
 
-router.route("/disciplines").get(disciplineController.getDisciplines);
-router.route("/disciplines/:id").get(disciplineController.getDiscipline);
-router.route("/created").post(disciplineController.addDiscipline);
-router.route("/disciplines/:id").delete(disciplineController.deleteDiscipline);
-router.route("/disciplines/:id").patch(disciplineController.updateDiscipline);
+router
+  .route("/disciplines")
+  .get(verifyJWT, disciplineController.getDisciplines);
+router
+  .route("/disciplines/:id")
+  .get(verifyJWT, disciplineController.getDiscipline);
+router.route("/created").post(verifyJWT, disciplineController.addDiscipline);
+router
+  .route("/disciplines/:id")
+  .delete(verifyJWT, disciplineController.deleteDiscipline);
+router
+  .route("/disciplines/:id")
+  .patch(verifyJWT, disciplineController.updateDiscipline);
 
 
 module.exports = router;

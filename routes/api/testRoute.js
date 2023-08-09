@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const testController = require("../../controllers/testController");
-//const verifyJWT = require("../../middlewares/verifyJWT");
+const verifyJWT = require("../../middlewares/verifyJWT");
 const path = require("path");
 
 
@@ -300,11 +300,13 @@ const path = require("path");
  *        
  */
 
-router.route("/tests/user-info").get(testController.getTestCurrentUser);
-router.route("/tests").get(testController.getTests);
-router.route("/tests/:id").get(testController.getTest);
-router.route("/created").post(testController.addTest);
-router.route("/tests/:id").delete(testController.deleteTest);
-router.route("/tests/:id").patch(testController.updateTest);
+router
+  .route("/tests/user-info")
+  .get(verifyJWT, testController.getTestCurrentUser);
+router.route("/tests").get(verifyJWT, testController.getTests);
+router.route("/tests/:id").get(verifyJWT, testController.getTest);
+router.route("/created").post(verifyJWT, testController.addTest);
+router.route("/tests/:id").delete(verifyJWT, testController.deleteTest);
+router.route("/tests/:id").patch(verifyJWT, testController.updateTest);
 
 module.exports = router;

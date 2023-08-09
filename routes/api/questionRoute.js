@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const questionController = require("../../controllers/questionController");
-//const verifyJWT = require("../../middlewares/verifyJWT");
+const verifyJWT = require("../../middlewares/verifyJWT");
 const path = require("path");
 const {uploadFiles} = require("../../middlewares/multer")
 
@@ -234,11 +234,20 @@ const {uploadFiles} = require("../../middlewares/multer")
  *        
  */
 
-router.route("/questions").get(questionController.getQuestions);
-router.route("/questions/:id").get(questionController.getQuestion);
-router.post("/created", uploadFiles, questionController.addQuestion);
-router.patch("/questions/:id", uploadFiles, questionController.updateQuestion);
-router.route("/questions/:id").delete(questionController.deleteQuestion);
-router.route("/questions/:id").patch(questionController.updateQuestion);
+router.route("/questions").get(verifyJWT, questionController.getQuestions);
+router.route("/questions/:id").get(verifyJWT, questionController.getQuestion);
+router.post("/created", uploadFiles, verifyJWT, questionController.addQuestion);
+router.patch(
+  "/questions/:id",
+  uploadFiles,
+  verifyJWT,
+  questionController.updateQuestion
+);
+router
+  .route("/questions/:id")
+  .delete(verifyJWT, questionController.deleteQuestion);
+router
+  .route("/questions/:id")
+  .patch(verifyJWT, questionController.updateQuestion);
 
 module.exports = router;

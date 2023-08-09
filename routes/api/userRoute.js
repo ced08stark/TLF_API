@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../../controllers/userController");
-//const verifyJWT = require("../../middlewares/verifyJWT");
+const verifyJWT = require("../../middlewares/verifyJWT");
 const path = require("path");
 
 /**
@@ -195,12 +195,12 @@ const path = require("path");
  *          - bearerAuth: []
  *        
  */
-router.route("/check-subscrire").get(userController.checkRemain);
-router.route("/users/user-info").get(userController.getCurrentUser);
-router.route("/users").get(userController.getUsers);
-router.route("/users/:id").get(userController.getUser);
-router.route("/users/:id").delete(userController.deleteUser);
-router.route("/users/:id").patch(userController.updateUser);
+router.route("/check-subscrire").get(verifyJWT, userController.checkRemain);
+router.route("/users/user-info").get(verifyJWT, userController.getCurrentUser);
+router.route("/users").get(verifyJWT, userController.getUsers);
+router.route("/users/:id").get(verifyJWT, userController.getUser);
+router.route("/users/:id").delete(verifyJWT, userController.deleteUser);
+router.route("/users/:id").patch(verifyJWT, userController.updateUser);
 
 
 

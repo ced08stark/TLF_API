@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const serieController = require("../../controllers/serieController");
-//const verifyJWT = require("../../middlewares/verifyJWT");
+const verifyJWT = require("../../middlewares/verifyJWT");
 const path = require("path");
 
 
@@ -226,10 +226,10 @@ const path = require("path");
  *        
  */
 
-router.route("/series").get(serieController.getSeries);
-router.route("/series/:id").get(serieController.getSerie);
-router.route("/created").post(serieController.addSerie);
-router.route("/series/:id").delete(serieController.deleteSerie);
-router.route("/series/:id").patch(serieController.updateSerie);
+router.route("/series").get(verifyJWT, serieController.getSeries);
+router.route("/series/:id").get(verifyJWT, serieController.getSerie);
+router.route("/created").post(verifyJWT, serieController.addSerie);
+router.route("/series/:id").delete(verifyJWT, serieController.deleteSerie);
+router.route("/series/:id").patch(verifyJWT, serieController.updateSerie);
 
 module.exports = router;

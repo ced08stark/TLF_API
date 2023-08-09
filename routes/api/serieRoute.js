@@ -99,7 +99,7 @@ const path = require("path");
  *                      schema:
  *                          type: array
  *                          items: 
- *                              $ref: '#/components/schemas/Test'
+ *                              $ref: '#/components/schemas/Serie'
  *          404:
  *              description: no serie was not found
  *      security:

@@ -80,12 +80,12 @@ app.use(express.json());
 
 app.use("/", express.static(path.join(__dirname, "/public")));
 app.use("/", require("./routes/root"));
-app.use("/api/auth", require("./routes/api/authRoute"));
-
 app.use("/uploads/pdf", express.static("uploads/pdf"));
 app.use("/uploads/image", express.static("uploads/images"));
 app.use("/uploads/autre", express.static("uploads/autres"));
 app.use("/uploads/audio", express.static("uploads/audios"));
+app.use("/api/auth", require("./routes/api/authRoute"));
+
 
 app.use(verifyJWT);
 app.use("/api/user", require("./routes/api/userRoute"));

@@ -87,7 +87,7 @@ app.use("/uploads/audio", express.static("uploads/audios"));
 app.use("/api/auth", require("./routes/api/authRoute"));
 
 
-//app.use(verifyJWT);
+app.use(verifyJWT);
 app.use("/api/user", require("./routes/api/userRoute"));
 app.use("/api/discipline", require("./routes/api/disciplineRoute"));
 app.use("/api/question", require("./routes/api/questionRoute"));

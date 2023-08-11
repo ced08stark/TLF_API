@@ -13,6 +13,7 @@ const {uploadFiles} = require("../../middlewares/multer")
  *      Question:
  *         type: object
  *         required:
+ *             - numero
  *             - libelle
  *             - consigne
  *             - suggestions
@@ -20,6 +21,9 @@ const {uploadFiles} = require("../../middlewares/multer")
  *             - duree
  *             - discipline
  *         properties:
+ *              numero:
+ *                  type: number
+ *                  description: numero question
  *              libelle:
  *                  type: string
  *                  description: question description

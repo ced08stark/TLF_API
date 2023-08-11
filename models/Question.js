@@ -1,9 +1,14 @@
 const {Discipline, disciplineSchema} = require('./Discipline')
+const { serieSchema } = require("./Serie");
 const { categorieSchema } = require("./Categorie");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const questionSchema = new Schema({
+  numero: {
+    type: Number,
+    require: true,
+  },
   libelle: {
     type: String,
     require: true,
@@ -37,6 +42,7 @@ const questionSchema = new Schema({
     type: disciplineSchema,
     require: true,
   },
+
 });
 
 const Question = mongoose.model("Question", questionSchema);

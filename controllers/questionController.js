@@ -47,14 +47,14 @@ const addQuestion = async (req, res) => {
 
       
     const newQuestion = new Question({
+      numero: parseInt(req?.body?.numero),
       libelle: files[0].filename,
       consigne: req?.body?.consigne,
       duree: parseInt(req?.body?.duree),
       categorie: req?.body?.categorie,
       suggestions: req?.body?.suggestions,
-      discipline: req?.body?.discipline
-        // Ajoutez d'autres disciplines si nécessaire
-      
+      discipline: req?.body?.discipline,
+      // Ajoutez d'autres disciplines si nécessaire
     });
     console.log(newQuestion);
     const result = await Question.create(newQuestion);
@@ -73,6 +73,7 @@ const updateQuestion = async (req, res) => {
       return res.status(400).json({ message: "Invalide User ID" });
     const questionUpdate = new Question({
       _id: id,
+      numero: parseInt(req?.body?.numero),
       libelle: files[0].filename,
       consigne: req?.body?.consigne,
       duree: parseInt(req?.body?.duree),

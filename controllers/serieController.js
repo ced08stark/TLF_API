@@ -57,7 +57,6 @@ const updateSerie = async (req, res) => {
   const id = req?.params?.id
   try {
     const currentUser = await User.findOne({ _id: req.userData.userId }).exec();
-
     if (!currentUser)
       return res.status(400).json({ message: "Invalide User ID" });
     const serieUpdate = new Serie({

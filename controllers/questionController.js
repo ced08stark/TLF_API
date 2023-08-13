@@ -48,7 +48,8 @@ const addQuestion = async (req, res) => {
       
     const newQuestion = new Question({
       numero: parseInt(req?.body?.numero),
-      libelle: files[0].filename,
+      //libelle: files[0].filename,
+      libelle: req?.body?.libelle,
       consigne: req?.body?.consigne,
       duree: parseInt(req?.body?.duree),
       categorie: req?.body?.categorie,
@@ -74,7 +75,8 @@ const updateQuestion = async (req, res) => {
     const questionUpdate = new Question({
       _id: id,
       numero: parseInt(req?.body?.numero),
-      libelle: files[0].filename,
+      //libelle: files[0].filename,
+      libelle: req?.body?.libelle,
       consigne: req?.body?.consigne,
       duree: parseInt(req?.body?.duree),
       categorie: req?.body?.categorie,

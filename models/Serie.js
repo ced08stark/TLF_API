@@ -16,8 +16,7 @@ const serieSchema = new Schema({
         numero: {
           type: Number,
           require: true,
-          index: true,
-          unique: true,
+          unique: true
         },
         libelle: {
           type: String,

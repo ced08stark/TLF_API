@@ -45,10 +45,10 @@ const addQuestion = async (req, res) => {
     if (!currentUser)
       return res.status(400).json({ message: "Invalide User ID" });
 
-      
+    console.log(req?.body?.duree)
     const newQuestion = new Question({
       numero: parseInt(req?.body?.numero),
-      //libelle: files[0].filename,
+      //libelle: '',files[0].filename,
       libelle: req?.body?.libelle,
       consigne: req?.body?.consigne,
       duree: parseInt(req?.body?.duree),

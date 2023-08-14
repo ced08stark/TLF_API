@@ -64,7 +64,8 @@ const addTest = async (req, res) => {
     const newTest = new Test({
       serie: req?.body?.serie,
       user: currentUser,
-      resultat: req?.body?.resultat
+      resultat: req?.body?.resultat,
+      payload: req?.body?.payload
       // Ajoutez d'autres disciplines si nécessaire
     });
     const result = await Test.create(newTest);
@@ -85,6 +86,7 @@ const updateTest = async (req, res) => {
       serie: req?.body?.serie,
       user: currentUser,
       resultat: req?.body?.resultat,
+      payload: req?.body?.payload
     });
     const result = await Test.findByIdAndupdate(id, testUpdate, { new: true });
     res.status(201).json(result);

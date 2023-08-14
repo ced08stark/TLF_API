@@ -12,10 +12,18 @@ const testSchema = new Schema({
     type: userSchema,
     require: true,
   },
+  payload: {
+    type: String,
+    require: false,
+  },
   resultat: {
     type: Number,
     require: true,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 

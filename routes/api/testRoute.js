@@ -12,61 +12,90 @@ const path = require("path");
  *     Test:
  *       type: object
  *       required:
- *          - questions
+ *          - series
  *          - user
  *          - resultat
+ *          - payload
+ *          - createdAt
  *       properties:
- *          questions:
+ *          payload:
+ *              type: string
+ *              description: information of test
+ *          series:
  *              type: array
  *              items:
- *                  type: object
- *                  required:
- *                      - libelle
- *                      - consigne
- *                      - suggestions
- *                      - categorie
- *                      - duree
- *                      - discipline
- *                  properties:
- *                      libelle:
- *                          type: string
- *                          description: question description
- *                      consigne:
- *                          type: string
- *                          description: question description
- *                      suggestions:
- *                          type: array
- *                          items: 
- *                              type: object
- *                              required:
- *                                  - text
- *                                  - isTrue
- *                              properties:
- *                                  text:
+ *                type: object
+ *                required:
+ *                    - id
+ *                    - libelle
+ *                    - questions
+ *                properties:
+ *                    id:
+ *                      type: string
+ *                      description: The auto-generated id of the user
+ *                    libelle:
+ *                      type: string
+ *                      description: libelle of question
+ *                    questions: 
+ *                        type: array
+ *                        items:
+ *                             type: object
+ *                             required:
+ *                                 - libelle
+ *                                 - consigne
+ *                                 - suggestions
+ *                                 - categorie
+ *                                 - duree
+ *                                 - discipline
+ *                             properties:
+ *                                  libelle:
  *                                      type: string
- *                                      description: suggestion text question
- *                                  isTrue:
- *                                      type: bool
- *                                      description: check validite question
- *                      categorie:
- *                          type: string
- *                          description: question categorie
- *                      duree:
- *                          type: number
- *                          description: question time
- *                      discpline:
- *                          type: object
- *                          required:
- *                              - libelle
- *                              - duree
- *                          properties:
- *                              libelle:
- *                              type: string
- *                              description: discipline libelle
- *                          duree:
- *                              type: number
- *                              description: duree of discipline
- *          user:
+ *                                      description: question description
+ *                                  consigne:
+ *                                      type: string
+ *                                      description: question description
+ *                                  suggestions:
+ *                                      type: array
+ *                                      items: 
+ *                                         type: object
+ *                                         required:
+ *                                             - text
+ *                                             - isTrue
+ *                                         properties:
+ *                                            text:
+ *                                                type: string
+ *                                                description: suggestion text question
+ *                                            isTrue:
+ *                                                type: boolean
+ *                                                description: check validite question
+ *                                  discpline:
+ *                                      type: object
+ *                                      require:
+ *                                         - libelle
+ *                                         - duree
+ *                                      properties:
+ *                                             libelle:
+ *                                                 type: string
+ *                                                 description: discipline libelle
+ *                                             duree:
+ *                                                 type: number
+ *                                                 description: duree of discipline
+ *                                  categorie:
+ *                                         type: object
+ *                                         required:
+ *                                                - libelle
+ *                                                - point
+ *                                         properties:
+ *                                                libelle:
+ *                                                      type: string
+ *                                                      description: discipline libelle
+ *                                                point:
+ *                                                      type: number
+ *                                                      description: duree of Categorie
+ *                                  duree:
+ *                                         type: number
+ *                                         description: time of question
+ *          user:         
  *              type: object
  *              required:
  *                  - email
@@ -96,7 +125,9 @@ const path = require("path");
  *          resultat: 
  *              type: number
  *              description: resultat of test
- *         
+ *          createdAt:
+ *              type: string
+ *              description: date create
  */
 
 

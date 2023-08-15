@@ -84,10 +84,7 @@ const updateQuestion = async (req, res) => {
       discipline: req?.body?.discipline,
     });
     console.log(id)
-    const result = await Question.findByIdAndUpdate(id, questionUpdate,{
-      new: true, // Retourne l'utilisateur mis à jour
-      runValidators: true, // Exécute les validateurs de schéma définis dans le modèle
-    });
+    const result = await Question.findByIdAndUpdate(id, questionUpdate);
     res.status(201).json(result);
   } catch (err) {
     res.status(500).json({ message: err.message });

@@ -1,5 +1,4 @@
 const {Discipline, disciplineSchema} = require('./Discipline')
-const { serieSchema } = require("./Serie");
 const { categorieSchema } = require("./Categorie");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;

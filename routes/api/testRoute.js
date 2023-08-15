@@ -252,7 +252,15 @@ const path = require("path");
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/Test'
+ *              properties:
+ *                serie:
+ *                  type: string
+ *                user:
+ *                  type: string
+ *                resultat:
+ *                  type: number
+ *                payload:
+ *                  type: string
  *      responses:
  *       200:
  *         content:

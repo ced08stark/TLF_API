@@ -41,11 +41,13 @@ const addSerie = async (req, res) => {
     const currentUser = await User.findOne({ _id: req.userData.userId }).exec();
     if (!currentUser)
       return res.status(400).json({ message: "Invalide User ID" });
+    console.log(req?.body?.questions);
     const newSerie = new Serie({
       questions: req?.body?.questions,
       libelle: req?.body?.libelle,
       // Ajoutez d'autres disciplines si nécessaire
     });
+    console.log(newSerie)
     const result = await Serie.create(newSerie);
     res.status(201).json(result);
   } catch (err) {

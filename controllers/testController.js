@@ -10,7 +10,7 @@ const getTests = async (req, res) => {
     if (!currentUser)
       return res.status(400).json({ message: "Invalide User ID" });
 
-    const tests = await Test.find().exec();
+    const tests = await Test.find().populate("user").populate("serie").exec();
     if (tests?.length <= 0)
       return res.status(404).json({ message: `No tests found` });
     res.status(200).json(tests);
@@ -28,7 +28,7 @@ const getTest = async (req, res) => {
       return res.status(400).json({ message: `test id required ` });
     const test = await Test.findOne({
       _id: new ObjectId(req.params.id),
-    }).exec();
+    }).populate('user').populate('serie').exec();
     if (!test)
       return res
         .status(404)
@@ -45,8 +45,11 @@ const getTestCurrentUser = async (req, res) => {
     if (!currentUser)
       return res.status(400).json({ message: "Invalide User ID" });
     const test = await Test.findOne({
-      user: currentUser
-    }).exec();
+      user: currentUser,
+    })
+      .populate("user")
+      .populate("serie")
+      .exec();
     if (!test) return res.status(404).json({ message: `No test found for users ${currentUser.email}` });
     res.status(200).json(test);
   } catch (err) {
@@ -63,7 +66,7 @@ const addTest = async (req, res) => {
       return res.status(400).json({ message: "Invalide User ID" });
     const newTest = new Test({
       serie: req?.body?.serie,
-      user: currentUser,
+      user: currentUser?._id,
       resultat: req?.body?.resultat,
       payload: req?.body?.payload
       // Ajoutez d'autres disciplines si nécessaire
@@ -83,12 +86,12 @@ const updateTest = async (req, res) => {
       return res.status(400).json({ message: "Invalide User ID" });
     const testUpdate = new Test({
       _id: id,
-      serie: req?.body?.serie,
-      user: currentUser,
+      serie: req?.body?.serieId,
+      user: currentUser?._id,
       resultat: req?.body?.resultat,
-      payload: req?.body?.payload
+      payload: req?.body?.payload,
     });
-    const result = await Test.findByIdAndupdate(id, testUpdate, { new: true });
+    const result = await Test.findByIdAndUpdate(id, testUpdate, { new: true });
     res.status(201).json(result);
   } catch (err) {
     res.status(500).json({ message: err.message });

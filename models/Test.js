@@ -1,15 +1,13 @@
-const {serieSchema} = require("./Serie");
-const { userSchema } = require("./User");
+const {serieSchema, Serie} = require("./Serie");
+const { userSchema, User } = require("./User");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const testSchema = new Schema({
-  serie: {
-    type: [serieSchema],
-    require: true,
-  },
+  serie: { type: Schema.Types.ObjectId, ref: "Serie", require: true },
   user: {
-    type: userSchema,
+    type: Schema.Types.ObjectId,
+    ref: "User",
     require: true,
   },
   payload: {
@@ -22,8 +20,8 @@ const testSchema = new Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 

@@ -50,7 +50,10 @@ const getTestCurrentUser = async (req, res) => {
       .populate("user")
       .populate("serie")
       .exec();
-    if (!test) return res.status(404).json({ message: `No test found for users ${currentUser.email}` });
+    if (test?.length <= 0)
+      return res
+        .status(404)
+        .json({ message: `No test found for users ${currentUser.email}` });
     res.status(200).json(test);
   } catch (err) {
     res.status(500).json({ message: err.message });

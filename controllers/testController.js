@@ -44,7 +44,7 @@ const getTestCurrentUser = async (req, res) => {
     const currentUser = await User.findOne({ _id: req?.userData?.userId }).exec();
     if (!currentUser)
       return res.status(400).json({ message: "Invalide User ID" });
-    const test = await Test.findOne({
+    const test = await Test.find({
       user: currentUser,
     })
       .populate("user")

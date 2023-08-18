@@ -950,3 +950,11 @@
 20230817	12:34:17	02e96549-e517-4623-9d1d-e8226818ac42	GET	undefined	/api/test/tests/user-info
 20230817	12:34:24	9cc26318-92ac-46ee-9afb-8b4159cb8bb8	GET	undefined	/api/test/tests/user-info
 20230817	12:36:55	7d165598-d1e9-4b5e-94da-69f6ab7045e5	GET	undefined	/api/test/tests/user-info
+20230819	00:07:37	bfd957bd-6ed6-4567-aa1c-822c4b4d8247	GET	undefined	/api-docs/
+20230819	00:07:37	2575f9ca-6d1f-4b8c-b60e-c5120bb5a5fd	GET	undefined	/api-docs/swagger-ui.css
+20230819	00:07:37	e51f36ad-39c8-45b3-ae99-c1af18693aac	GET	undefined	/api-docs/swagger-ui-init.js
+20230819	00:07:38	28d80f5a-d893-4f33-ae62-b5c76f24a28e	GET	undefined	/api-docs/swagger-ui-bundle.js
+20230819	00:07:38	8754ba80-c469-4898-a1b4-ae46eadfa9f4	GET	undefined	/api-docs/swagger-ui-standalone-preset.js
+20230819	00:07:38	dc7930cf-d3b3-4e06-b0e8-80bbf437740d	GET	undefined	/api-docs/favicon-16x16.png
+20230819	00:08:20	23d8d321-f10d-4b1f-96cf-f4a0e8ce846e	POST	http://localhost:3500	/api/auth/login
+20230819	00:09:03	5fc750a8-2730-4c2a-aad2-8feb8b789727	GET	undefined	/api/test/tests/user-info

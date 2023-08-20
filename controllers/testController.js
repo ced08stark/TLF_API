@@ -42,7 +42,7 @@ const getTest = async (req, res) => {
 
 const getTestByUserId = async (req, res) => {
   try {
-    const userId = req?.params?.userId;
+    const userId = req?.params?.id;
     const currentUser = await User.findOne({
       _id: req?.userData?.userId,
     }).exec();

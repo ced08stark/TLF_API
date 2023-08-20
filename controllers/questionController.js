@@ -106,6 +106,9 @@ const deleteQuestion = async (req, res) => {
         .status(204)
         .json({ message: `No question matches ID ${req.body.id}` });
     const result = await Question.deleteOne({ _id: new ObjectId(req.params.id) });
+    if(result){
+      
+    }
     res.json(result);
   } catch (err) {
     res.status(500).json({ message: err.message });

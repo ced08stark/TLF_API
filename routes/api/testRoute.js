@@ -149,6 +149,30 @@ const path = require("path");
  *        
  */
 
+/** @swagger
+ * /api/test/tests/user-info/{id}:
+ *   get:
+ *      tags:
+ *        - Tests
+ *      summary: Return a current user test information
+ *      description: get current user information test
+ *      parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The user id
+ *      responses:
+ *       200:
+ *         description: test find success
+ *       404:
+ *         description: test was not found
+ *      security:
+ *          - bearerAuth: []
+ *        
+ */
+
 
 
 /**
@@ -342,6 +366,9 @@ const path = require("path");
 router
   .route("/tests/user-info")
   .get(verifyJWT, testController.getTestCurrentUser);
+router
+  .route(`/tests/user-info/:id`)
+  .get(verifyJWT, testController.getTestByUserId);
 router.route("/tests").get(verifyJWT, testController.getTests);
 router.route("/tests/:id").get(verifyJWT, testController.getTest);
 router.route("/created").post(verifyJWT, testController.addTest);

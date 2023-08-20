@@ -12,9 +12,10 @@ const serieSchema = new Schema({
     unique: true,
   },
   questions: {
-    type: [ questionSchema ],
+    type: [questionSchema],
     require: false,
   },
+  /*questions: [{ type: Schema.Types.ObjectId, ref: "Question" }],*/
 });
 
 

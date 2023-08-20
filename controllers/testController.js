@@ -39,6 +39,35 @@ const getTest = async (req, res) => {
   }
 };
 
+
+const getTestByUserId = async (req, res) => {
+  try {
+    const userId = req?.params?.userId;
+    const currentUser = await User.findOne({
+      _id: req?.userData?.userId,
+    }).exec();
+    if (!currentUser)
+      return res.status(400).json({ message: "Invalide User ID" });
+    if (!userId)
+      return res.status(400).json({ message: `user id required ` });
+    const user = await User.find({
+      _id: userId,
+    })
+    .exec();
+    if (user){
+        const test = await Test.find({
+          user: user,
+        }).populate('user').populate('serie').exec();
+        return res.status(200).json(test);
+    }
+    return res
+      .status(404)
+      .json({ message: `No test found for id ${req.params.id}` });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 const getTestCurrentUser = async (req, res) => {
   try {
     const currentUser = await User.findOne({ _id: req?.userData?.userId }).exec();
@@ -130,5 +159,6 @@ module.exports = {
   addTest,
   deleteTest,
   updateTest,
+  getTestByUserId,
   getTestCurrentUser
 };

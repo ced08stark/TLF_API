@@ -29,11 +29,20 @@ const getTest = async (req, res) => {
     const test = await Test.findOne({
       _id: new ObjectId(req.params.id),
     }).populate('user').populate('serie').exec();
-    if (!test)
-      return res
-        .status(404)
-        .json({ message: `No test found for id ${req.params.id}` });
-    res.status(200).json(test);
+    if (!test){
+         return res
+           .status(404)
+           .json({ message: `No test found for id ${req.params.id}` });
+    }
+    else{
+        if (
+          test.user.id != req?.userData?.userId && currentUser?.role != 'admin'
+        )
+          return res
+            .status(400)
+            .json({ message: `test doesn't match with current user` });
+        res.status(200).json(test);
+    }
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -50,6 +59,7 @@ const getTestByUserId = async (req, res) => {
       return res.status(400).json({ message: "Invalide User ID" });
     if (!userId)
       return res.status(400).json({ message: `user id required ` });
+    
     const user = await User.find({
       _id: userId,
     })
@@ -58,11 +68,21 @@ const getTestByUserId = async (req, res) => {
         const test = await Test.find({
           user: user,
         }).populate('user').populate('serie').exec();
-        return res.status(200).json(test);
+        if (test.length < 0) {
+          return res
+            .status(404)
+            .json({ message: `No test found for id ${req.params.id}` });
+        } else {
+          if (
+            currentUser?.role != "admin"
+          )
+            return res
+              .status(400)
+              .json({ message: `tests doesn't match with this user` });
+          res.status(200).json(test);
+        }
     }
-    return res
-      .status(404)
-      .json({ message: `No test found for id ${req.params.id}` });
+    
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -88,7 +108,6 @@ const getTestCurrentUser = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-
 
 
 const addTest = async (req, res) => {
@@ -149,7 +168,7 @@ const deleteTest = async (req, res) => {
     const result = await Test.deleteOne({ _id: new ObjectId(req.params.id) });
     res.json(result);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: err.message })
   }
 };
 

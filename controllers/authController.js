@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 
 const handleLogin = async(req, res)=>{
     const { email, password } = req.body;
-    
+    const hashedPwd = await bcrypt.hash(password, 10);
     try{
         if (!email || !password)
             return res
@@ -25,10 +25,16 @@ const handleLogin = async(req, res)=>{
            function (error, token) {
             res.status(200).json({
               message: "Authentication successful",
+              role: foundUser.role,
               token,
             });
           }
         );
+    }
+    else{
+      res.status(401).json({
+        message: "password wrong",
+      });
     }
     }
     catch(err){
@@ -38,7 +44,6 @@ const handleLogin = async(req, res)=>{
 }
 
 const handleLogout = async (req, res) => {
-
   const cookies = req.cookies;
   console.log(cookies?.jwt);
   if(!cookies?.jwt) return res.status(204).json({message: 'no content'});
@@ -83,7 +88,6 @@ const handleRegister = async (req, res) => {
     res
       .status(201)
       .json({ Success: `new user ${email} created success`, result });
-
   } catch (err) {
     res.status(500).json({ message: err });
   }

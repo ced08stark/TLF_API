@@ -136,7 +136,7 @@ const path = require("path");
  * /api/categorie/created:
  *   post:
  *      tags:
- *       - Categorie
+ *       - Categories
  *      summary: create categorie
  *      description: create categorie from the application
  *      requestBody:

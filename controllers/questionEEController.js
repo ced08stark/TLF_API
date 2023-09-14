@@ -53,7 +53,7 @@ const addEEQuestion = async (req, res) => {
       // Ajoutez d'autres disciplines si nécessaire
     });
     console.log(newQuestion);
-    const result = await Question.create(newQuestion);
+    const result = await QuestionEE.create(newQuestion);
     res.status(201).json(result);
   } catch (err) {
     res.status(500).json({ message: err.message });

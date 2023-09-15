@@ -44,6 +44,7 @@ const addSerie = async (req, res) => {
     console.log(req?.body?.questions);
     const newSerie = new Serie({
       questions: req?.body?.questions,
+      eeQuestions: req?.body?.eeQuestions,
       libelle: req?.body?.libelle,
       // Ajoutez d'autres disciplines si nécessaire
     });
@@ -64,6 +65,7 @@ const updateSerie = async (req, res) => {
     const serieUpdate = new Serie({
       _id: id,
       questions: req?.body?.questions,
+      eeQuestions: req?.body?.eeQuestions,
       libelle: req?.body?.libelle,
       // Ajoutez d'autres disciplines si nécessaire
     });

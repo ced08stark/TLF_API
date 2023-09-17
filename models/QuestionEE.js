@@ -24,4 +24,4 @@ const questionEESchema = new Schema({
 });
 
 const QuestionEE = mongoose.model("QuestionEE", questionEESchema);
-module.exports = {  QuestionEE, questionEESchema }; 
+module.exports = {  QuestionEE, questionEESchema };

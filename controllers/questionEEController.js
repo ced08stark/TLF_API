@@ -48,7 +48,7 @@ const addEEQuestion = async (req, res) => {
     const newQuestion = new QuestionEE({
       numero: parseInt(req?.body?.numero),
       consigne: req?.body?.consigne,
-      images: req?.body?.images,
+      tasks: req?.body?.tasks,
       typeProduction: req?.body?.typeProduction
       // Ajoutez d'autres disciplines si nécessaire
     });
@@ -71,7 +71,7 @@ const updateEEQuestion = async (req, res) => {
       _id: id,
       numero: parseInt(req?.body?.numero),
       consigne: req?.body?.consigne,
-      images: req?.body?.images,
+      tasks: req?.body?.tasks,
       typeProduction: req?.body?.typeProduction,
     });
     console.log(id);

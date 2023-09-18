@@ -4,15 +4,6 @@ const { taskSchema } = require("./Task");
 
 
 const questionEESchema = new Schema({
-  numero: {
-    type: Number,
-    require: true,
-  },
-  typeProduction: {
-    type: String,
-    enum: ["Paragraphe", "Courriel", "Lettre"],
-    required: true,
-  },
   tasks: {
     type: [taskSchema],
     require: true,

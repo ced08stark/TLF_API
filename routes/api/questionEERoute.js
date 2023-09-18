@@ -12,6 +12,43 @@ const { uploadFiles } = require("../../middlewares/multer");
  *      EEQuestion:
  *         type: object
  *         required:
+ *             - tasks
+ *         properties:
+ *              tasks:
+ *                  type: array
+ *                  items:
+ *                      type: object
+ *                      required:
+ *                        - numero
+ *                        - consigne
+ *                        - images
+ *                        - typeProduction
+ *                      properties:
+ *                       numero:
+ *                           type: string
+ *                           description: task number
+ *                       consigne:
+ *                           type: string
+ *                           description: task consigne
+ *                       images:
+ *                           type: string
+ *                           description: task images
+ *                       typeProduction:
+ *                           type: string
+ *                           description: task productionType
+ *                        
+ *                  
+ *
+ */
+
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *      tasks:
+ *         type: object
+ *         required:
  *             - numero
  *             - consigne
  *             - images

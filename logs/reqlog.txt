@@ -1115,3 +1115,10 @@
 20230914	18:09:05	7b88c65c-67d5-4956-bb65-eb9123b1d45c	POST	http://localhost:3500	/api/eeQuestion/created
 20230914	18:09:21	6e14b296-ee2e-459d-b34b-f3facef6069e	POST	http://localhost:3500	/api/eeQuestion/created
 20230914	18:09:39	f670b00e-7f39-401e-ad9e-f892e6454faf	POST	http://localhost:3500	/api/eeQuestion/created
+20230918	16:19:01	4fa43940-92d9-44e3-a7a8-290204e3b13b	GET	undefined	/api-docs
+20230918	16:19:01	9aa6e037-625b-406a-99b3-252af64b3e2e	GET	undefined	/api-docs/
+20230918	16:19:01	96b92f07-d0a0-4781-a1e7-e3a23a14ee4c	GET	undefined	/api-docs/swagger-ui.css
+20230918	16:19:01	82f0ba5f-2b3b-4246-bd8b-48be4d2630dc	GET	undefined	/api-docs/swagger-ui-standalone-preset.js
+20230918	16:19:01	b5745944-0f40-406b-bce7-5e666ba8dab4	GET	undefined	/api-docs/swagger-ui-init.js
+20230918	16:19:02	aa75838d-dac6-4a83-b886-cb2f2680dedd	GET	undefined	/api-docs/swagger-ui-bundle.js
+20230918	16:19:02	328afc68-aa72-4c7d-ace0-725d5b676ba3	GET	undefined	/api-docs/favicon-16x16.png

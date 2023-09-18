@@ -46,10 +46,7 @@ const addEEQuestion = async (req, res) => {
 
     console.log(req?.body?.duree);
     const newQuestion = new QuestionEE({
-      numero: parseInt(req?.body?.numero),
-      consigne: req?.body?.consigne,
       tasks: req?.body?.tasks,
-      typeProduction: req?.body?.typeProduction
       // Ajoutez d'autres disciplines si nécessaire
     });
     console.log(newQuestion);
@@ -69,10 +66,7 @@ const updateEEQuestion = async (req, res) => {
       return res.status(400).json({ message: "Invalide User ID" });
     const questionUpdate = new QuestionEE({
       _id: id,
-      numero: parseInt(req?.body?.numero),
-      consigne: req?.body?.consigne,
       tasks: req?.body?.tasks,
-      typeProduction: req?.body?.typeProduction,
     });
     console.log(id);
     const result = await QuestionEE.findByIdAndUpdate(id, questionUpdate);

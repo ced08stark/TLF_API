@@ -25,7 +25,7 @@ const { uploadFiles } = require("../../middlewares/multer");
  *                        - typeProduction
  *                      properties:
  *                       numero:
- *                           type: string
+ *                           type: number
  *                           description: task number
  *                       consigne:
  *                           type: string

@@ -112,6 +112,7 @@ const getEETestCurrentUser = async (req, res) => {
 };
 
 const addEETest = async (req, res) => {
+  console.log('ici')
   try {
     const currentUser = await User.findOne({
       _id: req?.userData?.userId,
@@ -126,7 +127,9 @@ const addEETest = async (req, res) => {
       status: 'en cours'
       // Ajoutez d'autres disciplines si nécessaire
     });
-    const result = await Test.create(newTest);
+    console.log(newTest);
+    const result = await TestEE.create(newTest);
+    
     res.status(201).json(result);
   } catch (err) {
     res.status(500).json({ message: err.message });

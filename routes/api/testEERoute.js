@@ -21,6 +21,9 @@ const path = require("path");
  *          payload:
  *              type: string
  *              description: information of test
+ *          status:
+ *              type: string
+ *              description: status of test
  *          series:
  *              type: array
  *              items:
@@ -125,17 +128,17 @@ const path = require("path");
  *          resultat:
  *              type: array
  *              items:
- *                     type: object
- *                     required:
- *                         - task
- *                         - note
- *                     properties:
- *                        task:
- *                            type: string
- *                            description: task text question
- *                        note:
- *                            type: number
- *                            description: note question
+ *                  type: object
+ *                  required:
+ *                      - task
+ *                      - note
+ *                  properties:
+ *                     task:
+ *                         type: string
+ *                         description: task text question
+ *                     note:
+ *                         type: number
+ *                         description: note question
  *          createdAt:
  *              type: string
  *              description: date create
@@ -287,8 +290,22 @@ const path = require("path");
  *                  type: string
  *                user:
  *                  type: string
+ *                status:
+ *                  type: string
  *                resultat:
- *                  type: number
+ *                  type: array
+ *                  items:
+ *                      type: object
+ *                      required:
+ *                          - task
+ *                          - note
+ *                      properties:
+ *                         task:
+ *                             type: string
+ *                             description: task text question
+ *                         note:
+ *                             type: number
+ *                             description: note question
  *                payload:
  *                  type: string
  *      responses:

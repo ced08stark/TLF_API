@@ -1122,3 +1122,6 @@
 20230918	16:19:01	b5745944-0f40-406b-bce7-5e666ba8dab4	GET	undefined	/api-docs/swagger-ui-init.js
 20230918	16:19:02	aa75838d-dac6-4a83-b886-cb2f2680dedd	GET	undefined	/api-docs/swagger-ui-bundle.js
 20230918	16:19:02	328afc68-aa72-4c7d-ace0-725d5b676ba3	GET	undefined	/api-docs/favicon-16x16.png
+20230921	17:27:50	737c02db-272c-4b5c-8307-2562fed0a01a	GET	undefined	/api/eeTest/tests
+20230921	18:14:49	1dfb6c36-da67-400b-9e3c-49c35b99fe61	GET	undefined	/api/eeTest/tests
+20230921	18:24:18	e0fd08ea-2ed3-4330-8202-86583d553014	GET	undefined	/api/eeTest/tests

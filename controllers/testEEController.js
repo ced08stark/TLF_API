@@ -121,7 +121,7 @@ const addEETest = async (req, res) => {
       return res.status(400).json({ message: "Invalide User ID" });
     const newTest = new TestEE({
       serie: req?.body?.serie,
-      user: currentUser?._id,
+      user: req?.body?.user,
       resultat: req?.body?.resultat,
       payload: req?.body?.payload,
       status: 'en cours'
@@ -147,7 +147,7 @@ const updateEETest = async (req, res) => {
     const testUpdate = new TestEE({
       _id: id,
       serie: req?.body?.serieId,
-      user: currentUser?._id,
+      user: req?.body?.user,
       resultat: req?.body?.resultat,
       payload: req?.body?.payload,
       status: req?.body?.status

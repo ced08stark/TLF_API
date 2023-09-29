@@ -20,7 +20,7 @@ const taskEOSchema = new Schema({
     require: false,
   },
   duree: {
-    type: String,
+    type: Number,
     require: true,
   }
 });

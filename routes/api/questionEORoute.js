@@ -34,7 +34,7 @@ const { uploadFiles } = require("../../middlewares/multer");
  *                           type: string
  *                           description: task files
  *                       duree:
- *                           type: string
+ *                           type: number
  *                           description: task duree
  *
  *
@@ -63,7 +63,7 @@ const { uploadFiles } = require("../../middlewares/multer");
  *                  type: string
  *                  description: questions file
  *              duree:
- *                  type: string
+ *                  type: number
  *                  description: question duree produciton
  *
  */

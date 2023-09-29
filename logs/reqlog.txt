@@ -1155,3 +1155,15 @@
 20230922	00:08:04	364828be-59cd-48db-ba84-2d8930aa0b03	POST	http://localhost:3500	/api/eeTest/created
 20230922	00:08:22	f2f3b990-c382-4bfa-999e-6b4a13474b8a	GET	undefined	/api/test/tests/user-info
 20230922	00:08:42	a30c0375-7c3b-46aa-9b3c-fd4ccc097b0c	GET	undefined	/api/eeTest/tests/user-info
+20230929	12:30:45	d55a4830-dd63-4d82-9a22-8326caedeaac	GET	undefined	/api-docs/
+20230929	12:30:45	26aca160-ede4-461d-ae11-b786a2e3363f	GET	undefined	/api-docs/swagger-ui.css
+20230929	12:30:45	4396864d-7135-477a-8a96-7497b3eb9dca	GET	undefined	/api-docs/swagger-ui-bundle.js
+20230929	12:30:45	cd4ac913-3615-4de1-8c6c-eaa92d6cc9ea	GET	undefined	/api-docs/swagger-ui-standalone-preset.js
+20230929	12:30:45	bd442465-b661-495e-ad47-80799a4f648a	GET	undefined	/api-docs/swagger-ui-init.js
+20230929	12:30:46	7931cac3-fabb-4039-a2e3-d4dc58848a3c	GET	undefined	/api-docs/favicon-16x16.png
+20230929	12:31:32	d92c7f85-7eee-4892-a739-ac3477735e4c	POST	http://localhost:3500	/api/auth/login
+20230929	12:45:24	196349fc-714d-4b8f-8fa2-1cc9bb222555	GET	undefined	/api-docs/
+20230929	12:45:24	319fda9e-b285-40a3-9554-b2aee306a742	GET	undefined	/api-docs/swagger-ui.css
+20230929	12:45:24	f19930c7-f9b6-49c3-ad21-3f517e1267ab	GET	undefined	/api-docs/swagger-ui-bundle.js
+20230929	12:45:24	6a02d600-8ae0-4a4b-9b9c-c1f67dad7a5f	GET	undefined	/api-docs/swagger-ui-standalone-preset.js
+20230929	12:45:24	26140366-64d5-4d05-a7ee-cf3078e1808d	GET	undefined	/api-docs/swagger-ui-init.js

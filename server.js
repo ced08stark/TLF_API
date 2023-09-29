@@ -95,6 +95,7 @@ app.use("/api/serie", require("./routes/api/serieRoute"));
 app.use("/api/test", require("./routes/api/testRoute"));
 app.use("/api/eeQuestion", require("./routes/api/questionEERoute"));
 app.use("/api/eeTest", require("./routes/api/testEERoute"));
+app.use("/api/eoTest", require("./routes/api/testEORoute"));
 
 app.all("/*", (req, res) => {
   res.status(404);

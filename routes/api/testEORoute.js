@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const testController = require("../../controllers/testEEController");
+const testEOController = require("../../controllers/testEOController");
 const verifyJWT = require("../../middlewares/verifyJWT");
 const path = require("path");
 
@@ -8,7 +8,7 @@ const path = require("path");
  * @swagger
  * components:
  *   schemas:
- *     TestEE:
+ *     TestEO:
  *       type: object
  *       required:
  *          - series
@@ -27,7 +27,7 @@ const path = require("path");
  *              description: status of test
  *          isView:
  *              type: boolean
- *              description: test is view
+ *              description:  test isView
  *          series:
  *              type: array
  *              items:
@@ -150,10 +150,10 @@ const path = require("path");
 
 /**
  * @swagger
- * /api/eeTest/tests/user-info:
+ * /api/eoTest/tests/user-info:
  *   get:
  *      tags:
- *        - EETests
+ *        - EOTests
  *      summary: Return a current user test information
  *      description: get current user information test
  *      responses:
@@ -166,11 +166,12 @@ const path = require("path");
  *
  */
 
-/** @swagger
- * /api/eeTest/tests/user-info/{id}:
+/** 
+ * @swagger
+ * /api/eoTest/tests/user-info/{id}:
  *   get:
  *      tags:
- *        - EETests
+ *        - EOTests
  *      summary: Return a current user test information
  *      description: get current user information test
  *      parameters:
@@ -192,10 +193,10 @@ const path = require("path");
 
 /**
  * @swagger
- * /api/eeTest/tests:
+ * /api/eoTest/tests:
  *   get:
  *      tags:
- *       - EETests
+ *       - EOTests
  *      summary: Returns a list of tests
  *      description: tests Whose are already exist
  *      responses:
@@ -206,7 +207,7 @@ const path = require("path");
  *                      schema:
  *                          type: array
  *                          items:
- *                              $ref: '#/components/schemas/TestEE'
+ *                              $ref: '#/components/schemas/TestEO'
  *          404:
  *              description: no test was not found
  *      security:
@@ -216,10 +217,10 @@ const path = require("path");
 
 /**
  * @swagger
- * /api/eeTest/tests/{id}:
+ * /api/eoTest/tests/{id}:
  *   get:
  *      tags:
- *       - EETests
+ *       - EOTests
  *      summary: Returns a list of tests
  *      description: test Who are already exist
  *      parameters:
@@ -237,7 +238,7 @@ const path = require("path");
  *                      schema:
  *                          type: array
  *                          items:
- *                              $ref: '#/components/schemas/TestEE'
+ *                              $ref: '#/components/schemas/TestEO'
  *          404:
  *              description: no question was not found
  *      security:
@@ -247,10 +248,10 @@ const path = require("path");
 
 /**
  * @swagger
- * /api/eeTest/tests/{id}:
+ * /api/eoTest/tests/{id}:
  *   get:
  *      tags:
- *       - EETests
+ *       - EOTests
  *      summary: Returns a list of tests
  *      description: get test Who are already exist
  *      parameters:
@@ -268,7 +269,7 @@ const path = require("path");
  *                      schema:
  *                          type: array
  *                          items:
- *                              $ref: '#/components/schemas/TestEE'
+ *                              $ref: '#/components/schemas/TestEO'
  *          404:
  *              description: no test was found
  *      security:
@@ -278,10 +279,10 @@ const path = require("path");
 
 /**
  * @swagger
- * /api/eeTest/created:
+ * /api/eoTest/created:
  *   post:
  *      tags:
- *       - EETests
+ *       - EOTests
  *      summary: create test
  *      description: create test to the application
  *      requestBody:
@@ -317,7 +318,7 @@ const path = require("path");
  *         content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/TestEE'
+ *              $ref: '#/components/schemas/TestEO'
  *         description: add question success
  *       401:
  *         description: add question failed failed
@@ -329,10 +330,10 @@ const path = require("path");
 
 /**
  * @swagger
- * /api/eeTest/tests/{id}:
+ * /api/eoTest/tests/{id}:
  *   delete:
  *      tags:
- *       - EETests
+ *       - EOTests
  *      summary: delete a list of tests
  *      description: delete test Who are already exist
  *      parameters:
@@ -350,7 +351,7 @@ const path = require("path");
  *                      schema:
  *                          type: array
  *                          items:
- *                              $ref: '#/components/schemas/TestEE'
+ *                              $ref: '#/components/schemas/TestEO'
  *          404:
  *              description: no test was found
  *      security:
@@ -360,10 +361,10 @@ const path = require("path");
 
 /**
  * @swagger
- * /api/eeTest/tests/{id}:
+ * /api/eoTest/tests/{id}:
  *   patch:
  *      tags:
- *       - EETests
+ *       - EOTests
  *      summary: update a list of tests
  *      description: update test Who are already exist
  *      parameters:
@@ -381,7 +382,7 @@ const path = require("path");
  *                      schema:
  *                          type: array
  *                          items:
- *                              $ref: '#/components/schemas/TestEE'
+ *                              $ref: '#/components/schemas/TestEO'
  *          404:
  *              description: no test was found
  *      security:
@@ -391,14 +392,14 @@ const path = require("path");
 
 router
   .route("/tests/user-info")
-  .get(verifyJWT, testController.getEETestCurrentUser);
+  .get(verifyJWT, testEOController.getEOTestCurrentUser);
 router
   .route(`/tests/user-info/:id`)
-  .get(verifyJWT, testController.getEETestByUserId);
-router.route("/tests").get(verifyJWT, testController.getEETests);
-router.route("/tests/:id").get(verifyJWT, testController.getEETest);
-router.route("/created").post(verifyJWT, testController.addEETest);
-router.route("/tests/:id").delete(verifyJWT, testController.deleteEETest);
-router.route("/tests/:id").patch(verifyJWT, testController.updateEETest);
+  .get(verifyJWT, testEOController.getEOTestByUserId);
+router.route("/tests").get(verifyJWT, testEOController.getEOTests);
+router.route("/tests/:id").get(verifyJWT, testEOController.getEOTest);
+router.route("/created").post(verifyJWT, testEOController.addEOTest);
+router.route("/tests/:id").delete(verifyJWT, testEOController.deleteEOTest);
+router.route("/tests/:id").patch(verifyJWT, testEOController.updateEOTest);
 
 module.exports = router;

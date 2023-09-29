@@ -3,7 +3,7 @@ const { userSchema, User } = require("./User");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const testEESchema = new Schema({
+const testEOSchema = new Schema({
   serie: { type: Schema.Types.ObjectId, ref: "Serie", require: true },
   user: {
     type: Schema.Types.ObjectId,
@@ -39,5 +39,5 @@ const testEESchema = new Schema({
   },
 });
 
-const TestEE = mongoose.model("TestEE", testEESchema);
-module.exports = { TestEE, testEESchema };
+const TestEO = mongoose.model("TestEO", testEOSchema);
+module.exports = { TestEO, testEOSchema };

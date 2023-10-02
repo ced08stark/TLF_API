@@ -124,6 +124,7 @@ const addEETest = async (req, res) => {
       user: req?.body?.user,
       resultat: req?.body?.resultat,
       payload: req?.body?.payload,
+      isView: false,
       status: 'en cours'
       // Ajoutez d'autres disciplines si nécessaire
     });
@@ -150,7 +151,8 @@ const updateEETest = async (req, res) => {
       user: req?.body?.user,
       resultat: req?.body?.resultat,
       payload: req?.body?.payload,
-      status: req?.body?.status
+      isView: req?.body?.isView,
+      status: req?.body?.status,
     });
     const result = await TestEE.findByIdAndUpdate(id, testUpdate, { new: true });
     res.status(201).json(result);

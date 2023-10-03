@@ -1167,3 +1167,17 @@
 20230929	12:45:24	f19930c7-f9b6-49c3-ad21-3f517e1267ab	GET	undefined	/api-docs/swagger-ui-bundle.js
 20230929	12:45:24	6a02d600-8ae0-4a4b-9b9c-c1f67dad7a5f	GET	undefined	/api-docs/swagger-ui-standalone-preset.js
 20230929	12:45:24	26140366-64d5-4d05-a7ee-cf3078e1808d	GET	undefined	/api-docs/swagger-ui-init.js
+20231003	11:37:57	cb979f56-221d-4333-9be8-6974de7638da	POST	undefined	/api/serie/created
+20231003	11:38:26	3b8f3da4-81cc-4bbb-b830-09e8ce2be6b7	POST	undefined	/api/serie/created
+20231003	11:47:09	1bf617fd-f4aa-4886-8939-1db693808e83	GET	undefined	/api/serie/series/651be112fc9ec52dd6d95a65
+20231003	11:47:46	e993da19-9428-4061-9af2-8c84090f161d	GET	undefined	/api/serie/series/651be112fc9ec52dd6d95a65
+20231003	11:49:14	e5675721-a8a8-44b3-8ac0-c52940f37617	GET	undefined	/api/serie/series/651be112fc9ec52dd6d95a65
+20231003	11:49:18	326191c6-7ee1-40ae-974a-775369fd4114	GET	undefined	/api/serie/series/651be112fc9ec52dd6d95a65
+20231003	11:50:26	237d273a-00b6-4646-9833-e5b5ee89fa72	GET	undefined	/api/serie/series/651be112fc9ec52dd6d95a65
+20231003	11:52:46	ae562633-fbbe-4e42-abe4-acdf910b6310	DELETE	undefined	/api/serie/series/651be112fc9ec52dd6d95a65
+20231003	11:53:42	0a8011c2-510a-42f3-9a0d-286523eec2d3	DELETE	undefined	/api/question/questions/651be112fc9ec52dd6d95a65
+20231003	11:53:53	f838aaf1-92ea-491c-8d85-a4d00e9e64ce	DELETE	undefined	/api/question/questions/651be112fc9ec52dd6d95a65
+20231003	11:54:43	faf30ea2-d320-4c10-be1f-d52059fe2ff1	GET	undefined	/api/question/questions/651be112fc9ec52dd6d95a65
+20231003	11:55:02	6302ed5b-3032-42ee-a754-e5ec75f5c088	GET	undefined	/api/question/questions/651be112fc9ec52dd6d95a65
+20231003	11:55:43	83e5ebaf-44b8-4ab6-aee9-5590d1a33f48	DELETE	undefined	/api/question/questions/651a05691388d3295feb802b
+20231003	11:55:53	0724dd92-7685-4107-bbcc-9baad8334605	GET	undefined	/api/serie/series/651be112fc9ec52dd6d95a65

@@ -9,7 +9,11 @@ const getSeries = async (req, res) => {
     const currentUser = await User.findOne({ _id: req.userData.userId }).exec();
     if (!currentUser)
       return res.status(400).json({ message: "Invalide User ID" });
-    const series = await Serie.find().exec();
+    const series = await Serie.find()
+      .populate("questions")
+      .populate("eeQuestions")
+      .populate("eoQurstions")
+      .exec();
     if (series?.length <= 0)
       return res.status(404).json({ message: `No serie found` });
     res.status(200).json(series);
@@ -27,7 +31,11 @@ const getSerie = async (req, res) => {
       return res.status(400).json({ message: "serie id required" });
     const serie = await Serie.findOne({
       _id: new ObjectId(req.params.id),
-    }).exec();
+    })
+      .populate("questions")
+      .populate("eeQuestions")
+      .populate("eoQurstions")
+      .exec();
     if (!serie) return res.status(404).json({ message: `No Serie match id ${req.params.id}` });
     res.status(200).json(serie);
   } catch (err) {

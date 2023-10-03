@@ -13,19 +13,9 @@ const serieSchema = new Schema({
     index: true,
     unique: true,
   },
-  questions: {
-    type: [questionSchema],
-    require: false,
-  },
-  eeQuestions: {
-    type: [questionEESchema],
-    require: false,
-  },
-  eoQuestions: {
-    type: [questionEOSchema],
-    require: false,
-  },
-  /*questions: [{ type: Schema.Types.ObjectId, ref: "Question" }],*/
+  eeQuestions: [{ type: Schema.Types.ObjectId, ref: "QuestionEE", require: false }],
+  eoQuestions: [{ type: Schema.Types.ObjectId, ref: "QuestionEO", require: false }],
+  questions: [{ type: Schema.Types.ObjectId, ref: "Question", require: false }]
 });
 
 

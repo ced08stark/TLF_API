@@ -34,7 +34,7 @@ const getSerie = async (req, res) => {
     })
       .populate("questions")
       .populate("eeQuestions")
-      .populate("eoQurstions")
+      .populate("eoQuestions")
       .exec();
     if (!serie) return res.status(404).json({ message: `No Serie match id ${req.params.id}` });
     res.status(200).json(serie);

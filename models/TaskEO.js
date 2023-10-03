@@ -5,7 +5,7 @@ const taskEOSchema = new Schema({
   numero: {
     type: Number,
     require: true,
-    validate: [(numero) => numero > 78 && numero < 82],
+    validate: [(numero) => numero > 81 && numero < 84],
   },
   libelle: {
     type: String,

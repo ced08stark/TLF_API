@@ -12,7 +12,7 @@ const getSeries = async (req, res) => {
     const series = await Serie.find()
       .populate("questions")
       .populate("eeQuestions")
-      .populate("eoQurstions")
+      .populate("eoQuestions")
       .exec();
     if (series?.length <= 0)
       return res.status(404).json({ message: `No serie found` });

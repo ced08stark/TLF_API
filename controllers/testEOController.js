@@ -11,7 +11,21 @@ const getEOTests = async (req, res) => {
     if (!currentUser)
       return res.status(400).json({ message: "Invalide User ID" });
 
-    const tests = await TestEO.find().populate("user").populate("serie").exec();
+    const tests = await TestEO.find()
+      .populate("user")
+      .populate({
+        path: "serie",
+        populate: { path: "eeQuestions" },
+      })
+      .populate({
+        path: "serie",
+        populate: { path: "eoQuestions" },
+      })
+      .populate({
+        path: "serie",
+        populate: { path: "questions" },
+      })
+      .exec();
     if (tests?.length <= 0)
       return res.status(404).json({ message: `No tests found` });
     res.status(200).json(tests);
@@ -33,7 +47,18 @@ const getEOTest = async (req, res) => {
       _id: new ObjectId(req.params.id),
     })
       .populate("user")
-      .populate("serie")
+      .populate({
+        path: "serie",
+        populate: { path: "eeQuestions" },
+      })
+      .populate({
+        path: "serie",
+        populate: { path: "eoQuestions" },
+      })
+      .populate({
+        path: "serie",
+        populate: { path: "questions" },
+      })
       .exec();
     if (!test) {
       return res
@@ -69,7 +94,18 @@ const getEOTestByUserId = async (req, res) => {
         user: user,
       })
         .populate("user")
-        .populate("serie")
+        .populate({
+          path: "serie",
+          populate: { path: "eeQuestions" },
+        })
+        .populate({
+          path: "serie",
+          populate: { path: "eoQuestions" },
+        })
+        .populate({
+          path: "serie",
+          populate: { path: "questions" },
+        })
         .exec();
       if (test.length < 0) {
         return res
@@ -99,7 +135,18 @@ const getEOTestCurrentUser = async (req, res) => {
       user: currentUser,
     })
       .populate("user")
-      .populate("serie")
+      .populate({
+        path: "serie",
+        populate: { path: "eeQuestions" },
+      })
+      .populate({
+        path: "serie",
+        populate: { path: "eoQuestions" },
+      })
+      .populate({
+        path: "serie",
+        populate: { path: "questions" },
+      })
       .exec();
     // if (test?.length <= 0)
     //   return res

@@ -10,7 +10,21 @@ const getTests = async (req, res) => {
     if (!currentUser)
       return res.status(400).json({ message: "Invalide User ID" });
 
-    const tests = await Test.find().populate("user").populate("serie").exec();
+    const tests = await Test.find()
+      .populate("user")
+      .populate({
+        path: "serie",
+        populate: { path: "eeQuestions" },
+      })
+      .populate({
+        path: "serie",
+        populate: { path: "eoQuestions" },
+      })
+      .populate({
+        path: "serie",
+        populate: { path: "questions" },
+      })
+      .exec();
     if (tests?.length <= 0)
       return res.status(404).json({ message: `No tests found` });
     res.status(200).json(tests);
@@ -28,7 +42,21 @@ const getTest = async (req, res) => {
       return res.status(400).json({ message: `test id required ` });
     const test = await Test.findOne({
       _id: new ObjectId(req.params.id),
-    }).populate('user').populate('serie').exec();
+    })
+      .populate("user")
+      .populate({
+        path: "serie",
+        populate: { path: "eeQuestions" },
+      })
+      .populate({
+        path: "serie",
+        populate: { path: "eoQuestions" },
+      })
+      .populate({
+        path: "serie",
+        populate: { path: "questions" },
+      })
+      .exec();
     if (!test){
          return res
            .status(404)
@@ -67,7 +95,21 @@ const getTestByUserId = async (req, res) => {
     if (user){
         const test = await Test.find({
           user: user,
-        }).populate('user').populate('serie').exec();
+        })
+          .populate("user")
+          .populate({
+            path: "serie",
+            populate: { path: "eeQuestions" },
+          })
+          .populate({
+            path: "serie",
+            populate: { path: "eoQuestions" },
+          })
+          .populate({
+            path: "serie",
+            populate: { path: "questions" },
+          })
+          .exec();
         if (test.length < 0) {
           return res
             .status(404)
@@ -97,7 +139,18 @@ const getTestCurrentUser = async (req, res) => {
       user: currentUser,
     })
       .populate("user")
-      .populate("serie")
+      .populate({
+        path: "serie",
+        populate: { path: "eeQuestions" },
+      })
+      .populate({
+        path: "serie",
+        populate: { path: "eoQuestions" },
+      })
+      .populate({
+        path: "serie",
+        populate: { path: "questions" },
+      })
       .exec();
     // if (test?.length <= 0)
     //   return res

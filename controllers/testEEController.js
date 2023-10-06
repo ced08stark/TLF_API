@@ -11,7 +11,18 @@ const getEETests = async (req, res) => {
     if (!currentUser)
       return res.status(400).json({ message: "Invalide User ID" });
 
-    const tests = await TestEE.find().populate("user").populate("serie").exec();
+    const tests = await TestEE.find().populate("user").populate({
+        path: "serie",
+        populate: { path: "eeQuestions" },
+      })
+      .populate({
+        path: "serie",
+        populate: { path: "eoQuestions" },
+      })
+      .populate({
+        path: "serie",
+        populate: { path: "questions" },
+      }).exec();
     if (tests?.length <= 0)
       return res.status(404).json({ message: `No tests found` });
     res.status(200).json(tests);
@@ -33,7 +44,18 @@ const getEETest = async (req, res) => {
       _id: new ObjectId(req.params.id),
     })
       .populate("user")
-      .populate("serie")
+      .populate({
+        path: "serie",
+        populate: { path: "eeQuestions" },
+      })
+      .populate({
+        path: "serie",
+        populate: { path: "eoQuestions" },
+      })
+      .populate({
+        path: "serie",
+        populate: { path: "questions" },
+      })
       .exec();
     if (!test) {
       return res
@@ -69,7 +91,18 @@ const getEETestByUserId = async (req, res) => {
         user: user,
       })
         .populate("user")
-        .populate("serie")
+        .populate({
+          path: "serie",
+          populate: { path: "eeQuestions" },
+        })
+        .populate({
+          path: "serie",
+          populate: { path: "eoQuestions" },
+        })
+        .populate({
+          path: "serie",
+          populate: { path: "questions" },
+        })
         .exec();
       if (test.length < 0) {
         return res
@@ -99,7 +132,18 @@ const getEETestCurrentUser = async (req, res) => {
       user: currentUser,
     })
       .populate("user")
-      .populate("serie")
+      .populate({
+        path: "serie",
+        populate: { path: "eeQuestions" },
+      })
+      .populate({
+        path: "serie",
+        populate: { path: "eoQuestions" },
+      })
+      .populate({
+        path: "serie",
+        populate: { path: "questions" },
+      })
       .exec();
     // if (test?.length <= 0)
     //   return res
@@ -112,7 +156,7 @@ const getEETestCurrentUser = async (req, res) => {
 };
 
 const addEETest = async (req, res) => {
-  console.log('ici')
+  
   try {
     const currentUser = await User.findOne({
       _id: req?.userData?.userId,
@@ -128,7 +172,7 @@ const addEETest = async (req, res) => {
       status: 'en cours'
       // Ajoutez d'autres disciplines si nécessaire
     });
-    console.log(newTest);
+    
     const result = await TestEE.create(newTest);
     
     res.status(201).json(result);

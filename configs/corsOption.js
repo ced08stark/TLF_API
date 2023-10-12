@@ -8,7 +8,8 @@ const whiteList = [
   "http://localhost:3500",
   "https://tcp-services-huga.onrender.com",
   "https://tcp-front-git-test-cabrelelvis187-gmailcom.vercel.app",
-  "https://tcp-admin-front.vercel.app"
+  "https://tcp-admin-front.vercel.app",
+  "https://objectif-canada-tcf.com"
 ];
 const corsOption = {
   origin: (origin, callback) => {

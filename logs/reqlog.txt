@@ -1242,3 +1242,9 @@
 20231012	10:45:35	3083781d-9a83-4d93-8cc8-41959e93c2ce	GET	undefined	/api/eeTest/tests/user-info/recent
 20231012	10:47:32	99c9b0c1-eede-4fd2-aaf0-c8c9ea308226	GET	undefined	/api/eeTest/tests/user-info/recent
 20231012	10:50:40	d0032cd0-2208-45d4-97ed-594c4e688358	GET	undefined	/api/eoTest/tests/user-info/recent
+20231012	19:55:29	28dcdabf-4fd7-4522-b0a2-fabc9d5a6e1e	GET	undefined	/api-docs/
+20231012	19:55:29	9343d0aa-f228-4b76-95ac-dee98863b922	GET	undefined	/api-docs/swagger-ui.css
+20231012	19:55:29	0d9c9616-f1e9-410b-a7e6-b3c9d9374b7b	GET	undefined	/api-docs/swagger-ui-init.js
+20231012	19:55:29	2c221598-37db-47c1-9701-738ee4620320	GET	undefined	/api-docs/swagger-ui-bundle.js
+20231012	19:55:29	99407f78-cd79-4de1-817e-375aaf62f4c9	GET	undefined	/api-docs/swagger-ui-standalone-preset.js
+20231012	19:55:30	3f1d5254-cc5c-46a4-af7f-acd08fe0c8c2	GET	undefined	/api-docs/favicon-16x16.png

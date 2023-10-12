@@ -149,6 +149,24 @@ const path = require("path");
  *        
  */
 
+/**
+ * @swagger
+ * /api/Test/tests/user-info/recent:
+ *   get:
+ *      tags:
+ *        - Tests
+ *      summary: Return a current user test information
+ *      description: get current user information test
+ *      responses:
+ *       200:
+ *         description: test find success
+ *       404:
+ *         description: test was not found
+ *      security:
+ *          - bearerAuth: []
+ *
+ */
+
 /** @swagger
  * /api/test/tests/user-info/{id}:
  *   get:
@@ -229,6 +247,8 @@ const path = require("path");
  *          - bearerAuth: []
  *        
  */
+
+
 
 
 /**
@@ -368,6 +388,10 @@ const path = require("path");
  *          - bearerAuth: []
  *        
  */
+
+router
+  .route("/tests/user-info/recent")
+  .get(verifyJWT, testController.getLastTestCurrentUser);
 
 router
   .route("/tests/user-info")

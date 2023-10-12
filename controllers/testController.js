@@ -162,6 +162,43 @@ const getTestCurrentUser = async (req, res) => {
   }
 };
 
+const getLastTestCurrentUser = async (req, res) => {
+  try {
+    const currentUser = await User.findOne({
+      _id: req?.userData?.userId,
+    }).exec();
+    if (!currentUser)
+      return res.status(400).json({ message: "Invalide User ID" });
+    const test = await Test.find({
+      user: currentUser,
+    })
+      .populate("user")
+      .populate({
+        path: "serie",
+        populate: { path: "eeQuestions" },
+      })
+      .populate({
+        path: "serie",
+        populate: { path: "eoQuestions" },
+      })
+      .populate({
+        path: "serie",
+        populate: { path: "questions" },
+      })
+      .exec();
+    if (test?.length <= 0)
+      res
+        .status(201)
+        .json({
+          message: `No test found for users ${currentUser.email}`,
+          test: {},
+        });
+    res.status(200).json(test[0]);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 
 const addTest = async (req, res) => {
   try {
@@ -232,5 +269,6 @@ module.exports = {
   deleteTest,
   updateTest,
   getTestByUserId,
-  getTestCurrentUser
+  getTestCurrentUser,
+  getLastTestCurrentUser
 };

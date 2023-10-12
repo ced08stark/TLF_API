@@ -158,6 +158,40 @@ const getEOTestCurrentUser = async (req, res) => {
   }
 };
 
+const getEOLastTestCurrentUser = async (req, res) => {
+  try {
+    const currentUser = await User.findOne({
+      _id: req?.userData?.userId,
+    }).exec();
+    if (!currentUser)
+      return res.status(400).json({ message: "Invalide User ID" });
+    const test = await TestEO.find({
+      user: currentUser,
+    })
+      .populate("user")
+      .populate({
+        path: "serie",
+        populate: { path: "eeQuestions" },
+      })
+      .populate({
+        path: "serie",
+        populate: { path: "eoQuestions" },
+      })
+      .populate({
+        path: "serie",
+        populate: { path: "questions" },
+      })
+      .exec();
+    if (test?.length <= 0)
+       res
+        .status(201)
+        .json({ message: `No test found for users ${currentUser.email}`, test: {} });
+    res.status(200).json(test[test?.length - 1]);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 const addEOTest = async (req, res) => {
   console.log("ici");
   try {
@@ -241,4 +275,5 @@ module.exports = {
   updateEOTest,
   getEOTestByUserId,
   getEOTestCurrentUser,
+  getEOLastTestCurrentUser
 };

@@ -166,6 +166,28 @@ const path = require("path");
  *
  */
 
+/**
+ * @swagger
+ * /api/eeTest/tests/user-info/recent:
+ *   get:
+ *      tags:
+ *        - EETests
+ *      summary: Return a current user test information
+ *      description: get current user information test
+ *      responses:
+ *          200:    # status code
+ *              description: Successul Response
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/TestEE'
+ *          404:
+ *              description: no test was not found
+ *
+ */
+
 /** @swagger
  * /api/eeTest/tests/user-info/{id}:
  *   get:
@@ -373,6 +395,12 @@ const path = require("path");
  *           type: string
  *         required: true
  *         description: The test id
+ *      requestBody:
+ *        require: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/TestEE'
  *      responses:
  *          200:    # status code
  *              description: Successul Response
@@ -390,8 +418,15 @@ const path = require("path");
  */
 
 router
+  .route("/tests/user-info/recent")
+  .get(verifyJWT, testController.getEELastTestCurrentUser);
+
+router
   .route("/tests/user-info")
   .get(verifyJWT, testController.getEETestCurrentUser);
+
+
+
 router
   .route(`/tests/user-info/:id`)
   .get(verifyJWT, testController.getEETestByUserId);

@@ -157,6 +157,30 @@ const path = require("path");
  *      summary: Return a current user test information
  *      description: get current user information test
  *      responses:
+ *          200:    # status code
+ *              description: Successul Response
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/TestEO'
+ *          404:
+ *              description: no test was found
+ *      security:
+ *          - bearerAuth: []
+ *
+ */
+
+/**
+ * @swagger
+ * /api/eoTest/tests/user-info/recent:
+ *   get:
+ *      tags:
+ *        - EOTests
+ *      summary: Return a current user test information
+ *      description: get current user information test
+ *      responses:
  *       200:
  *         description: test find success
  *       404:
@@ -374,6 +398,12 @@ const path = require("path");
  *           type: string
  *         required: true
  *         description: The test id
+ *      requestBody:
+ *        require: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/TestEO'
  *      responses:
  *          200:    # status code
  *              description: Successul Response
@@ -390,6 +420,9 @@ const path = require("path");
  *
  */
 
+router
+  .route("/tests/user-info/recent")
+  .get(verifyJWT, testEOController.getEOLastTestCurrentUser);
 router
   .route("/tests/user-info")
   .get(verifyJWT, testEOController.getEOTestCurrentUser);

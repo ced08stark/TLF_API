@@ -155,6 +155,41 @@ const getEETestCurrentUser = async (req, res) => {
   }
 };
 
+
+const getEELastTestCurrentUser = async (req, res) => {
+  try {
+    const currentUser = await User.findOne({
+      _id: req?.userData?.userId,
+    }).exec();
+    if (!currentUser)
+      return res.status(400).json({ message: "Invalide User ID" });
+    const test = await TestEE.find({
+      user: currentUser,
+    })
+      .populate("user")
+      .populate({
+        path: "serie",
+        populate: { path: "eeQuestions" },
+      })
+      .populate({
+        path: "serie",
+        populate: { path: "eoQuestions" },
+      })
+      .populate({
+        path: "serie",
+        populate: { path: "questions" },
+      })
+      .exec();
+    if (test?.length <= 0)
+      res
+        .status(201)
+        .json({ message: `No test found for users ${currentUser.email}`, test: {} });
+    res.status(200).json(test[test.length-1]);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 const addEETest = async (req, res) => {
   
   try {
@@ -198,7 +233,7 @@ const updateEETest = async (req, res) => {
       isView: req?.body?.isView,
       status: req?.body?.status,
     });
-    const result = await TestEE.findByIdAndUpdate(id, testUpdate, { new: true });
+    const result = await TestEE.findByIdAndUpdate(id, testUpdate);
     res.status(201).json(result);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -236,4 +271,5 @@ module.exports = {
   updateEETest,
   getEETestByUserId,
   getEETestCurrentUser,
+  getEELastTestCurrentUser
 };

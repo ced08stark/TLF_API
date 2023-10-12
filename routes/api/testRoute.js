@@ -347,6 +347,12 @@ const path = require("path");
  *           type: string
  *         required: true
  *         description: The test id
+ *      requestBody:
+ *        require: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Test'
  *      responses: 
  *          200:    # status code
  *              description: Successul Response

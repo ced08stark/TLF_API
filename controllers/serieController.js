@@ -44,6 +44,26 @@ const getSerie = async (req, res) => {
 };
 
 
+const getSerie100 = async (req, res) => {
+  try {
+    const serie = await Serie.findOne({
+      libelle: '100',
+    })
+      .populate("questions")
+      .populate("eeQuestions")
+      .populate("eoQuestions")
+      .exec();
+    if (!serie)
+      return res
+        .status(404)
+        .json({ message: `No Serie match id ${req.params.id}` });
+    res.status(200).json(serie);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+
 const addSerie = async (req, res) => {
   try {
     const currentUser = await User.findOne({ _id: req.userData.userId }).exec();
@@ -110,6 +130,7 @@ const deleteSerie = async (req, res) => {
 module.exports = {
   getSerie,
   getSeries,
+  getSerie100,
   addSerie,
   deleteSerie,
   updateSerie

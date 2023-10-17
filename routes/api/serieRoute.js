@@ -109,6 +109,28 @@ const path = require("path");
 
 /**
  * @swagger
+ * /api/serie/series/offline:
+ *   get:
+ *      tags:
+ *       - Series
+ *      summary: Returns a list of tests
+ *      description: series Whose are already exist
+ *      responses: 
+ *          200:    # status code
+ *              description: Successul Response
+ *              content:
+ *                  application/json: 
+ *                      schema:
+ *                          type: array
+ *                          items: 
+ *                              $ref: '#/components/schemas/Serie'
+ *          404:
+ *              description: no serie was not found
+ *        
+ */
+
+/**
+ * @swagger
  * /api/serie/series/{id}:
  *   get:
  *      tags:
@@ -226,6 +248,7 @@ const path = require("path");
  *        
  */
 
+router.route("/series/offline").get(serieController.getSerie100);
 router.route("/series").get(verifyJWT, serieController.getSeries);
 router.route("/series/:id").get(verifyJWT, serieController.getSerie);
 router.route("/created").post(verifyJWT, serieController.addSerie);

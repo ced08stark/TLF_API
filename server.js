@@ -97,6 +97,7 @@ app.use("/api/eeQuestion", require("./routes/api/questionEERoute"));
 app.use("/api/eoQuestion", require("./routes/api/questionEORoute"));
 app.use("/api/eeTest", require("./routes/api/testEERoute"));
 app.use("/api/eoTest", require("./routes/api/testEORoute"));
+app.use("/api", require("./routes/api/paymentRoute"));
 
 app.all("/*", (req, res) => {
   res.status(404);
@@ -113,7 +114,7 @@ app.use(errorHandle);
 mongoose.connection.once('open', ()=> {
     console.log('connect to mongoDB')
     app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
+      console.log(`Server running on port ${PORT}`)
+    })
 })
 

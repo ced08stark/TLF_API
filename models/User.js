@@ -21,6 +21,7 @@ const userSchema = new Schema({
   pays: {
     type: String,
     require: true,
+    default: 'Cameroun'
   },
   remain: {
     type: Date,

@@ -106,6 +106,37 @@ const getCurrentUser = async (req, res) => {
   }
 };
 
+const setIsOnline = async (req, res) => {
+    const id = req.params.id;
+    console.log("update");
+    try {
+      const currentUser = await User.findOne({
+        _id: req?.userData?.userId,
+      }).exec();
+      if (!currentUser)
+        return res.status(400).json({ message: "Invalide User ID" });
+      const newUser = new User({
+        _id: id,
+        email: currentUser.email,
+        password: currentUser.password,
+        role: currentUser.role,
+        phone: currentUser.phone,
+        pays: currentUser.pays,
+        isOnline: false,
+        remain: currentUser.remain,
+      });
+      console.log(newUser);
+      const result = await User.findByIdAndUpdate(id, newUser, {
+        new: true, // Retourne l'utilisateur mis à jour
+      });
+      res
+        .status(201)
+        .json({ Success: `user ${newUser?.email} disconnect success`, result });
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+}
+
 const updateUser = async (req, res) => {
   const id = req.params.id;
   console.log('update')
@@ -122,6 +153,7 @@ const updateUser = async (req, res) => {
       role: req.body.role,
       phone: req.body.phone,
       pays: req.body.pays,
+      isOnline: req.body.isOnline,
       remain: req.body.remain,
     });
     console.log(newUser)
@@ -148,4 +180,5 @@ module.exports = {
   getCurrentUser,
   updateUser,
   checkRemain,
+  setIsOnline
 };

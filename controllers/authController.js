@@ -16,20 +16,37 @@ const handleLogin = async(req, res)=>{
         console.log(foundUser)
     const match = await bcrypt.compare(password, foundUser.password)
     if(match){
-        jwt.sign(
-          {
+      if(foundUser.isOnline == false){
+          const newUser = new User({
+            _id: id,
             email: foundUser.email,
-            userId: foundUser.id,
-          },
-          process.env.ACCESS_TOKEN,
-           function (error, token) {
-            res.status(200).json({
-              message: "Authentication successful",
-              role: foundUser.role,
-              token,
-            });
-          }
-        );
+            password: foundUser.password,
+            role: foundUser.role,
+            phone: foundUser.phone,
+            pays: foundUser.pays,
+            isOnline: true,
+            remain: foundUser.remain,
+          });
+          const result = await User.findByIdAndUpdate(id, newUser, {
+            new: true, // Retourne l'utilisateur mis à jour
+          });
+          jwt.sign(
+            {
+              email: foundUser.email,
+              userId: foundUser.id,
+            },
+            process.env.ACCESS_TOKEN,
+            function (error, token) {
+              res.status(200).json({
+                message: "Authentication successful",
+                role: foundUser.role,
+                isOnline: foundUser.isOnline,
+                token,
+              });
+            }
+          );
+      }
+        
     }
     else{
       res.status(401).json({

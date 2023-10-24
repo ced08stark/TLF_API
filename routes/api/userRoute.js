@@ -148,6 +148,31 @@ const path = require("path");
 
 /**
  * @swagger
+ * /api/user/disconnect/{id}:
+ *   patch:
+ *      tags:
+ *        - Users
+ *      summary: delete user by id
+ *      description: delete user whose id specify
+ *      parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The user id
+ *      responses:
+ *       201:
+ *         description: The user was disconnect
+ *       404:
+ *         description: The user was not found
+ *      security:
+ *          - bearerAuth: []
+ *        
+ */
+
+/**
+ * @swagger
  * /api/user/users/{id}:
  *   patch:
  *      tags:
@@ -196,6 +221,9 @@ const path = require("path");
  *        
  */
 router.route("/check-subscrire").get(verifyJWT, userController.checkRemain);
+router
+  .route("/users/disconnect/:id")
+  .patch(verifyJWT, userController.setIsOnline);
 router.route("/users/user-info").get(verifyJWT, userController.getCurrentUser);
 router.route("/users").get(verifyJWT, userController.getUsers);
 router.route("/users/:id").get(verifyJWT, userController.getUser);

@@ -107,16 +107,15 @@ const getCurrentUser = async (req, res) => {
 };
 
 const setIsOnline = async (req, res) => {
-    const id = req.params.id;
-    console.log("update");
     try {
       const currentUser = await User.findOne({
         _id: req?.userData?.userId,
       }).exec();
+      //console.log(currentUser)
       if (!currentUser)
         return res.status(400).json({ message: "Invalide User ID" });
       const newUser = new User({
-        _id: id,
+        _id: currentUser._id,
         email: currentUser.email,
         password: currentUser.password,
         role: currentUser.role,
@@ -125,13 +124,13 @@ const setIsOnline = async (req, res) => {
         isOnline: false,
         remain: currentUser.remain,
       });
-      console.log(newUser);
-      const result = await User.findByIdAndUpdate(id, newUser, {
+      //console.log(newUser);
+      const result = await User.findByIdAndUpdate(currentUser._id, newUser, {
         new: true, // Retourne l'utilisateur mis à jour
       });
       res
         .status(201)
-        .json({ Success: `user ${newUser?.email} disconnect success`, result });
+        .json({ Success: `user ${newUser?.email} is disconnect` })
     } catch (err) {
       res.status(500).json({ message: err.message });
     }

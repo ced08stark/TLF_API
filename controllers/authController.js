@@ -4,47 +4,58 @@ const jwt = require("jsonwebtoken");
 
 
 const handleLogin = async(req, res)=>{
+  console.log("ici");
     const { email, password } = req.body;
     const hashedPwd = await bcrypt.hash(password, 10);
     try{
+      
         if (!email || !password)
             return res
             .status(400)
             .json({ message: "Username and password are require" });
         const foundUser = await User.findOne({email: email})
         if(!foundUser) return res.status(401).json({'message': 'unauthorized'})//unauthorized
-        console.log(foundUser)
+       
     const match = await bcrypt.compare(password, foundUser.password)
     if(match){
-      if(foundUser.isOnline == false){
-          const newUser = new User({
-            _id: id,
-            email: foundUser.email,
-            password: foundUser.password,
-            role: foundUser.role,
-            phone: foundUser.phone,
-            pays: foundUser.pays,
-            isOnline: true,
-            remain: foundUser.remain,
-          });
-          const result = await User.findByIdAndUpdate(id, newUser, {
-            new: true, // Retourne l'utilisateur mis à jour
-          });
-          jwt.sign(
-            {
-              email: foundUser.email,
-              userId: foundUser.id,
-            },
-            process.env.ACCESS_TOKEN,
-            function (error, token) {
-              res.status(200).json({
-                message: "Authentication successful",
-                role: foundUser.role,
-                isOnline: foundUser.isOnline,
-                token,
-              });
-            }
-          );
+      if (foundUser.isOnline == false) {
+        const newUser = new User({
+          _id: foundUser._id,
+          email: foundUser.email,
+          password: foundUser.password,
+          role: foundUser.role,
+          phone: foundUser.phone,
+          pays: foundUser.pays,
+          isOnline: true,
+          remain: foundUser.remain,
+        });
+       
+        const result = await User.findByIdAndUpdate(foundUser._id, newUser, {
+          new: true, // Retourne l'utilisateur mis à jour
+        });
+        if(result){
+            jwt.sign(
+              {
+                email: foundUser.email,
+                userId: foundUser.id,
+              },
+              process.env.ACCESS_TOKEN,
+              function (error, token) {
+                res.status(200).json({
+                  message: "Authentication successful",
+                  role: foundUser.role,
+                  isOnline: result.isOnline,
+                  token,
+                });
+              }
+            );
+        }
+        
+      }
+      else{
+        res.status(401).json({
+          message: "this user is also connect",
+        });
       }
         
     }

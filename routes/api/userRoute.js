@@ -15,6 +15,7 @@ const path = require("path");
  *         - password
  *         - phone
  *         - role
+ *         - isOnline
  *         - remain
  *       properties:
  *         id:
@@ -32,6 +33,12 @@ const path = require("path");
  *         role:
  *           type: string
  *           description: The user role
+ *         pays:
+ *           type: string
+ *           desciption: the user country
+ *         isOnline:
+ *           type: boolean
+ *           desciption: the user online
  *         remain:
  *           type: number
  *           description: The user remain
@@ -42,6 +49,7 @@ const path = require("path");
  *         phone: tony123
  *         role: client
  *         pays: cameroun
+ *         isOnline: false
  *         remain: null
  */
 
@@ -148,19 +156,11 @@ const path = require("path");
 
 /**
  * @swagger
- * /api/user/disconnect/{id}:
+ * /api/user/users/disconnect:
  *   patch:
  *      tags:
  *        - Users
- *      summary: delete user by id
- *      description: delete user whose id specify
- *      parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: The user id
+ *      description: get current user information
  *      responses:
  *       201:
  *         description: The user was disconnect
@@ -222,7 +222,7 @@ const path = require("path");
  */
 router.route("/check-subscrire").get(verifyJWT, userController.checkRemain);
 router
-  .route("/users/disconnect/:id")
+  .route("/users/disconnect")
   .patch(verifyJWT, userController.setIsOnline);
 router.route("/users/user-info").get(verifyJWT, userController.getCurrentUser);
 router.route("/users").get(verifyJWT, userController.getUsers);

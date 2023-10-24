@@ -130,7 +130,7 @@ const setIsOnline = async (req, res) => {
       });
       res
         .status(201)
-        .json({ Success: `user ${newUser?.email} is disconnect` })
+        .json({ Success: `user ${newUser?.email} is disOnline` })
     } catch (err) {
       res.status(500).json({ message: err.message });
     }

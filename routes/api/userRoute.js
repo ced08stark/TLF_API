@@ -156,7 +156,7 @@ const path = require("path");
 
 /**
  * @swagger
- * /api/user/users/disconnect:
+ * /api/user/users/disOnline:
  *   patch:
  *      tags:
  *        - Users
@@ -221,9 +221,7 @@ const path = require("path");
  *        
  */
 router.route("/check-subscrire").get(verifyJWT, userController.checkRemain);
-router
-  .route("/users/disconnect")
-  .patch(verifyJWT, userController.setIsOnline);
+router.route("/users/disOnline").patch(verifyJWT, userController.setIsOnline);
 router.route("/users/user-info").get(verifyJWT, userController.getCurrentUser);
 router.route("/users").get(verifyJWT, userController.getUsers);
 router.route("/users/:id").get(verifyJWT, userController.getUser);

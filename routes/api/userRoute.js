@@ -154,22 +154,6 @@ const path = require("path");
  *        
  */
 
-/**
- * @swagger
- * /api/user/users/disOnline:
- *   patch:
- *      tags:
- *        - Users
- *      description: get current user information
- *      responses:
- *       201:
- *         description: The user was disconnect
- *       404:
- *         description: The user was not found
- *      security:
- *          - bearerAuth: []
- *        
- */
 
 /**
  * @swagger
@@ -220,8 +204,8 @@ const path = require("path");
  *          - bearerAuth: []
  *        
  */
+
 router.route("/check-subscrire").get(verifyJWT, userController.checkRemain);
-router.route("/users/disOnline").patch(verifyJWT, userController.setIsOnline);
 router.route("/users/user-info").get(verifyJWT, userController.getCurrentUser);
 router.route("/users").get(verifyJWT, userController.getUsers);
 router.route("/users/:id").get(verifyJWT, userController.getUser);

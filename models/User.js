@@ -27,10 +27,9 @@ const userSchema = new Schema({
     type: Date,
     require: false,
   },
-  isOnline: {
-    type: Boolean,
-    require: true,
-    default: false
+  userToken: {
+    type: String,
+    require: false,
   },
   createdAt: {
     type: Date,

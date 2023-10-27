@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 
-const handleLogin = async(req, res)=>{
+const handleLogin = async (req, res)=>{
   console.log("ici");
     const { email, password } = req.body;
     const hashedPwd = await bcrypt.hash(password, 10);
@@ -16,47 +16,42 @@ const handleLogin = async(req, res)=>{
         const foundUser = await User.findOne({email: email})
         if(!foundUser) return res.status(401).json({'message': 'unauthorized'})//unauthorized
        
-    const match = await bcrypt.compare(password, foundUser.password)
-    if(match){
-      if (foundUser.isOnline == false) {
-        const newUser = new User({
-          _id: foundUser._id,
-          email: foundUser.email,
-          password: foundUser.password,
-          role: foundUser.role,
-          phone: foundUser.phone,
-          pays: foundUser.pays,
-          isOnline: true,
-          remain: foundUser.remain,
-        });
-       
-        const result = await User.findByIdAndUpdate(foundUser._id, newUser, {
-          new: true, // Retourne l'utilisateur mis à jour
-        });
-        if(result){
-            jwt.sign(
-              {
-                email: foundUser.email,
-                userId: foundUser.id,
-              },
-              process.env.ACCESS_TOKEN,
-              function (error, token) {
-                res.status(200).json({
-                  message: "Authentication successful",
-                  role: foundUser.role,
-                  isOnline: result.isOnline,
-                  token,
-                });
+                const match = await bcrypt.compare(password, foundUser.password)
+                if(match){
+                        jwt.sign(
+                          {
+                            email: foundUser.email,
+                            userId: foundUser.id,
+                          },
+                          process.env.ACCESS_TOKEN,
+                          {expiresIn: '1d'},
+                        async function (error, token) {
+                            const newUser = new User({
+                            _id: foundUser.id,
+                            email: foundUser.email,
+                            password: foundUser.password,
+                            role: foundUser.role,
+                            phone: foundUser.phone,
+                            pays: foundUser.pays,
+                            userToken: token,
+                            remain: foundUser.remain
+                          });
+                          console.log(newUser)
+                          const result = await User.findByIdAndUpdate(foundUser.id, newUser, {
+                            new: true, // Retourne l'utilisateur mis à jour
+                          });
+                          if(result){
+                            res.status(200).json({
+                            message: "Authentication successful",
+                            role: foundUser.role,
+                            token
+                          });
+                    }    
               }
             );
-        }
         
-      }
-      else{
-        res.status(401).json({
-          message: "this user is also connect",
-        });
-      }
+        
+     
         
     }
     else{
@@ -70,6 +65,7 @@ const handleLogin = async(req, res)=>{
     }
     
 }
+
 
 const handleLogout = async (req, res) => {
   const cookies = req.cookies;

@@ -70,9 +70,7 @@ app.use(cookieParser());
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 app.use(cors(corsOption));
 app.use(express.urlencoded({ extended: false }));
-
 app.use(express.json());
-
 
 
 

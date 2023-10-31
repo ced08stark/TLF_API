@@ -5,7 +5,7 @@ const paiementSchema = new Schema({
   montant: {
     type: Number,
     require: true,
-    enum: [5000, 8000, 14950, 24950],
+    enum: [200, 5000, 8000, 14950, 24950],
   },
   reference: {
     type: String,

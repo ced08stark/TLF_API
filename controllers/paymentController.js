@@ -24,7 +24,7 @@ const initPayments = async(req, res) =>{
         reference: req.body.reference,
         phone: req.body.phone,
       };
-      if(parseInt(req.body.amount) == 500 || parseInt(req.body.amount) == 8000 || parseInt(req.body.amount) == 14950 || parseInt(req.body.amount) == 24950){
+      if(parseInt(req.body.amount) == 200 || parseInt(req.body.amount) == 5000 || parseInt(req.body.amount) == 8000 || parseInt(req.body.amount) == 14950 || parseInt(req.body.amount) == 24950){
           const response = await axios.post(
             "https://api.notchpay.co/payments/initialize",
             params,
@@ -56,7 +56,8 @@ const initPayments = async(req, res) =>{
             if(responseComplete){
                 const paiement = new Paiement({
                   user: currentUser._id,
-                  montant: parseInt(req.body.amount),
+                  //montant: parseInt(req.body.amount),
+                  montant: 200
                 });
 
                 const responseFinish = await Paiement.create(paiement)
@@ -73,36 +74,38 @@ const initPayments = async(req, res) =>{
                         ? currentUser?.remain +
                           (parseInt(req.body.amount) == 5000
                             ? new Date(
-                                new Date().getTime() + 7 * 24 * 60 * 60 * 1000
+                                new Date().getTime() + 8 * 24 * 60 * 60 * 1000
                               )
-                            : parseInt(req.body.amount) == 8000
+                            : parseInt(req.body.amount) == 8000 ||
+                              parseInt(paiement.montant) == 200
                             ? new Date(
-                                new Date().getTime() + 15 * 24 * 60 * 60 * 1000
+                                new Date().getTime() + 16 * 24 * 60 * 60 * 1000
                               )
                             : parseInt(req.body.amount) == 14950
                             ? new Date(
-                                new Date().getTime() + 30 * 24 * 60 * 60 * 1000
+                                new Date().getTime() + 31 * 24 * 60 * 60 * 1000
                               )
                             : parseInt(req.body.amount) == 24950
                             ? new Date(
-                                new Date().getTime() + 60 * 24 * 60 * 60 * 1000
+                                new Date().getTime() + 61 * 24 * 60 * 60 * 1000
                               )
                             : null)
                         : parseInt(req.body.amount) == 5000
                         ? new Date(
-                            new Date().getTime() + 7 * 24 * 60 * 60 * 1000
+                            new Date().getTime() + 8 * 24 * 60 * 60 * 1000
                           )
-                        : parseInt(req.body.amount) == 8000
+                        : parseInt(req.body.amount) == 8000 ||
+                          parseInt(paiement.montant) == 200
                         ? new Date(
-                            new Date().getTime() + 15 * 24 * 60 * 60 * 1000
+                            new Date().getTime() + 16 * 24 * 60 * 60 * 1000
                           )
                         : parseInt(req.body.amount) == 14950
                         ? new Date(
-                            new Date().getTime() + 30 * 24 * 60 * 60 * 1000
+                            new Date().getTime() + 31 * 24 * 60 * 60 * 1000
                           )
                         : parseInt(req.body.amount) == 24950
                         ? new Date(
-                            new Date().getTime() + 60 * 24 * 60 * 60 * 1000
+                            new Date().getTime() + 61 * 24 * 60 * 60 * 1000
                           )
                         : null,
                   });
@@ -317,7 +320,7 @@ const initCardPayment = async (req, res) => {
                   ? currentUser?.remain +
                     (parseInt(req.body.amount) == 5000
                       ? new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000)
-                      : parseInt(req.body.amount) == 8000
+                      : (parseInt(req.body.amount) == 8000)
                       ? new Date(
                           new Date().getTime() + 15 * 24 * 60 * 60 * 1000
                         )

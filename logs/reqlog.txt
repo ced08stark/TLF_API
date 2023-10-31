@@ -1680,3 +1680,10 @@
 20231029	15:38:14	0fa8534b-3a9e-4e65-98cf-aabb89f313c9	GET	undefined	/api-docs/swagger-ui-standalone-preset.js
 20231029	15:38:14	581129ef-c32f-49bd-9068-7d15861d8029	GET	undefined	/api-docs/swagger-ui-init.js
 20231029	15:38:14	f286fbfd-5376-4e53-874d-e48c766b0411	GET	undefined	/api-docs/swagger-ui.css
+20231031	13:17:20	08312086-c71c-4102-ae7f-ba2609c515cb	GET	undefined	/api-docs/
+20231031	13:17:20	4e21453a-79e5-494d-8204-ba5a8c097192	GET	undefined	/api-docs/swagger-ui.css
+20231031	13:17:20	bc2314ff-a2f7-4a56-8983-ad7335a22e40	GET	undefined	/api-docs/swagger-ui-init.js
+20231031	13:17:21	82473834-07a2-460c-b91e-c5c377922d30	GET	undefined	/api-docs/swagger-ui-bundle.js
+20231031	13:17:21	dfc5c1ca-6edb-4aa3-a69e-1c255c946521	GET	undefined	/api-docs/swagger-ui-standalone-preset.js
+20231031	13:18:01	55e6181d-bc54-4b3f-9555-97c30b7fea98	POST	http://localhost:3500	/api/auth/login
+20231031	13:20:20	753d4f01-93a1-4bbe-9763-c112e2cf1b3a	POST	http://localhost:3500	/api/payments/initialize

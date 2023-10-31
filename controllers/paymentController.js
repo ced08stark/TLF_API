@@ -18,7 +18,7 @@ const initPayments = async(req, res) =>{
         return res.status(400).json({ message: "Invalide User ID" });
       const params = {
         email: currentUser.email,
-        amount: req.body.amount,
+        amount: 200,
         currency: req.body.currency,
         description: req.body.description,
         reference: req.body.reference,

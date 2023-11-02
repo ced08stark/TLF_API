@@ -1,6 +1,168 @@
 const {User} = require("../models/User");
+const { OTP } = require("../models/OTP");
+const generateOTP = require('./../middlewares/generateOTP')
+const sendEmail = require('./../middlewares/sendMail')
+const { UserVerification } = require("../models/UserVerification");
+
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const nodemailer = require('nodemailer')
+const {v4: uuidv4} = require('uuid');
+const { hashData, verifyHashedData } = require("../middlewares/hashedData");
+
+//mailer send
+// let transport = nodemailer.createTransport({
+//   service: 'gmail',
+//   auth: {
+//     user: '',
+//     pass: ''
+//   }
+// })
+
+// transport.verify((error, success)=>{
+//   if(error){
+//     console.log(error)
+//   }
+//   else{
+//     console.log('ready to message')
+//     console.log(success)
+//   }
+// })
+
+// const sendVerificationEmail = ({_id, email}, res)=>{
+//   const currentUrl = 'http://localhost:3500'
+
+//   const uniqueString = uuidv4() + _id;
+//   const mailOptions = {
+//     from: "",
+//     to: email,
+//     subject: "verify your mail",
+//     html: `<p>verify your email address to complete de signup and login into your account</p><p>this link <b>expire in 6 hours</b></p><p>Press <a href=${currentUrl + "user/verify/" + _id + "/" + uniqueString}>here</a> to proceed .</p>`,
+
+//   };
+
+//   const saltRounds = 10;
+//   bcrypt
+//    .hash(uniqueString, saltRounds)
+//    .then((hashedUniqueString) => {
+//       const newVerification = new UserVerification({
+//         userId: _id,
+//         uniqueString: hashedUniqueString,
+//         createdAt: Date.now(),
+//         expireAt: Date.now() + 21600000,
+//       })
+
+//       newVerification.save().then(()=>{
+//         transport.sendMail(mailOptions)
+//         .then(()=>{
+//           res.json({
+//             status: "Pending",
+//             message: "verification email send",
+//           });
+//         })
+//         .catch((error) =>{
+//           console.log(error)
+//           res.json({
+//             status: "Failed",
+//             message: "verification email failed",
+//           });
+//         })
+//       }).catch((error) =>{
+//         console.log(error)
+//       })
+//    })
+//    .catch(()=>{
+//       res.json({
+//         status: "Failed",
+//         message: "Empty credentials supplied while hashing email data",
+//       })
+//    })
+// }
+
+const verifyOTP = async(req, res) =>{
+  
+  try {
+    let { email, otp } = req.body;
+
+     if(!(email && otp)){
+      throw Error("Provider values for email, otp");
+    }
+
+    const matchedOTPRecord = await OTP.findOne({
+      email
+    }) 
+
+    if(!matchedOTPRecord){
+      throw Error('No otp reords found')
+    }
+    const {expiresAt} = matchedOTPRecord;
+
+    if(expiresAt < Date.now()){
+        await OTP.deleteOne({email});
+        throw Error('code has expired. request for a new one')
+    }
+
+    const hashedOTP = matchedOTPRecord.otp
+    const validOTP = await verifyHashedData(otp, hashedOTP)
+    
+    //const validOTP = await verifyOTP({email, otp})
+    res.status(200).json({valid: validOTP});
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+   
+}
+
+
+const deleteOTP = async (email)=>{
+  try{
+    await OTP.deleteOne({email});
+
+  }
+  catch(error){
+    throw error;
+  }
+}
+
+const sendOTP = async (req, res)=>{
+    try{
+        const {email, subject, message, duration} = req.body;
+        
+        if(!(email && subject && message)){
+          throw Error("provider value for email, subject, message")
+        }
+        await OTP.deleteOne({email});
+
+        const generatedOTP = await generateOTP()
+        const mailOptions = {
+          from: process.env.AUTH_EMAIL,
+          to: email,
+          subject,
+          html: `<p>${message}</p><p style="color:tomato;font-size:25px;letter-spacing:2px;"><b>${generatedOTP}</b></p><p>this code <b>expires in ${duration}  hour(s)</b></p>`,
+        };
+
+        await sendEmail(mailOptions)
+        const hashedOTP = await hashData(generatedOTP)
+        const newOTP = await new OTP({
+          email,
+          otp: hashedOTP,
+          created: Date.now(),
+          expireAt: Date.now() + 3600000 * duration,
+        });
+
+        const createdOTPRecord = await newOTP.save()
+        if (createdOTPRecord){
+          res.status(200).json(createdOTPRecord);
+        }
+        else{
+          res.status(204).json("no content");
+        }
+
+    }
+    catch(error){
+      throw error;
+    }
+}
 
 
 const handleLogin = async (req, res)=>{
@@ -117,4 +279,4 @@ const handleRegister = async (req, res) => {
   }
 };
 
-module.exports = {handleLogin, handleRegister, handleLogout}
+module.exports = { handleLogin, handleRegister, handleLogout, sendOTP, verifyOTP };

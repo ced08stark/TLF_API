@@ -83,6 +83,7 @@ app.use("/uploads/image", express.static("uploads/images"));
 app.use("/uploads/autre", express.static("uploads/autres"));
 app.use("/uploads/audio", express.static("uploads/audios"));
 app.use("/api/auth", require("./routes/api/authRoute"));
+app.use("/api/otp", require("./routes/api/otpRoute"));
 
 
 //app.use(verifyJWT);

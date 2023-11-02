@@ -56,8 +56,7 @@ const initPayments = async(req, res) =>{
             if(responseComplete){
                 const paiement = new Paiement({
                   user: currentUser._id,
-                  //montant: parseInt(req.body.amount),
-                  montant: 200
+                  montant: parseInt(req.body.amount),
                 });
 
                 const responseFinish = await Paiement.create(paiement)

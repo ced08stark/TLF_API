@@ -113,6 +113,100 @@ const verifyOTP = async(req, res) =>{
    
 }
 
+const resetUserPassword = async(req, res)=>{
+
+  try{
+    const {email, newPassword, otp} = req.body
+      //verify otp
+      if (!(email && otp)) {
+        throw Error("Provider values for email, otp");
+      }
+
+      const matchedOTPRecord = await OTP.findOne({
+        email,
+      });
+
+      if (!matchedOTPRecord) {
+        throw Error("No otp reords found");
+      }
+      const { expiresAt } = matchedOTPRecord;
+
+      if (expiresAt < Date.now()) {
+        await OTP.deleteOne({ email });
+        throw Error("code has expired. request for a new one");
+      }
+
+      const hashedOTP = matchedOTPRecord.otp;
+      const validOTP = await verifyHashedData(otp, hashedOTP);
+
+      if(!validOTP){
+        throw Error("invalide code passed, check your inbox")
+      }
+
+       if (newPassword.length < 8) {
+         throw Error("password is too short");
+       }
+       const hashedNewPassword = await hashData(newPassword)
+       await User.updateOne({ email }, { password: hashedNewPassword });
+
+       await OTP.deleteOne({ email });
+         //const validOTP = await verifyOTP({email, otp}
+      res.status(200).json({email, passwordReset: true})
+  }
+  catch(error){
+      res.status(400).send(error.message)
+  }
+
+}
+
+const sendPasswordResetOtpEmail = async(req, res)=>{
+  
+  try{
+    const { email } = req.body;
+    const existingUser = await User.findOne({email});
+    if(!existingUser){
+        throw Error('There\'s not account for the provider email')
+    }
+
+    await OTP.deleteOne({ email });
+
+    const generatedOTP = await generateOTP();
+    const otpDetails = {
+      email,
+      subject: 'password reset',
+      message: 'Enter the code below to reset your password',
+      duration: 1
+    }
+
+    const mailOptions = {
+      from: process.env.AUTH_EMAIL,
+      to: otpDetails.email,
+      subject: otpDetails.subject,
+      html: `<p>${otpDetails.message}</p><p style="color:tomato;font-size:25px;letter-spacing:2px;"><b>${generatedOTP}</b></p><p>this code <b>expires in ${otpDetails.duration}  hour(s)</b></p>`,
+    };
+
+    await sendEmail(mailOptions);
+    const hashedOTP = await hashData(generatedOTP);
+
+    const newOTP = await new OTP({
+      email,
+      otp: hashedOTP,
+      created: Date.now(),
+      expireAt: Date.now() + 3600000 * otpDetails.duration,
+    });
+
+    const createdOTPRecord = await newOTP.save();
+    if (createdOTPRecord) {
+      res.status(200).json(createdOTPRecord);
+    } else {
+      res.status(204).json("no content");
+    }
+  }
+  catch(error){
+    res.status(400).json(error.message);
+  }
+}
+
 
 const deleteOTP = async (email)=>{
   try{
@@ -279,4 +373,4 @@ const handleRegister = async (req, res) => {
   }
 };
 
-module.exports = { handleLogin, handleRegister, handleLogout, sendOTP, verifyOTP };
+module.exports = { handleLogin, handleRegister, handleLogout, sendOTP, verifyOTP, sendPasswordResetOtpEmail, resetUserPassword };

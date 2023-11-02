@@ -102,10 +102,44 @@ const verifyJWT = require("../../middlewares/verifyJWT");
  *        
  */
 
+/**
+ * @swagger
+ * /api/auth/reset-password:
+ *   post:
+ *      tags:
+ *        - authentification
+ *      summary: reset user password
+ *      description: reset user password from the application
+ *      requestBody:
+ *        require: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              properties:
+ *                email:
+ *                  type: string
+ *                otp:
+ *                  type: string
+ *                newPassword:
+ *                  type: string
+ *      responses:
+ *       200:
+ *         content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/User'
+ *         description: register success
+ *       404:
+ *         description: register failed
+ *      
+ *        
+ */
+
 router
   .route("/login")
   .post(authController.handleLogin);
 router.get("/logout", authController.handleLogout);
+router.post("/reset-password", authController.resetUserPassword);
 router.route("/register").post(authController.handleRegister);
   
 

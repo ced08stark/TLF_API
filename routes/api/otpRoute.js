@@ -1,7 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-const { sendOTP, verifyOTP } = require('../../controllers/authController')
+const {
+  sendOTP,
+  verifyOTP,
+  sendPasswordResetOtpEmail,
+} = require("../../controllers/authController");
 
 
 /**
@@ -86,11 +90,36 @@ const { sendOTP, verifyOTP } = require('../../controllers/authController')
  *        
  */
 
+/**
+ * @swagger
+ * /api/otp/forgot-password:
+ *   post:
+ *      tags:
+ *        - OTP
+ *      summary: forgot password otp
+ *      description: connect user from the application
+ *      requestBody:
+ *        require: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              properties:
+ *                email:
+ *                  type: string
+ *      responses:
+ *       200:
+ *         description: otp forgot password send
+ *       404:
+ *         description: otp forgot password failed
+ *      
+ *        
+ */
+
 
 
 
 router.post("/verify", verifyOTP);
-
+router.post("/forgot-password", sendPasswordResetOtpEmail);
 router.post('/sendOTP', sendOTP);
 
 module.exports = router;

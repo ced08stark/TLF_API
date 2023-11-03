@@ -53,83 +53,136 @@ const initPayments = async(req, res) =>{
                 },
               }
             );
-            if(responseComplete){
-                const paiement = new Paiement({
-                  user: currentUser._id,
-                  montant: parseInt(req.body.amount),
-                });
 
-                const responseFinish = await Paiement.create(paiement)
-                if(responseFinish){
-                  const newUser = new User({
-                    _id: currentUser?.id,
-                    email: currentUser?.email,
-                    password: currentUser?.password,
-                    role: currentUser?.role,
-                    phone: currentUser?.phone,
-                    pays: currentUser?.pays,
-                    remain:
-                      currentUser?.remain > Date.now()
-                        ? currentUser?.remain +
-                          (parseInt(req.body.amount) == 5000
-                            ? new Date(
-                                new Date().getTime() + 8 * 24 * 60 * 60 * 1000
-                              )
-                            : parseInt(req.body.amount) == 8000 ||
-                              parseInt(paiement.montant) == 200
-                            ? new Date(
-                                new Date().getTime() + 16 * 24 * 60 * 60 * 1000
-                              )
-                            : parseInt(req.body.amount) == 14950
-                            ? new Date(
-                                new Date().getTime() + 31 * 24 * 60 * 60 * 1000
-                              )
-                            : parseInt(req.body.amount) == 24950
-                            ? new Date(
-                                new Date().getTime() + 61 * 24 * 60 * 60 * 1000
-                              )
-                            : null)
-                        : parseInt(req.body.amount) == 5000
-                        ? new Date(
-                            new Date().getTime() + 8 * 24 * 60 * 60 * 1000
-                          )
-                        : parseInt(req.body.amount) == 8000 ||
-                          parseInt(paiement.montant) == 200
-                        ? new Date(
-                            new Date().getTime() + 16 * 24 * 60 * 60 * 1000
-                          )
-                        : parseInt(req.body.amount) == 14950
-                        ? new Date(
-                            new Date().getTime() + 31 * 24 * 60 * 60 * 1000
-                          )
-                        : parseInt(req.body.amount) == 24950
-                        ? new Date(
-                            new Date().getTime() + 61 * 24 * 60 * 60 * 1000
-                          )
-                        : null,
-                  });
-                  console.log(newUser);
-                  const result = await User.findByIdAndUpdate(
-                    currentUser?.id,
-                    newUser,
-                    {
-                      new: true, // Retourne l'utilisateur mis à jour
-                    }
-                  );
-                  res.status(201).json({message: 'paiement success', result});
-                }
+            if(responseComplete){
+              res.status(201).json({ message: "paiement initialiser avec success", result: responseComplete.data});
             }
+            else{
+              res.status(400).json({ message: "your account don\'t have amount necessery !!!" });
+            }
+          
           }
           
       }
       else{
-        res.status(404).json({message: 'this amout don\'t exist !!!'});
+        res.status(404).json({message: 'this amout don\'t exist for susbription !!!'});
       }
   } catch (error) {
     console.error(error);
     res.status(500).json({message: "An error occurred"});
   }
 }
+
+const activeAccount = async (req, res) => {
+  try{
+    const ref = req.body.reference
+    const currentUser = await User.findOne({
+      _id: req.userData.userId,
+    }).exec();
+    
+          const response = await axios.get(
+            `https://api.notchpay.co/payments/${ref}`,
+            {
+              headers: {
+                Authorization: process.env.PAYMENT_KEY,
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          console.log(response.data.transaction.status)
+
+          if(response){
+                 if (response.data.transaction.status == "complete") {
+                   const paiement = new Paiement({
+                     user: currentUser._id,
+                     montant: parseInt(req.body.amount),
+                   });
+
+                   const responseFinish = await Paiement.create(paiement);
+                   if (responseFinish) {
+                     const newUser = new User({
+                       _id: currentUser?.id,
+                       email: currentUser?.email,
+                       password: currentUser?.password,
+                       role: currentUser?.role,
+                       phone: currentUser?.phone,
+                       pays: currentUser?.pays,
+                       remain:
+                         currentUser?.remain > Date.now()
+                           ? currentUser?.remain +
+                             (parseInt(req.body.amount) == 5000
+                               ? new Date(
+                                   new Date().getTime() +
+                                     8 * 24 * 60 * 60 * 1000
+                                 )
+                               : parseInt(req.body.amount) == 8000 ||
+                                 parseInt(paiement.montant) == 200
+                               ? new Date(
+                                   new Date().getTime() +
+                                     16 * 24 * 60 * 60 * 1000
+                                 )
+                               : parseInt(req.body.amount) == 14950
+                               ? new Date(
+                                   new Date().getTime() +
+                                     31 * 24 * 60 * 60 * 1000
+                                 )
+                               : parseInt(req.body.amount) == 24950
+                               ? new Date(
+                                   new Date().getTime() +
+                                     61 * 24 * 60 * 60 * 1000
+                                 )
+                               : null)
+                           : parseInt(req.body.amount) == 5000
+                           ? new Date(
+                               new Date().getTime() + 8 * 24 * 60 * 60 * 1000
+                             )
+                           : parseInt(req.body.amount) == 8000 ||
+                             parseInt(paiement.montant) == 200
+                           ? new Date(
+                               new Date().getTime() + 16 * 24 * 60 * 60 * 1000
+                             )
+                           : parseInt(req.body.amount) == 14950
+                           ? new Date(
+                               new Date().getTime() + 31 * 24 * 60 * 60 * 1000
+                             )
+                           : parseInt(req.body.amount) == 24950
+                           ? new Date(
+                               new Date().getTime() + 61 * 24 * 60 * 60 * 1000
+                             )
+                           : null,
+                     });
+
+                     const result = await User.findByIdAndUpdate(
+                       currentUser?.id,
+                       newUser,
+                       {
+                         new: true, // Retourne l'utilisateur mis à jour
+                       }
+                     );
+                     res
+                       .status(201)
+                       .json({ message: "subscription succefful", result });
+                   }
+                 } else if (response.data.transaction.status == "pending") {
+                   res
+                     .status(400)
+                     .json({ message: "this paiement is pending" });
+                 } else {
+                   res.status(400).json({ message: "this paiement is failed" });
+                 }
+          }
+          else{
+            res.status(400).json({ message: "this reference don't exist" });
+          }
+
+       
+         
+    }
+  
+  catch(error){
+      res.status(500).json({ message: "An error occurred" });
+  }
+};
 
 
 
@@ -183,58 +236,16 @@ const initPaypalPayment = async (req, res) => {
           }
         );
         if (responseComplete) {
-          const paiement = new Paiement({
-            user: currentUser._id,
-            montant: parseInt(req.body.amount),
-          });
-
-          const responseFinish = await Paiement.create(paiement);
-          if (responseFinish) {
-            const newUser = new User({
-              _id: currentUser?.id,
-              email: currentUser?.email,
-              password: currentUser?.password,
-              role: currentUser?.role,
-              phone: currentUser?.phone,
-              pays: currentUser?.pays,
-              remain:
-                currentUser?.remain > Date.now()
-                  ? currentUser?.remain +
-                    (parseInt(req.body.amount) == 5000
-                      ? new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000)
-                      : parseInt(req.body.amount) == 8000
-                      ? new Date(
-                          new Date().getTime() + 15 * 24 * 60 * 60 * 1000
-                        )
-                      : parseInt(req.body.amount) == 14950
-                      ? new Date(
-                          new Date().getTime() + 30 * 24 * 60 * 60 * 1000
-                        )
-                      : parseInt(req.body.amount) == 24950
-                      ? new Date(
-                          new Date().getTime() + 60 * 24 * 60 * 60 * 1000
-                        )
-                      : null)
-                  : parseInt(req.body.amount) == 5000
-                  ? new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000)
-                  : parseInt(req.body.amount) == 8000
-                  ? new Date(new Date().getTime() + 15 * 24 * 60 * 60 * 1000)
-                  : parseInt(req.body.amount) == 14950
-                  ? new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000)
-                  : parseInt(req.body.amount) == 24950
-                  ? new Date(new Date().getTime() + 60 * 24 * 60 * 60 * 1000)
-                  : null,
+          res
+            .status(201)
+            .json({
+              message: "paiement initialiser avec success",
+              result: responseComplete.data,
             });
-            console.log(newUser);
-            const result = await User.findByIdAndUpdate(
-              currentUser?.id,
-              newUser,
-              {
-                new: true, // Retourne l'utilisateur mis à jour
-              }
-            );
-            res.status(201).json({ message: "paiement success", result });
-          }
+        } else {
+          res
+            .status(400)
+            .json({ message: "your account don't have amount necessery !!!" });
         }
       }
     } else {
@@ -299,60 +310,18 @@ const initCardPayment = async (req, res) => {
             },
           }
         );
-        if (responseComplete) {
-          const paiement = new Paiement({
-            user: currentUser._id,
-            montant: parseInt(req.body.amount),
-          });
-
-          const responseFinish = await Paiement.create(paiement);
-          if (responseFinish) {
-            const newUser = new User({
-              _id: currentUser?.id,
-              email: currentUser?.email,
-              password: currentUser?.password,
-              role: currentUser?.role,
-              phone: currentUser?.phone,
-              pays: currentUser?.pays,
-              remain:
-                currentUser?.remain > Date.now()
-                  ? currentUser?.remain +
-                    (parseInt(req.body.amount) == 5000
-                      ? new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000)
-                      : (parseInt(req.body.amount) == 8000)
-                      ? new Date(
-                          new Date().getTime() + 15 * 24 * 60 * 60 * 1000
-                        )
-                      : parseInt(req.body.amount) == 14950
-                      ? new Date(
-                          new Date().getTime() + 30 * 24 * 60 * 60 * 1000
-                        )
-                      : parseInt(req.body.amount) == 24950
-                      ? new Date(
-                          new Date().getTime() + 60 * 24 * 60 * 60 * 1000
-                        )
-                      : null)
-                  : parseInt(req.body.amount) == 5000
-                  ? new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000)
-                  : parseInt(req.body.amount) == 8000
-                  ? new Date(new Date().getTime() + 15 * 24 * 60 * 60 * 1000)
-                  : parseInt(req.body.amount) == 14950
-                  ? new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000)
-                  : parseInt(req.body.amount) == 24950
-                  ? new Date(new Date().getTime() + 60 * 24 * 60 * 60 * 1000)
-                  : null,
-            });
-            console.log(newUser);
-            const result = await User.findByIdAndUpdate(
-              currentUser?.id,
-              newUser,
-              {
-                new: true, // Retourne l'utilisateur mis à jour
-              }
-            );
-            res.status(201).json({ message: "paiement success", result });
-          }
-        }
+       if (responseComplete) {
+         res
+           .status(201)
+           .json({
+             message: "paiement initialiser avec success",
+             result: responseComplete.data,
+           });
+       } else {
+         res
+           .status(400)
+           .json({ message: "your account don't have amount necessery !!!" });
+       }
       }
     } else {
       res.status(404).json({ message: "this amout don't exist !!!" });
@@ -414,5 +383,6 @@ module.exports = {
     checkPayments,
     completePayments,
     initCardPayment,
-    initPaypalPayment
+    initPaypalPayment,
+    activeAccount
 }

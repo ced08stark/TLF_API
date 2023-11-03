@@ -155,6 +155,36 @@ const verifyJWT = require("../../middlewares/verifyJWT");
 
 /**
  * @swagger
+ * /api/payments/subscription:
+ *   post:
+ *      tags:
+ *       - Payments
+ *      summary: active subscription
+ *      description: active subscription from the offer
+ *      requestBody:
+ *        require: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              properties:
+ *                amount:
+ *                  type: string
+ *                reference:
+ *                  type: string
+ *      responses:
+ *       200:
+ *         description: subscription success
+ *       404:
+ *         description: subscription failed
+ *      security:
+ *         - bearerAuth: []
+ *      
+ *        
+ */
+
+
+/**
+ * @swagger
  * /api/payments/initialize:
  *   post:
  *      tags:
@@ -246,6 +276,10 @@ const paymentController = require("../../controllers/paymentController");
 router
   .route("/payments/initialize")
   .post(verifyJWT, paymentController.initPayments);
+
+router
+  .route("/payments/subscription")
+  .post(verifyJWT, paymentController.activeAccount);
 
 router
   .route("/payments/initializeCard")

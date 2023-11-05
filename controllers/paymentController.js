@@ -190,7 +190,8 @@ const activeAccount2 = async (req, res) => {
 const activeAccount = async (req, res) => {
   console.log('webhooks');
   try {
-    console.log('webhook call')
+    console.log(hash)
+    console.log(req.headers["x-notch-signature"]);
     const hash = crypto
       .createHmac("sha256", secret)
       .update(JSON.stringify(req.body))

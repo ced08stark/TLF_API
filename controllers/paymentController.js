@@ -197,7 +197,7 @@ const activeAccount = async (req, res) => {
     ) {
       // Retrieve the request's body
       
-      console.log(req.body);
+     
       if (res.body.event == "payment.complete") {
         const response = await axios.get(
           `https://api.notchpay.co/payments/${req.body.data.reference}`,
@@ -208,7 +208,7 @@ const activeAccount = async (req, res) => {
             },
           }
         );
-
+        console.log(response);
         const currentUser = await User.findOne({
           email: req.body.data.customer.email,
         }).exec();

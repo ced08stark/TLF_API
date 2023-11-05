@@ -198,7 +198,7 @@ const activeAccount = async (req, res) => {
       // Retrieve the request's body
       
      
-      if (res.body.event == "payment.complete") {
+      if (req.body.event == "payment.complete") {
         const response = await axios.get(
           `https://api.notchpay.co/payments/${req.body.data.reference}`,
           {
@@ -280,10 +280,8 @@ const activeAccount = async (req, res) => {
           console.log("reference n\'existe pas");
         }
       } else if (req.body.event == "payment.failed") {
-        res.status(400).json({ message: "this paiement is failed" });
         console.log("transaction failed");
       } else if (req.body.event == "payment.expired") {
-        res.status(400).json({ message: "this paiement is expired" });
         console.log("transaction expired");
       }
       console.log(req.body.data);

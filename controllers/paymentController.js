@@ -269,14 +269,12 @@ const activeAccount = async (req, res) => {
                   new: true, // Retourne l'utilisateur mis à jour
                 }
               );
-              res
-                .status(201)
-                .json({ message: "subscription succefful", result });
+              
             }
             console.log(`utilisateur ${result}`);
           }
         } else {
-          res.status(400).json({ message: "this reference don't exist" });
+         
           console.log("reference n\'existe pas");
         }
       } else if (req.body.event == "payment.failed") {

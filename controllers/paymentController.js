@@ -188,7 +188,7 @@ const activeAccount2 = async (req, res) => {
 
 
 const activeAccount = async (req, res) => {
-
+  console.log('webhooks');
   try {
     console.log('webhook call')
     const hash = crypto

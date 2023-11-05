@@ -1831,3 +1831,9 @@
 20231105	13:12:11	36ec049b-5cb5-468e-941f-53dbab448a5a	POST	http://localhost:3500	/api/payments/initialize
 20231105	13:16:26	70b09db7-704d-43a1-928b-e2ac7db6b54f	POST	http://localhost:3500	/api/payments/initialize
 20231105	13:16:39	1906c630-b971-4e11-a485-b58a7fdd523a	POST	http://localhost:3500	/api/payments/initialize
+20231105	13:51:40	7a0f3f40-1cbf-4c14-a369-b405774ee2c2	GET	undefined	/api/payments/webhook
+20231105	13:52:10	7ec5c211-a102-438c-aa72-3bbbecc2fd8a	GET	undefined	/api/payments/webhoo
+20231105	13:52:41	4d0fc19b-2fbb-4bc6-9fd5-d3998c7d727c	GET	undefined	/api
+20231105	13:52:41	ef623116-d116-4b93-9ccc-b9c3fad7c3ab	GET	undefined	/favicon.ico
+20231105	13:52:46	6b9b726a-b106-4a52-afab-07e86efce55f	GET	undefined	/api/payments/webhook
+20231105	13:55:59	a0e3dc8b-fe1c-49d9-b670-3cd4c5ad47ae	POST	undefined	/api/payments/webhook

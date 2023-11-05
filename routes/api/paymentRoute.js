@@ -278,10 +278,7 @@ router
   .post(verifyJWT, paymentController.initPayments);
 
 
-router
-  .route("/payments/webhook")
-  .post(paymentController.activeAccount);
-
+router.route("/payments/webhooks").post(paymentController.activeAccount);
 
 
 router

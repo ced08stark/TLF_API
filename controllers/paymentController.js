@@ -269,9 +269,9 @@ const activeAccount = async (req, res) => {
                   new: true, // Retourne l'utilisateur mis à jour
                 }
               );
-              
+               console.log(`utilisateur ${result}`);
             }
-            console.log(`utilisateur ${result}`);
+           
           }
         } else {
          

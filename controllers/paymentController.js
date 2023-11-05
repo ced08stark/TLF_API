@@ -196,7 +196,7 @@ const activeAccount = async (req, res) => {
 
     if (hash == req.headers["x-notch-signature"]) {
       // Retrieve the request's body
-      console.log('ici')
+      console.log('ici okay')
       const event = req.body;
       // Do something with event
     }

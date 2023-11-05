@@ -273,10 +273,11 @@ const activeAccount = async (req, res) => {
                 .status(201)
                 .json({ message: "subscription succefful", result });
             }
-            console.log(result);
+            console.log(`utilisateur ${result}`);
           }
         } else {
           res.status(400).json({ message: "this reference don't exist" });
+          console.log("reference n\'existe pas");
         }
       } else if (res.body.event == "payment.failed") {
         res.status(400).json({ message: "this paiement is failed" });

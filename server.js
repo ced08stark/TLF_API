@@ -16,7 +16,7 @@ const swaggerUI = require("swagger-ui-express");
 const swaggerJsdoc = require("swagger-jsdoc");
 //const swaggerJsDocs = YAML.load('./api.yaml')
 
-const PORT = process.env.PORT || 3500;
+const PORT = process.env.PORT || 3500
 
 
 

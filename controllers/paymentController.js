@@ -194,7 +194,7 @@ const activeAccount = async (req, res) => {
     //console.log(secret);
     if (req.headers["x-notch-signature"] == req.headers["x-notch-signature"]) {
       // Retrieve the request's body
-      console.log(res.body);
+      console.log(res);
       if (res.body.event == "payment.complete") {
           const response = await axios.get(
             `https://api.notchpay.co/payments/${res.body.data.transaction.reference}`,

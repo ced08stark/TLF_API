@@ -6,7 +6,7 @@ const { Paiement } = require("../models/Paiement");
 const { User } = require("../models/User");
 const { ObjectId } = require("mongodb");
 const crypto = require("crypto");
-const secret = process.env.PRIVATE_KEY;
+const secret = process.env.SECRET_KEY;
 
 
 const initPayments = async(req, res) =>{
@@ -189,15 +189,10 @@ const activeAccount2 = async (req, res) => {
 
 const activeAccount = async (req, res) => {
   try {
-    const hash = crypto
-      .createHmac("sha256", secret)
-      .update(JSON.stringify(req.body))
-      .digest("hex");
-    console.log(hash)
-    console.log(req.headers["x-notch-signature"]);
     
+    //console.log(req.headers["x-notch-signature"]);
 
-    if (hash == req.headers["x-notch-signature"]) {
+    if (secret == req.headers["x-notch-signature"]) {
       // Retrieve the request's body
       console.log('ici okay')
       const event = req.body;

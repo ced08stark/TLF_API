@@ -194,9 +194,93 @@ const activeAccount = async (req, res) => {
     //console.log(secret);
     if (req.headers["x-notch-signature"] == req.headers["x-notch-signature"]) {
       // Retrieve the request's body
-      console.log("ici okay");
-      const event = res;
-      console.log(event);
+      const event = res.body.event;
+      if (res.body.event == "payment.complete") {
+          const response = await axios.get(
+            `https://api.notchpay.co/payments/${res.body.data.transaction.reference}`,
+            {
+              headers: {
+                Authorization: process.env.PAYMENT_KEY,
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (response) {
+            if (response.data.transaction.status == "complete") {
+              const paiement = new Paiement({
+                user: currentUser._id,
+                montant: parseInt(req.body.amount),
+              });
+
+              const responseFinish = await Paiement.create(paiement);
+              if (responseFinish) {
+                const newUser = new User({
+                  _id: currentUser?.id,
+                  email: currentUser?.email,
+                  password: currentUser?.password,
+                  role: currentUser?.role,
+                  phone: currentUser?.phone,
+                  pays: currentUser?.pays,
+                  remain:
+                    currentUser?.remain > Date.now()
+                      ? currentUser?.remain +
+                        (parseInt(req.body.amount) == 5000
+                          ? new Date(
+                              new Date().getTime() + 8 * 24 * 60 * 60 * 1000
+                            )
+                          : parseInt(req.body.amount) == 8000 ||
+                            parseInt(paiement.montant) == 200
+                          ? new Date(
+                              new Date().getTime() + 16 * 24 * 60 * 60 * 1000
+                            )
+                          : parseInt(req.body.amount) == 14950
+                          ? new Date(
+                              new Date().getTime() + 31 * 24 * 60 * 60 * 1000
+                            )
+                          : parseInt(req.body.amount) == 24950
+                          ? new Date(
+                              new Date().getTime() + 61 * 24 * 60 * 60 * 1000
+                            )
+                          : null)
+                      : parseInt(req.body.amount) == 5000
+                      ? new Date(new Date().getTime() + 8 * 24 * 60 * 60 * 1000)
+                      : parseInt(req.body.amount) == 8000 ||
+                        parseInt(paiement.montant) == 200
+                      ? new Date(
+                          new Date().getTime() + 16 * 24 * 60 * 60 * 1000
+                        )
+                      : parseInt(req.body.amount) == 14950
+                      ? new Date(
+                          new Date().getTime() + 31 * 24 * 60 * 60 * 1000
+                        )
+                      : parseInt(req.body.amount) == 24950
+                      ? new Date(
+                          new Date().getTime() + 61 * 24 * 60 * 60 * 1000
+                        )
+                      : null,
+                });
+
+                const result = await User.findByIdAndUpdate(
+                  currentUser?.id,
+                  newUser,
+                  {
+                    new: true, // Retourne l'utilisateur mis à jour
+                  }
+                );
+                res
+                  .status(201)
+                  .json({ message: "subscription succefful", result });
+              }
+            }
+          } else {
+            res.status(400).json({ message: "this reference don't exist" });
+          }
+      } else if (res.body.event == "payment.failed") {
+        res.status(400).json({ message: "this paiement is failed" });
+      } else if (res.body.event == "payment.expired") {
+        res.status(400).json({ message: "this paiement is expired" });
+      } console.log(event);
       // Do something with event
     }
 

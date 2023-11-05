@@ -192,11 +192,9 @@ const activeAccount = async (req, res) => {
     
     //console.log(req.headers["x-notch-signature"]);
     //console.log(secret);
-    console.log('ici')
     if (req.headers["x-notch-signature"] == req.headers["x-notch-signature"]) {
       // Retrieve the request's body
-      const event = res.body.event;
-      console.log(res.body.data.transaction.reference);
+      console.log(res.body);
       if (res.body.event == "payment.complete") {
           const response = await axios.get(
             `https://api.notchpay.co/payments/${res.body.data.transaction.reference}`,
@@ -208,8 +206,13 @@ const activeAccount = async (req, res) => {
             }
           );
 
+          const currentUser = await User.findOne({
+            email: res.body.data.transaction.customer.email,
+          }).exec();
+
           if (response) {
             if (response.data.transaction.status == "complete") {
+               
               const paiement = new Paiement({
                 user: currentUser._id,
                 montant: parseInt(req.body.amount),

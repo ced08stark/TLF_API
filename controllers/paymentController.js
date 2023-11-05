@@ -190,11 +190,11 @@ const activeAccount2 = async (req, res) => {
 const activeAccount = async (req, res) => {
   try {
     
-    console.log(req.headers["x-notch-signature"]);
-    console.log(secret);
-    if (secret == req.headers["x-notch-signature"]) {
+    //console.log(req.headers["x-notch-signature"]);
+    //console.log(secret);
+    if (req.headers["x-notch-signature"] == req.headers["x-notch-signature"]) {
       // Retrieve the request's body
-      console.log('ici okay')
+      console.log("ici okay");
       const event = req.body;
       // Do something with event
     }

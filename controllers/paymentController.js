@@ -284,9 +284,12 @@ const activeAccount = async (req, res) => {
           }
       } else if (res.body.event == "payment.failed") {
         res.status(400).json({ message: "this paiement is failed" });
+        console.log('transaction failed')
       } else if (res.body.event == "payment.expired") {
         res.status(400).json({ message: "this paiement is expired" });
-      } console.log(event);
+        console.log("transaction expired");
+      } 
+      console.log(res.body.data);
       // Do something with event
     }
 

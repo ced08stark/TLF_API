@@ -195,6 +195,7 @@ const activeAccount = async (req, res) => {
     if (req.headers["x-notch-signature"] == req.headers["x-notch-signature"]) {
       // Retrieve the request's body
       const event = res.body.event;
+      console.log(res.body.data.transaction.reference);
       if (res.body.event == "payment.complete") {
           const response = await axios.get(
             `https://api.notchpay.co/payments/${res.body.data.transaction.reference}`,
@@ -272,6 +273,7 @@ const activeAccount = async (req, res) => {
                   .status(201)
                   .json({ message: "subscription succefful", result });
               }
+              console.log(result)
             }
           } else {
             res.status(400).json({ message: "this reference don't exist" });

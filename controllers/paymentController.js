@@ -6,7 +6,7 @@ const { Paiement } = require("../models/Paiement");
 const { User } = require("../models/User");
 const { ObjectId } = require("mongodb");
 const crypto = require("crypto");
-const secret = process.env.PAYMENT_KEY;
+const secret = process.env.PRIVATE_KEY;
 
 
 const initPayments = async(req, res) =>{
@@ -188,7 +188,6 @@ const activeAccount2 = async (req, res) => {
 
 
 const activeAccount = async (req, res) => {
-  console.log('webhooks');
   try {
     const hash = crypto
       .createHmac("sha256", secret)

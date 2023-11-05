@@ -1820,3 +1820,5 @@
 20231105	12:37:06	ff139088-1501-4771-8e6e-4d559a7641a9	POST	http://localhost:3500	/api/payments/initialize
 20231105	12:38:26	527aa5e6-33bb-4448-9741-5e0928230042	POST	http://localhost:3500	/api/payments/initialize
 20231105	12:42:46	d3ce61e9-ba71-40e2-90e4-0e79e5410dbd	POST	http://localhost:3500	/api/payments/initialize
+20231105	12:50:53	aafa13e2-5d2c-42d4-b5e2-40826457e525	POST	http://localhost:3500	/api/payments/initialize
+20231105	12:52:26	03eb0a98-4eb5-4bc0-bdff-249792ae8d09	POST	http://localhost:3500	/api/payments/initialize

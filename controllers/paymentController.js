@@ -217,7 +217,7 @@ const activeAccount = async (req, res) => {
           if (response.data.transaction.status == "complete") {
             const paiement = new Paiement({
               user: currentUser._id,
-              montant: parseInt(req.body.amount),
+              montant: parseInt(req.body.data.amount),
             });
 
             const responseFinish = await Paiement.create(paiement);
@@ -288,7 +288,7 @@ const activeAccount = async (req, res) => {
       // Do something with event
     }
 
-    res.send(200);
+    console.log('success')
 
     // const response = await axios.get(
     //   `https://api.notchpay.co/payments/${ref}`,

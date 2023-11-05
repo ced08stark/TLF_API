@@ -196,11 +196,11 @@ const activeAccount = async (req, res) => {
       (req.headers["x-notch-signature"] != undefined && req.headers["x-notch-signature"]) == req.headers["x-notch-signature"]
     ) {
       // Retrieve the request's body
-      console.log(res.body);
+      
       console.log(req.body);
       if (res.body.event == "payment.complete") {
         const response = await axios.get(
-          `https://api.notchpay.co/payments/${res.body.data.transaction.reference}`,
+          `https://api.notchpay.co/payments/${req.body.data.reference}`,
           {
             headers: {
               Authorization: process.env.PAYMENT_KEY,
@@ -210,7 +210,7 @@ const activeAccount = async (req, res) => {
         );
 
         const currentUser = await User.findOne({
-          email: res.body.data.transaction.customer.email,
+          email: req.body.data.customer.email,
         }).exec();
 
         if (response) {
@@ -232,32 +232,32 @@ const activeAccount = async (req, res) => {
                 remain:
                   currentUser?.remain > Date.now()
                     ? currentUser?.remain +
-                      (parseInt(req.body.amount) == 5000
+                      (parseInt(req.body.data.amount) == 5000
                         ? new Date(
                             new Date().getTime() + 8 * 24 * 60 * 60 * 1000
                           )
-                        : parseInt(req.body.amount) == 8000 ||
+                        : parseInt(req.body.data.amount) == 8000 ||
                           parseInt(paiement.montant) == 200
                         ? new Date(
                             new Date().getTime() + 16 * 24 * 60 * 60 * 1000
                           )
-                        : parseInt(req.body.amount) == 14950
+                        : parseInt(req.body.data.amount) == 14950
                         ? new Date(
                             new Date().getTime() + 31 * 24 * 60 * 60 * 1000
                           )
-                        : parseInt(req.body.amount) == 24950
+                        : parseInt(req.body.data.amount) == 24950
                         ? new Date(
                             new Date().getTime() + 61 * 24 * 60 * 60 * 1000
                           )
                         : null)
-                    : parseInt(req.body.amount) == 5000
+                    : parseInt(req.body.data.amount) == 5000
                     ? new Date(new Date().getTime() + 8 * 24 * 60 * 60 * 1000)
-                    : parseInt(req.body.amount) == 8000 ||
+                    : parseInt(req.body.data.amount) == 8000 ||
                       parseInt(paiement.montant) == 200
                     ? new Date(new Date().getTime() + 16 * 24 * 60 * 60 * 1000)
-                    : parseInt(req.body.amount) == 14950
+                    : parseInt(req.body.data.amount) == 14950
                     ? new Date(new Date().getTime() + 31 * 24 * 60 * 60 * 1000)
-                    : parseInt(req.body.amount) == 24950
+                    : parseInt(req.body.data.amount) == 24950
                     ? new Date(new Date().getTime() + 61 * 24 * 60 * 60 * 1000)
                     : null,
               });
@@ -279,14 +279,14 @@ const activeAccount = async (req, res) => {
           res.status(400).json({ message: "this reference don't exist" });
           console.log("reference n\'existe pas");
         }
-      } else if (res.body.event == "payment.failed") {
+      } else if (req.body.event == "payment.failed") {
         res.status(400).json({ message: "this paiement is failed" });
         console.log("transaction failed");
-      } else if (res.body.event == "payment.expired") {
+      } else if (req.body.event == "payment.expired") {
         res.status(400).json({ message: "this paiement is expired" });
         console.log("transaction expired");
       }
-      console.log(res.body.data);
+      console.log(req.body.data);
       // Do something with event
     }
 

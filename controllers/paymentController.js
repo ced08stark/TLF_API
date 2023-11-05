@@ -192,6 +192,7 @@ const activeAccount = async (req, res) => {
     
     //console.log(req.headers["x-notch-signature"]);
     //console.log(secret);
+    console.log('ici')
     if (req.headers["x-notch-signature"] == req.headers["x-notch-signature"]) {
       // Retrieve the request's body
       const event = res.body.event;

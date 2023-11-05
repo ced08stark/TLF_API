@@ -5,6 +5,8 @@ app.use(express.json());
 const { Paiement } = require("../models/Paiement");
 const { User } = require("../models/User");
 const { ObjectId } = require("mongodb");
+const crypto = require("crypto");
+const secret = process.env.PAYMENT_KEY;
 
 
 const initPayments = async(req, res) =>{
@@ -73,13 +75,13 @@ const initPayments = async(req, res) =>{
   }
 }
 
-const activeAccount = async (req, res) => {
+const activeAccount2 = async (req, res) => {
   try{
     const ref = req.body.reference
     const currentUser = await User.findOne({
       _id: req.userData.userId,
     }).exec();
-    
+          
           const response = await axios.get(
             `https://api.notchpay.co/payments/${ref}`,
             {
@@ -181,6 +183,98 @@ const activeAccount = async (req, res) => {
   
   catch(error){
       res.status(500).json({ message: "An error occurred" });
+  }
+};
+
+
+const activeAccount = async (req, res) => {
+  try {
+    const hash = crypto
+      .createHmac("sha256", secret)
+      .update(JSON.stringify(req.body))
+      .digest("hex");
+
+    if (hash == req.headers["x-notch-signature"]) {
+      // Retrieve the request's body
+      console.log('ici')
+      const event = req.body;
+      // Do something with event
+    }
+
+    res.send(200);
+
+    // const response = await axios.get(
+    //   `https://api.notchpay.co/payments/${ref}`,
+    //   {
+    //     headers: {
+    //       Authorization: process.env.PAYMENT_KEY,
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
+
+    // console.log(response.data.transaction.status);
+
+    // if (response) {
+    //   if (response.data.transaction.status == "complete") {
+    //     const paiement = new Paiement({
+    //       user: currentUser._id,
+    //       montant: parseInt(req.body.amount),
+    //     });
+
+    //     const responseFinish = await Paiement.create(paiement);
+    //     if (responseFinish) {
+    //       const newUser = new User({
+    //         _id: currentUser?.id,
+    //         email: currentUser?.email,
+    //         password: currentUser?.password,
+    //         role: currentUser?.role,
+    //         phone: currentUser?.phone,
+    //         pays: currentUser?.pays,
+    //         remain:
+    //           currentUser?.remain > Date.now()
+    //             ? currentUser?.remain +
+    //               (parseInt(req.body.amount) == 5000
+    //                 ? new Date(new Date().getTime() + 8 * 24 * 60 * 60 * 1000)
+    //                 : parseInt(req.body.amount) == 8000 ||
+    //                   parseInt(paiement.montant) == 200
+    //                 ? new Date(new Date().getTime() + 16 * 24 * 60 * 60 * 1000)
+    //                 : parseInt(req.body.amount) == 14950
+    //                 ? new Date(new Date().getTime() + 31 * 24 * 60 * 60 * 1000)
+    //                 : parseInt(req.body.amount) == 24950
+    //                 ? new Date(new Date().getTime() + 61 * 24 * 60 * 60 * 1000)
+    //                 : null)
+    //             : parseInt(req.body.amount) == 5000
+    //             ? new Date(new Date().getTime() + 8 * 24 * 60 * 60 * 1000)
+    //             : parseInt(req.body.amount) == 8000 ||
+    //               parseInt(paiement.montant) == 200
+    //             ? new Date(new Date().getTime() + 16 * 24 * 60 * 60 * 1000)
+    //             : parseInt(req.body.amount) == 14950
+    //             ? new Date(new Date().getTime() + 31 * 24 * 60 * 60 * 1000)
+    //             : parseInt(req.body.amount) == 24950
+    //             ? new Date(new Date().getTime() + 61 * 24 * 60 * 60 * 1000)
+    //             : null,
+    //       });
+
+    //       const result = await User.findByIdAndUpdate(
+    //         currentUser?.id,
+    //         newUser,
+    //         {
+    //           new: true, // Retourne l'utilisateur mis à jour
+    //         }
+    //       );
+    //       res.status(201).json({ message: "subscription succefful", result });
+    //     }
+    //   } else if (response.data.transaction.status == "pending") {
+    //     res.status(400).json({ message: "this paiement is pending" });
+    //   } else {
+    //     res.status(400).json({ message: "this paiement is failed" });
+    //   }
+    // } else {
+    //   res.status(400).json({ message: "this reference don't exist" });
+    // }
+  } catch (error) {
+    res.status(500).json({ message: "An error occurred" });
   }
 };
 

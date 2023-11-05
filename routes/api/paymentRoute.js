@@ -277,9 +277,12 @@ router
   .route("/payments/initialize")
   .post(verifyJWT, paymentController.initPayments);
 
+
 router
-  .route("/payments/subscription")
-  .post(verifyJWT, paymentController.activeAccount);
+  .route("/payments/webhook")
+  .post(paymentController.activeAccount);
+
+
 
 router
   .route("/payments/initializeCard")

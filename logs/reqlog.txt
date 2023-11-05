@@ -1807,3 +1807,16 @@
 20231103	21:08:11	13fe0d5d-e07f-48d4-aeaf-85a0a01bf3f7	POST	http://localhost:3500	/api/payments/subscription
 20231103	21:08:38	8e9f6eb3-5960-4e83-93f4-98913a6ec375	POST	http://localhost:3500	/api/payments/subscription
 20231103	21:09:50	2c57cf11-a58d-4293-a241-11f7d26d5405	POST	http://localhost:3500	/api/payments/subscription
+20231105	12:30:54	6e1d32b5-0a3c-498e-9bad-e68c410af550	POST	http://localhost:3500	/api/payments/initialize
+20231105	12:32:42	aa843bdc-9d0e-4a77-bdf7-2e2e6ff0e885	GET	undefined	/api-docs/
+20231105	12:32:42	7c1dacaf-8591-4df9-b0c3-3bb420de6e47	GET	undefined	/api-docs/swagger-ui.css
+20231105	12:32:42	31ee0fc4-7156-4d24-a661-124dd495c2d3	GET	undefined	/api-docs/swagger-ui-standalone-preset.js
+20231105	12:32:42	d360511a-4807-48d5-bce6-dcca86ef27e0	GET	undefined	/api-docs/swagger-ui-init.js
+20231105	12:32:42	1f61ce55-0504-4308-a19c-8e357d696055	GET	undefined	/api-docs/swagger-ui-bundle.js
+20231105	12:32:43	2339801d-6747-4a40-9071-e9c276134ecc	GET	undefined	/api-docs/favicon-16x16.png
+20231105	12:33:07	a2750ac4-1456-4d80-9d72-f126be6302f3	POST	http://localhost:3500	/api/auth/login
+20231105	12:34:43	b53f3aff-0707-44cb-b29a-92d66515e78d	POST	http://localhost:3500	/api/payments/initialize
+20231105	12:36:47	78493a44-5267-4648-881c-8ff41fc608ea	POST	http://localhost:3500	/api/payments/initialize
+20231105	12:37:06	ff139088-1501-4771-8e6e-4d559a7641a9	POST	http://localhost:3500	/api/payments/initialize
+20231105	12:38:26	527aa5e6-33bb-4448-9741-5e0928230042	POST	http://localhost:3500	/api/payments/initialize
+20231105	12:42:46	d3ce61e9-ba71-40e2-90e4-0e79e5410dbd	POST	http://localhost:3500	/api/payments/initialize

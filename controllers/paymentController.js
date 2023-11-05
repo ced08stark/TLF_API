@@ -188,7 +188,9 @@ const activeAccount2 = async (req, res) => {
 
 
 const activeAccount = async (req, res) => {
+
   try {
+    console.log('webhook call')
     const hash = crypto
       .createHmac("sha256", secret)
       .update(JSON.stringify(req.body))

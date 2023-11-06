@@ -189,9 +189,15 @@ const activeAccount2 = async (req, res) => {
 
 const activeAccount = async (req, res) => {
   try {
-    
-    //console.log(req.headers["x-notch-signature"]);
-    //console.log(secret);
+    const hash = crypto
+      .createHmac("sha256", secret)
+      .update(JSON.stringify(req.body))
+      .digest("hex");
+     const isEqual = crypto.timingSafeEqual(
+       hash,
+       req.headers["x-notch-signature"]
+     );
+     console.log(isEqual)
     if (
       (req.headers["x-notch-signature"] != undefined && req.headers["x-notch-signature"]) == req.headers["x-notch-signature"]
     ) {
@@ -282,7 +288,7 @@ const activeAccount = async (req, res) => {
       } else if (req.body.event == "payment.expired") {
         console.log("transaction expired");
       }
-      console.log(req.body.data);
+     
       // Do something with event
     }
 

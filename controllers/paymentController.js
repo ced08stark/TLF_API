@@ -6,7 +6,7 @@ const { Paiement } = require("../models/Paiement");
 const { User } = require("../models/User");
 const { ObjectId } = require("mongodb");
 const crypto = require("crypto");
-const secret = process.env.SECRET_KEY;
+const secret = process.env.PRIVATE_KEY;
 
 
 const initPayments = async(req, res) =>{
@@ -193,11 +193,16 @@ const activeAccount = async (req, res) => {
     .createHmac("sha256", secret)
     .update(JSON.stringify(req.body))
     .digest("hex");
-  const isEqual = crypto.timingSafeEqual(
-    hash,
-    req.headers["x-notch-signature"]
-  );
+  console.log(hash)
+  console.log(req.headers["x-notch-signature"]);
+  
 
+  const buf1 = Buffer.from(hash);
+  const buf2 = Buffer.from(req.headers["x-notch-signature"]);
+  const isEqual = crypto.timingSafeEqual(
+    buf1,
+    buf2
+  );
   console.log(isEqual);
   try {
     

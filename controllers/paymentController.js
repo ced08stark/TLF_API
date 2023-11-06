@@ -188,6 +188,7 @@ const activeAccount2 = async (req, res) => {
 
 
 const activeAccount = async (req, res) => {
+  console.log('webhook')
   try {
     const hash = crypto
       .createHmac("sha256", secret)
@@ -197,6 +198,7 @@ const activeAccount = async (req, res) => {
        hash,
        req.headers["x-notch-signature"]
      );
+
      console.log(isEqual)
     if (
       (req.headers["x-notch-signature"] != undefined && req.headers["x-notch-signature"]) == req.headers["x-notch-signature"]

@@ -196,13 +196,13 @@ const activeAccount = async (req, res) => {
   console.log(req.headers["x-notch-signature"]);
   
 
-  const buf1 = Buffer.from(hash);
+  const buf1 = Buffer.from(hash)
   const buf2 = Buffer.from(req.headers["x-notch-signature"]);
   const isEqual = crypto.timingSafeEqual(
     buf1,
     buf2
   );
-  console.log(isEqual);
+  console.log(isEqual)
   try {
     
     if (

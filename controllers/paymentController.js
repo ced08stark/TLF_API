@@ -189,20 +189,21 @@ const activeAccount2 = async (req, res) => {
 
 const activeAccount = async (req, res) => {
   console.log('webhook')
-  const hash = crypto
-    .createHmac("sha256", secret)
-    .digest("hex");
-  console.log(hash)
-  console.log(req.headers["x-notch-signature"]);
+  // const hash = crypto
+  //   .createHmac("sha256", secret)
+  //   .digest("hex");
+  // console.log(hash)
+  // console.log(req.headers["x-notch-signature"]);
   
 
-  const buf1 = Buffer.from(hash)
-  const buf2 = Buffer.from(req.headers["x-notch-signature"]);
-  const isEqual = crypto.timingSafeEqual(
-    buf1,
-    buf2
-  );
-  console.log(isEqual)
+  // const buf1 = Buffer.from(hash)
+  // const buf2 = Buffer.from(req.headers["x-notch-signature"]);
+  // const isEqual = crypto.timingSafeEqual(
+  //   buf1,
+  //   buf2
+  // );
+  // console.log(isEqual)
+  console.log(req)
   try {
     
     if (

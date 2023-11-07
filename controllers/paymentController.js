@@ -203,7 +203,13 @@ const activeAccount = async (req, res) => {
   //   buf2
   // );
   // console.log(isEqual)
-  console.log(req)
+
+  console.log(req.headers.userAgent);
+  console.log(req.headers.cfIpcountry);
+  console.log(req.headers)
+  //console.log("1699334110555633 1699334110544543 822318cda69105e2-IAD");
+  //console.log("54.87.122.170 54.87.122.170");
+  
   try {
     
     if (

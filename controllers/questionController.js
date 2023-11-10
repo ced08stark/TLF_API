@@ -2,6 +2,8 @@ const {Question} = require("../models/Question");
 const {User} = require("../models/User");
 const { ObjectId } = require("mongodb");
 const bcrypt = require("bcrypt");
+const { uploadFile, getFileStream } = require("../s3")
+
 
 
 
@@ -38,9 +40,13 @@ const getQuestion = async (req, res) => {
   }
 };
 
+
+
 const addQuestion = async (req, res) => {
+  console.log('ici')
   try {
-    const files = req.files;
+    
+   
     const currentUser = await User.findOne({ _id: req.userData.userId }).exec();
     if (!currentUser)
       return res.status(400).json({ message: "Invalide User ID" });
@@ -68,7 +74,8 @@ const addQuestion = async (req, res) => {
 const updateQuestion = async (req, res) => {
   const id = req?.params?.id
   try {
-    const files = req.files;
+    const file = req.files[0];
+    const resultFile = await uploadFile(file);
     const currentUser = await User.findOne({ _id: req.userData.userId }).exec();
     if (!currentUser)
       return res.status(400).json({ message: "Invalide User ID" });
@@ -76,7 +83,7 @@ const updateQuestion = async (req, res) => {
       _id: id,
       numero: parseInt(req?.body?.numero),
       //libelle: files[0].filename,
-      libelle: req?.body?.libelle,
+      libelle: "file/" + resultFile.Key,
       consigne: req?.body?.consigne,
       duree: parseInt(req?.body?.duree),
       categorie: req?.body?.categorie,
@@ -116,4 +123,35 @@ const deleteQuestion = async (req, res) => {
 };
 
 
-module.exports = {getQuestions, getQuestion, addQuestion, deleteQuestion, updateQuestion}
+const readFile = async (req, res) => {
+  const readStream = getFileStream(req.params.key)
+  readStream.pipe(res)
+};
+
+
+const upload = async (req, res) => {
+  
+  try{
+    const file = req.files[0];
+    console.log(file)
+   const resultFile = await uploadFile(file)
+   console.log(resultFile)
+   res.status(200).json({file: resultFile.Key})
+  }
+  catch(err){
+    res.status(500).json({message: err.message})
+  }
+   
+};
+
+
+
+module.exports = {
+  getQuestions,
+  getQuestion,
+  addQuestion,
+  deleteQuestion,
+  updateQuestion,
+  readFile,
+  upload
+};

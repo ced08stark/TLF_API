@@ -240,18 +240,29 @@ const {uploadFiles} = require("../../middlewares/multer")
 
 router.route("/questions").get(verifyJWT, questionController.getQuestions);
 router.route("/questions/:id").get(verifyJWT, questionController.getQuestion);
-router.post("/created", /*uploadFiles*/ verifyJWT, questionController.addQuestion);
+router.post("/created", /*uploadFiles*/verifyJWT, questionController.addQuestion);
 router.patch(
   "/questions/:id",
-  /*uploadFiles*/
+  uploadFiles,
   verifyJWT,
   questionController.updateQuestion
 );
 router
   .route("/questions/:id")
   .delete(verifyJWT, questionController.deleteQuestion);
+
 router
   .route("/questions/:id")
   .patch(verifyJWT, questionController.updateQuestion);
+
+router
+  .route("/file/:key")
+  .get(questionController.readFile);
+
+router.post("/upload", uploadFiles, questionController.upload);
+
+
+
+
 
 module.exports = router;

@@ -1,6 +1,7 @@
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
+const {uploadFile} = require('../s3')
 
 
 const filename = path.resolve(__filename);
@@ -25,6 +26,7 @@ const storage = multer.diskStorage({
       null,
       file.fieldname + "-" + uniqueSuffix + "." + getFileExtension(file)
     );
+    
   },
 });
 

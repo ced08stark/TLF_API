@@ -188,13 +188,12 @@ const activeAccount2 = async (req, res) => {
 
 
 const activeAccount = async (req, res) => {
-  console.log('webhook')
+  console.log("webhook");
   // const hash = crypto
   //   .createHmac("sha256", secret)
   //   .digest("hex");
   // console.log(hash)
   // console.log(req.headers["x-notch-signature"]);
-  
 
   // const buf1 = Buffer.from(hash)
   // const buf2 = Buffer.from(req.headers["x-notch-signature"]);
@@ -205,19 +204,19 @@ const activeAccount = async (req, res) => {
   // console.log(isEqual)
 
   console.log(req.headers.userAgent);
-  console.log(req.headers.cfIpcountry);
-  console.log(req.headers)
+  console.log(req.headers["cf-ipcountry"]);
+  console.log(req.headers);
   //console.log("1699334110555633 1699334110544543 822318cda69105e2-IAD");
   //console.log("54.87.122.170 54.87.122.170");
-  
+
   try {
-    
     if (
-      (req.headers["x-notch-signature"] != undefined && req.headers["x-notch-signature"]) == req.headers["x-notch-signature"]
+      (req.headers["x-notch-signature"] != undefined &&
+        req.headers["user-agent"] != undefined &&
+        req.headers["cf-ipcountry"]) == "US"
     ) {
       // Retrieve the request's body
-      
-     
+
       if (req.body.event == "payment.complete") {
         const response = await axios.get(
           `https://api.notchpay.co/payments/${req.body.data.reference}`,
@@ -289,24 +288,22 @@ const activeAccount = async (req, res) => {
                   new: true, // Retourne l'utilisateur mis à jour
                 }
               );
-               console.log(`utilisateur ${result}`);
+              console.log(`utilisateur ${result}`);
             }
-           
           }
         } else {
-         
-          console.log("reference n\'existe pas");
+          console.log("reference n'existe pas");
         }
       } else if (req.body.event == "payment.failed") {
         console.log("transaction failed");
       } else if (req.body.event == "payment.expired") {
         console.log("transaction expired");
       }
-     
+
       // Do something with event
     }
 
-    console.log('success')
+    console.log("success");
 
     // const response = await axios.get(
     //   `https://api.notchpay.co/payments/${ref}`,

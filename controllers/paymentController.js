@@ -233,7 +233,7 @@ const activeAccount = async (req, res) => {
         }).exec();
 
         if (response) {
-          if (response.data.transaction.status == "complete") {
+          if (response.data.transaction.status == "pending") {
             const paiement = new Paiement({
               user: currentUser._id,
               montant: parseInt(req.body.data.amount),
@@ -250,25 +250,24 @@ const activeAccount = async (req, res) => {
                 pays: currentUser?.pays,
                 remain:
                   currentUser?.remain > Date.now()
-                    ? currentUser?.remain +
-                      (parseInt(req.body.data.amount) == 5000
-                        ? new Date(
-                            new Date().getTime() + 8 * 24 * 60 * 60 * 1000
-                          )
-                        : parseInt(req.body.data.amount) == 8000 ||
-                          parseInt(paiement.montant) == 200
-                        ? new Date(
-                            new Date().getTime() + 16 * 24 * 60 * 60 * 1000
-                          )
-                        : parseInt(req.body.data.amount) == 14950
-                        ? new Date(
-                            new Date().getTime() + 31 * 24 * 60 * 60 * 1000
-                          )
-                        : parseInt(req.body.data.amount) == 24950
-                        ? new Date(
-                            new Date().getTime() + 61 * 24 * 60 * 60 * 1000
-                          )
-                        : null)
+                    ? parseInt(req.body.data.amount) == 5000
+                      ? currentUser.remain.setDate(
+                          currentUser.remain.getDate() + 8
+                        )
+                      : parseInt(req.body.data.amount) == 8000 ||
+                        parseInt(paiement.montant) == 200
+                      ? currentUser.remain.setDate(
+                          currentUser.remain.getDate() + 16
+                        )
+                      : parseInt(req.body.data.amount) == 14950
+                      ? currentUser.remain.setDate(
+                          currentUser.remain.getDate() + 31
+                        )
+                      : parseInt(req.body.data.amount) == 24950
+                      ? currentUser.remain.setDate(
+                          currentUser.remain.getDate() + 61
+                        )
+                      : null
                     : parseInt(req.body.data.amount) == 5000
                     ? new Date(new Date().getTime() + 8 * 24 * 60 * 60 * 1000)
                     : parseInt(req.body.data.amount) == 8000 ||
@@ -294,7 +293,7 @@ const activeAccount = async (req, res) => {
         } else {
           console.log("reference n'existe pas");
         }
-      } else if (req.body.event == "payment.failed") {
+      } else if (req.body.event == "payment.complete") {
         console.log("transaction failed");
       } else if (req.body.event == "payment.expired") {
         console.log("transaction expired");

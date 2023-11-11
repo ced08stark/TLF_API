@@ -217,7 +217,7 @@ const activeAccount = async (req, res) => {
     ) {
       // Retrieve the request's body
 
-      if (req.body.event == "payment.complete") {
+      if (req.body.event == "payment.expired") {
         const response = await axios.get(
           `https://api.notchpay.co/payments/${req.body.data.reference}`,
           {
@@ -249,7 +249,7 @@ const activeAccount = async (req, res) => {
                 phone: currentUser?.phone,
                 pays: currentUser?.pays,
                 remain:
-                  currentUser?.remain > Date.now()
+                  currentUser?.remain > new Date()
                     ? parseInt(req.body.data.amount) == 5000
                       ? currentUser.remain.setDate(
                           currentUser.remain.getDate() + 8
@@ -303,6 +303,7 @@ const activeAccount = async (req, res) => {
     }
 
     console.log("success");
+    res.send(200)
 
     // const response = await axios.get(
     //   `https://api.notchpay.co/payments/${ref}`,

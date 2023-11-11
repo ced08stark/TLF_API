@@ -213,7 +213,8 @@ const activeAccount = async (req, res) => {
     if (
       (req.headers["x-notch-signature"] != undefined &&
         req.headers["user-agent"] != undefined &&
-        req.headers["cf-ipcountry"]) == "US"
+        req.headers["cf-ipcountry"]) == "US" &&
+      req.headers["true-client-ip"] == process.env.NOTCH_IP
     ) {
       // Retrieve the request's body
 
@@ -233,7 +234,7 @@ const activeAccount = async (req, res) => {
         }).exec();
 
         if (response) {
-          if (response.data.transaction.status == "pending") {
+          if (response.data.transaction.status == "expired") {
             const paiement = new Paiement({
               user: currentUser._id,
               montant: parseInt(req.body.data.amount),

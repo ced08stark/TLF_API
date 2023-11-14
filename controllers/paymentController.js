@@ -187,6 +187,23 @@ const activeAccount2 = async (req, res) => {
 };
 
 
+function getDaysToAdd(amount) {
+  switch (amount) {
+    case 5000:
+      return 8;
+    case 8000:
+    case 200:
+      return 16;
+    case 14950:
+      return 31;
+    case 24950:
+      return 61;
+    default:
+      return null;
+  }
+}
+
+
 const activeAccount = async (req, res) => {
   console.log("webhook");
   // const hash = crypto
@@ -239,7 +256,7 @@ const activeAccount = async (req, res) => {
               user: currentUser._id,
               montant: parseInt(req.body.data.amount),
             });
-
+            let daysToAdd = getDaysToAdd(parseInt(req.body.data.amount));
             const responseFinish = await Paiement.create(paiement);
             if (responseFinish) {
               const newUser = new User({
@@ -249,36 +266,36 @@ const activeAccount = async (req, res) => {
                 role: currentUser?.role,
                 phone: currentUser?.phone,
                 pays: currentUser?.pays,
-                remain:
-                  currentUser?.remain > new Date()
-                    ? parseInt(req.body.data.amount) == 5000
-                      ? currentUser.remain.setDate(
-                          currentUser.remain.getDate() + 8
-                        )
-                      : parseInt(req.body.data.amount) == 8000 ||
-                        parseInt(paiement.montant) == 200
-                      ? currentUser.remain.setDate(
-                          currentUser.remain.getDate() + 16
-                        )
-                      : parseInt(req.body.data.amount) == 14950
-                      ? currentUser.remain.setDate(
-                          currentUser.remain.getDate() + 31
-                        )
-                      : parseInt(req.body.data.amount) == 24950
-                      ? currentUser.remain.setDate(
-                          currentUser.remain.getDate() + 61
-                        )
-                      : null
-                    : parseInt(req.body.data.amount) == 5000
-                    ? new Date(new Date().getTime() + 8 * 24 * 60 * 60 * 1000)
-                    : parseInt(req.body.data.amount) == 8000 ||
-                      parseInt(paiement.montant) == 200
-                    ? new Date(new Date().getTime() + 16 * 24 * 60 * 60 * 1000)
-                    : parseInt(req.body.data.amount) == 14950
-                    ? new Date(new Date().getTime() + 31 * 24 * 60 * 60 * 1000)
-                    : parseInt(req.body.data.amount) == 24950
-                    ? new Date(new Date().getTime() + 61 * 24 * 60 * 60 * 1000)
-                    : null,
+                remain: currentUser?.remain > new Date() ? currentUser.remain.setDate(currentUser.remain.getDate() + daysToAdd) : new Date(new Date().getTime() + daysToAdd * 24 * 60 * 60 * 1000)
+                  // currentUser?.remain > new Date()
+                  //   ? parseInt(req.body.data.amount) == 5000
+                  //     ? currentUser.remain.setDate(
+                  //         currentUser.remain.getDate() + 8
+                  //       )
+                  //     : parseInt(req.body.data.amount) == 8000 ||
+                  //       parseInt(paiement.montant) == 200
+                  //     ? currentUser.remain.setDate(
+                  //         currentUser.remain.getDate() + 16
+                  //       )
+                  //     : parseInt(req.body.data.amount) == 14950
+                  //     ? currentUser.remain.setDate(
+                  //         currentUser.remain.getDate() + 31
+                  //       )
+                  //     : parseInt(req.body.data.amount) == 24950
+                  //     ? currentUser.remain.setDate(
+                  //         currentUser.remain.getDate() + 61
+                  //       )
+                  //     : null
+                  //   : parseInt(req.body.data.amount) == 5000
+                  //   ? new Date(new Date().getTime() + 8 * 24 * 60 * 60 * 1000)
+                  //   : parseInt(req.body.data.amount) == 8000 ||
+                  //     parseInt(paiement.montant) == 200
+                  //   ? new Date(new Date().getTime() + 16 * 24 * 60 * 60 * 1000)
+                  //   : parseInt(req.body.data.amount) == 14950
+                  //   ? new Date(new Date().getTime() + 31 * 24 * 60 * 60 * 1000)
+                  //   : parseInt(req.body.data.amount) == 24950
+                  //   ? new Date(new Date().getTime() + 61 * 24 * 60 * 60 * 1000)
+                  //   : null,
               });
 
               const result = await User.findByIdAndUpdate(

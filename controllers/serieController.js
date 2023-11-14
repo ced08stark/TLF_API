@@ -56,7 +56,7 @@ const getSerie100 = async (req, res) => {
     if (!serie)
       return res
         .status(404)
-        .json({ message: `No Serie match id ${req.params.id}` });
+        .json({ message: `No Serie match` });
     res.status(200).json(serie);
   } catch (err) {
     res.status(500).json({ message: err.message });

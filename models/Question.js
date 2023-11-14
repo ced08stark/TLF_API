@@ -40,8 +40,7 @@ const questionSchema = new Schema({
   discipline: {
     type: disciplineSchema,
     require: true,
-  },
-
+  }
 });
 
 const Question = mongoose.model("Question", questionSchema);

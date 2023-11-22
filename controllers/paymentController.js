@@ -20,13 +20,13 @@ const initPayments = async(req, res) =>{
         return res.status(400).json({ message: "Invalide User ID" });
       const params = {
         email: currentUser.email,
-        amount: 200,
+        amount: parseInt(req.body.amount),
         currency: req.body.currency,
         description: req.body.description,
         reference: req.body.reference,
         phone: req.body.phone,
       };
-      if(parseInt(req.body.amount) == 200 || parseInt(req.body.amount) == 5000 || parseInt(req.body.amount) == 8000 || parseInt(req.body.amount) == 14950 || parseInt(req.body.amount) == 24950){
+      if(parseInt(req.body.amount) == 5000 || parseInt(req.body.amount) == 8000 || parseInt(req.body.amount) == 14950 || parseInt(req.body.amount) == 24950){
           const response = await axios.post(
             "https://api.notchpay.co/payments/initialize",
             params,
@@ -75,116 +75,114 @@ const initPayments = async(req, res) =>{
   }
 }
 
-const activeAccount2 = async (req, res) => {
-  try{
-    const ref = req.body.reference
-    const currentUser = await User.findOne({
-      _id: req.userData.userId,
-    }).exec();
+// const activeAccount2 = async (req, res) => {
+//   try{
+//     const ref = req.body.reference
+//     const currentUser = await User.findOne({
+//       _id: req.userData.userId,
+//     }).exec();
           
-          const response = await axios.get(
-            `https://api.notchpay.co/payments/${ref}`,
-            {
-              headers: {
-                Authorization: process.env.PAYMENT_KEY,
-                "Content-Type": "application/json",
-              },
-            }
-          );
-          console.log(response.data.transaction.status)
+//           const response = await axios.get(
+//             `https://api.notchpay.co/payments/${ref}`,
+//             {
+//               headers: {
+//                 Authorization: process.env.PAYMENT_KEY,
+//                 "Content-Type": "application/json",
+//               },
+//             }
+//           );
+//           console.log(response.data.transaction.status)
 
-          if(response){
-                 if (response.data.transaction.status == "complete") {
-                   const paiement = new Paiement({
-                     user: currentUser._id,
-                     montant: parseInt(req.body.amount),
-                   });
+//           if(response){
+//                  if (response.data.transaction.status == "complete") {
+//                    const paiement = new Paiement({
+//                      user: currentUser._id,
+//                      montant: parseInt(req.body.amount),
+//                    });
 
-                   const responseFinish = await Paiement.create(paiement);
-                   if (responseFinish) {
-                     const newUser = new User({
-                       _id: currentUser?.id,
-                       email: currentUser?.email,
-                       password: currentUser?.password,
-                       role: currentUser?.role,
-                       phone: currentUser?.phone,
-                       pays: currentUser?.pays,
-                       remain:
-                         currentUser?.remain > Date.now()
-                           ? currentUser?.remain +
-                             (parseInt(req.body.amount) == 5000
-                               ? new Date(
-                                   new Date().getTime() +
-                                     8 * 24 * 60 * 60 * 1000
-                                 )
-                               : parseInt(req.body.amount) == 8000 ||
-                                 parseInt(paiement.montant) == 200
-                               ? new Date(
-                                   new Date().getTime() +
-                                     16 * 24 * 60 * 60 * 1000
-                                 )
-                               : parseInt(req.body.amount) == 14950
-                               ? new Date(
-                                   new Date().getTime() +
-                                     31 * 24 * 60 * 60 * 1000
-                                 )
-                               : parseInt(req.body.amount) == 24950
-                               ? new Date(
-                                   new Date().getTime() +
-                                     61 * 24 * 60 * 60 * 1000
-                                 )
-                               : null)
-                           : parseInt(req.body.amount) == 5000
-                           ? new Date(
-                               new Date().getTime() + 8 * 24 * 60 * 60 * 1000
-                             )
-                           : parseInt(req.body.amount) == 8000 ||
-                             parseInt(paiement.montant) == 200
-                           ? new Date(
-                               new Date().getTime() + 16 * 24 * 60 * 60 * 1000
-                             )
-                           : parseInt(req.body.amount) == 14950
-                           ? new Date(
-                               new Date().getTime() + 31 * 24 * 60 * 60 * 1000
-                             )
-                           : parseInt(req.body.amount) == 24950
-                           ? new Date(
-                               new Date().getTime() + 61 * 24 * 60 * 60 * 1000
-                             )
-                           : null,
-                     });
+//                    const responseFinish = await Paiement.create(paiement);
+//                    if (responseFinish) {
+//                      const newUser = new User({
+//                        _id: currentUser?.id,
+//                        email: currentUser?.email,
+//                        password: currentUser?.password,
+//                        role: currentUser?.role,
+//                        phone: currentUser?.phone,
+//                        pays: currentUser?.pays,
+//                        remain:
+//                          currentUser?.remain > Date.now()
+//                            ? currentUser?.remain +
+//                              (parseInt(req.body.amount) == 5000
+//                                ? new Date(
+//                                    new Date().getTime() +
+//                                      8 * 24 * 60 * 60 * 1000
+//                                  )
+//                                : parseInt(req.body.amount) == 8000 
+//                                ? new Date(
+//                                    new Date().getTime() +
+//                                      16 * 24 * 60 * 60 * 1000
+//                                  )
+//                                : parseInt(req.body.amount) == 14950
+//                                ? new Date(
+//                                    new Date().getTime() +
+//                                      31 * 24 * 60 * 60 * 1000
+//                                  )
+//                                : parseInt(req.body.amount) == 24950
+//                                ? new Date(
+//                                    new Date().getTime() +
+//                                      61 * 24 * 60 * 60 * 1000
+//                                  )
+//                                : null)
+//                            : parseInt(req.body.amount) == 5000
+//                            ? new Date(
+//                                new Date().getTime() + 8 * 24 * 60 * 60 * 1000
+//                              )
+//                            : parseInt(req.body.amount) == 8000 
+//                            ? new Date(
+//                                new Date().getTime() + 16 * 24 * 60 * 60 * 1000
+//                              )
+//                            : parseInt(req.body.amount) == 14950
+//                            ? new Date(
+//                                new Date().getTime() + 31 * 24 * 60 * 60 * 1000
+//                              )
+//                            : parseInt(req.body.amount) == 24950
+//                            ? new Date(
+//                                new Date().getTime() + 61 * 24 * 60 * 60 * 1000
+//                              )
+//                            : null,
+//                      });
 
-                     const result = await User.findByIdAndUpdate(
-                       currentUser?.id,
-                       newUser,
-                       {
-                         new: true, // Retourne l'utilisateur mis à jour
-                       }
-                     );
-                     res
-                       .status(201)
-                       .json({ message: "subscription succefful", result });
-                   }
-                 } else if (response.data.transaction.status == "pending") {
-                   res
-                     .status(400)
-                     .json({ message: "this paiement is pending" });
-                 } else {
-                   res.status(400).json({ message: "this paiement is failed" });
-                 }
-          }
-          else{
-            res.status(400).json({ message: "this reference don't exist" });
-          }
+//                      const result = await User.findByIdAndUpdate(
+//                        currentUser?.id,
+//                        newUser,
+//                        {
+//                          new: true, // Retourne l'utilisateur mis à jour
+//                        }
+//                      );
+//                      res
+//                        .status(201)
+//                        .json({ message: "subscription succefful", result });
+//                    }
+//                  } else if (response.data.transaction.status == "pending") {
+//                    res
+//                      .status(400)
+//                      .json({ message: "this paiement is pending" });
+//                  } else {
+//                    res.status(400).json({ message: "this paiement is failed" });
+//                  }
+//           }
+//           else{
+//             res.status(400).json({ message: "this reference don't exist" });
+//           }
 
        
          
-    }
+//     }
   
-  catch(error){
-      res.status(500).json({ message: "An error occurred" });
-  }
-};
+//   catch(error){
+//       res.status(500).json({ message: "An error occurred" });
+//   }
+// };
 
 
 function getDaysToAdd(amount) {
@@ -192,7 +190,6 @@ function getDaysToAdd(amount) {
     case 5000:
       return 8;
     case 8000:
-    case 200:
       return 16;
     case 14950:
       return 31;
@@ -205,7 +202,7 @@ function getDaysToAdd(amount) {
 
 
 const activeAccount = async (req, res) => {
-  console.log("webhook");
+  //console.log("webhook");
   // const hash = crypto
   //   .createHmac("sha256", secret)
   //   .digest("hex");
@@ -220,9 +217,9 @@ const activeAccount = async (req, res) => {
   // );
   // console.log(isEqual)
 
-  console.log(req.headers.userAgent);
-  console.log(req.headers["cf-ipcountry"]);
-  console.log(req.headers);
+  // console.log(req.headers.userAgent);
+  // console.log(req.headers["cf-ipcountry"]);
+  // console.log(req.headers);
   //console.log("1699334110555633 1699334110544543 822318cda69105e2-IAD");
   //console.log("54.87.122.170 54.87.122.170");
 
@@ -317,82 +314,11 @@ const activeAccount = async (req, res) => {
         console.log("transaction expired");
       }
 
-      // Do something with event
+      
     }
-
-    console.log("success");
     res.send(200)
 
-    // const response = await axios.get(
-    //   `https://api.notchpay.co/payments/${ref}`,
-    //   {
-    //     headers: {
-    //       Authorization: process.env.PAYMENT_KEY,
-    //       "Content-Type": "application/json",
-    //     },
-    //   }
-    // );
-
-    // console.log(response.data.transaction.status);
-
-    // if (response) {
-    //   if (response.data.transaction.status == "complete") {
-    //     const paiement = new Paiement({
-    //       user: currentUser._id,
-    //       montant: parseInt(req.body.amount),
-    //     });
-
-    //     const responseFinish = await Paiement.create(paiement);
-    //     if (responseFinish) {
-    //       const newUser = new User({
-    //         _id: currentUser?.id,
-    //         email: currentUser?.email,
-    //         password: currentUser?.password,
-    //         role: currentUser?.role,
-    //         phone: currentUser?.phone,
-    //         pays: currentUser?.pays,
-    //         remain:
-    //           currentUser?.remain > Date.now()
-    //             ? currentUser?.remain +
-    //               (parseInt(req.body.amount) == 5000
-    //                 ? new Date(new Date().getTime() + 8 * 24 * 60 * 60 * 1000)
-    //                 : parseInt(req.body.amount) == 8000 ||
-    //                   parseInt(paiement.montant) == 200
-    //                 ? new Date(new Date().getTime() + 16 * 24 * 60 * 60 * 1000)
-    //                 : parseInt(req.body.amount) == 14950
-    //                 ? new Date(new Date().getTime() + 31 * 24 * 60 * 60 * 1000)
-    //                 : parseInt(req.body.amount) == 24950
-    //                 ? new Date(new Date().getTime() + 61 * 24 * 60 * 60 * 1000)
-    //                 : null)
-    //             : parseInt(req.body.amount) == 5000
-    //             ? new Date(new Date().getTime() + 8 * 24 * 60 * 60 * 1000)
-    //             : parseInt(req.body.amount) == 8000 ||
-    //               parseInt(paiement.montant) == 200
-    //             ? new Date(new Date().getTime() + 16 * 24 * 60 * 60 * 1000)
-    //             : parseInt(req.body.amount) == 14950
-    //             ? new Date(new Date().getTime() + 31 * 24 * 60 * 60 * 1000)
-    //             : parseInt(req.body.amount) == 24950
-    //             ? new Date(new Date().getTime() + 61 * 24 * 60 * 60 * 1000)
-    //             : null,
-    //       });
-
-    //       const result = await User.findByIdAndUpdate(
-    //         currentUser?.id,
-    //         newUser,
-    //         {
-    //           new: true, // Retourne l'utilisateur mis à jour
-    //         }
-    //       );
-    //       res.status(201).json({ message: "subscription succefful", result });
-    //     }
-    //   } else if (response.data.transaction.status == "pending") {
-    //     res.status(400).json({ message: "this paiement is pending" });
-    //   } else {
-    //     res.status(400).json({ message: "this paiement is failed" });
-    //   }
-    // } else {
-    //   res.status(400).json({ message: "this reference don't exist" });
-    // }
+    
   } catch (error) {
     res.status(500).json({ message: "An error occurred" });
   }

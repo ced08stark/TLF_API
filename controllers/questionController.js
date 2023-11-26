@@ -43,7 +43,6 @@ const getQuestion = async (req, res) => {
 
 
 const addQuestion = async (req, res) => {
-  console.log('ici')
   try {
     
    
@@ -74,23 +73,21 @@ const addQuestion = async (req, res) => {
 const updateQuestion = async (req, res) => {
   const id = req?.params?.id
   try {
-    const file = req.files[0];
-    const resultFile = await uploadFile(file);
+    
     const currentUser = await User.findOne({ _id: req.userData.userId }).exec();
     if (!currentUser)
       return res.status(400).json({ message: "Invalide User ID" });
     const questionUpdate = new Question({
       _id: id,
       numero: parseInt(req?.body?.numero),
-      //libelle: files[0].filename,
-      libelle: "file/" + resultFile.Key,
+      libelle: req?.body?.libelle,
       consigne: req?.body?.consigne,
       duree: parseInt(req?.body?.duree),
       categorie: req?.body?.categorie,
       suggestions: req?.body?.suggestions,
       discipline: req?.body?.discipline,
     });
-    console.log(id)
+    
     const result = await Question.findByIdAndUpdate(id, questionUpdate);
     res.status(201).json(result);
   } catch (err) {

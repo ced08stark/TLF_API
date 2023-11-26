@@ -63,6 +63,49 @@ const getSerie100 = async (req, res) => {
   }
 };
 
+const getLibellesOfSeries = async (req, res) => {
+  let libelles = []
+ console.log(req.userData.userId);
+  try {
+    const currentUser = await User.findOne({ _id: req.userData.userId }).exec();
+    if (!currentUser)
+      return res.status(400).json({ message: "Invalide User ID" });
+    const series = await Serie.find().exec();
+
+    if (series?.length <= 0)
+      return res.status(404).json({ message: `No serie found` });
+
+    for(let item of series){
+      libelles.push(item.libelle)
+    }
+    res.status(200).json(libelles);
+  } catch (err) {
+    res.status(500).json({ message: err });
+  }
+};
+
+const getSerieByLibelle = async (req, res) => {
+  try {
+    const currentUser = await User.findOne({ _id: req.userData.userId }).exec();
+    if (!currentUser)
+      return res.status(400).json({ message: "Invalide User ID" });
+    if (!req?.params?.libelle)
+      return res.status(400).json({ message: "serie libelle required" });
+
+    const serie = await Serie.findOne({
+      libelle: req.params.libelle,
+    })
+      .populate("questions")
+      .populate("eeQuestions")
+      .populate("eoQuestions")
+      .exec();
+    if (!serie) return res.status(404).json({ message: `No Serie match` });
+    res.status(200).json(serie);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 
 const addSerie = async (req, res) => {
   try {
@@ -130,6 +173,8 @@ const deleteSerie = async (req, res) => {
 module.exports = {
   getSerie,
   getSeries,
+  getSerieByLibelle,
+  getLibellesOfSeries,
   getSerie100,
   addSerie,
   deleteSerie,

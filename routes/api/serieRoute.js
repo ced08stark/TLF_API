@@ -89,7 +89,32 @@ const path = require("path");
  *   get:
  *      tags:
  *       - Series
- *      summary: Returns a list of tests
+ *      summary: Returns a list of series
+ *      description: series Whose are already exist
+ *      responses: 
+ *          200:    # status code
+ *              description: Successul Response
+ *              content:
+ *                  application/json: 
+ *                      schema:
+ *                          type: array
+ *                          items: 
+ *                              $ref: '#/components/schemas/Serie'
+ *          404:
+ *              description: no serie was not found
+ *      security:
+ *          - bearerAuth: []
+ *        
+ */
+
+
+/**
+ * @swagger
+ * /api/serie/series/libelles:
+ *   get:
+ *      tags:
+ *       - Series
+ *      summary: Returns a list of series libelles
  *      description: series Whose are already exist
  *      responses: 
  *          200:    # status code
@@ -144,6 +169,38 @@ const path = require("path");
  *           type: string
  *         required: true
  *         description: The serie id
+ *      responses: 
+ *          200:    # status code
+ *              description: Successul Response
+ *              content:
+ *                  application/json: 
+ *                      schema:
+ *                          type: array
+ *                          items: 
+ *                              $ref: '#/components/schemas/Serie'
+ *          404:
+ *              description: no serie was not found
+ *      security:
+ *          - bearerAuth: []
+ *        
+ */
+
+
+/**
+ * @swagger
+ * /api/serie/series/{libelle}:
+ *   get:
+ *      tags:
+ *       - Series
+ *      summary: Returns a serie by libelle
+ *      description: serie Who are already exist
+ *      parameters:
+ *       - in: path
+ *         name: libelle
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The serie libelle
  *      responses: 
  *          200:    # status code
  *              description: Successul Response
@@ -248,8 +305,19 @@ const path = require("path");
  *        
  */
 
+
+
+
+
+
+
+
 router.route("/series/offline").get(serieController.getSerie100);
 router.route("/series").get(verifyJWT, serieController.getSeries);
+router.route("/series/libelles").get(verifyJWT, serieController.getLibellesOfSeries);
+router
+  .route("/series/:libelle")
+  .get(verifyJWT, serieController.getSerieByLibelle);
 router.route("/series/:id").get(verifyJWT, serieController.getSerie);
 router.route("/created").post(verifyJWT, serieController.addSerie);
 router.route("/series/:id").delete(verifyJWT, serieController.deleteSerie);

@@ -327,20 +327,24 @@ const activeAccount = async (req, res) => {
 
 const activeUserAccount = async (req, res) => {
   try {
+
+        const currentAuth = await User.findOne({
+          _id: req.userData.userId,
+        }).exec();
+        if (!currentAuth)
+          return res
+            .status(403)
+            .json({ message: "this action is unauthorized" });
+        
         const currentUser = await User.findOne({
           email: req.body.userEmail,
         }).exec();
 
-        const adminUser = await User.findOne({
-          email: req.body.adminEmail,
-        }).exec();
-
         if(!currentUser)
             return res.status(404).json({message: 'user not fount'})
-        if (!adminUser)
-          return res.status(401).json({ message: "this action is unauthorized" });
+       
 
-        if (adminUser.role == "admin") {
+        if (currentAuth.role == "admin") {
           const newUser = new User({
             _id: currentUser?.id,
             email: currentUser?.email,
@@ -362,8 +366,7 @@ const activeUserAccount = async (req, res) => {
             }
           );
           res.status(201).json(`account active success ${result}`);
-        }
-        else{
+        } else {
           return res
             .status(401)
             .json({ message: "this action is unauthorized" });

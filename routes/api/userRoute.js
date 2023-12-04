@@ -253,8 +253,6 @@ const paymentController = require("../../controllers/paymentController");
  *              properties:
  *                userEmail:
  *                  type: string
- *                AdminEmail:
- *                  type: string
  *      responses:
  *       200:
  *         description: account actived success
@@ -269,8 +267,8 @@ const paymentController = require("../../controllers/paymentController");
 
 
 router
-  .route("/users/aciveAccount")
-  .post(paymentController.activeUserAccount);
+  .route("/users/activeAccount")
+  .post(verifyJWT, paymentController.activeUserAccount);
 router.route("/check-subscrire").get(verifyJWT, userController.checkRemain);
 router.route("/users/user-info").get(verifyJWT, userController.getCurrentUser);
 router.route("/users").get(verifyJWT, userController.getUsers);

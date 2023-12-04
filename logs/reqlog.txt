@@ -2476,3 +2476,4 @@
 20231204	19:44:44	38363971-ec5d-46f3-8cf5-e2f70fe52774	POST	http://localhost:3500	/api/auth/login
 20231204	19:47:14	86d0355b-8e3b-4827-a0ba-9e1ae234bf22	POST	undefined	/api/user/users/activeAccount
 20231204	19:48:11	d10bc128-d74a-481a-a88e-f0593ebbb8ae	POST	undefined	/api/user/users/activeAccount
+20231204	21:22:28	e953e4e9-e148-447e-9a4b-062d18186f6f	GET	undefined	/api/user/users

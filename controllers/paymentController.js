@@ -325,6 +325,58 @@ const activeAccount = async (req, res) => {
 };
 
 
+const activeUserAccount = async (req, res) => {
+  try {
+        const currentUser = await User.findOne({
+          email: req.body.userEmail,
+        }).exec();
+
+        const adminUser = await User.findOne({
+          email: req.body.adminEmail,
+        }).exec();
+
+        if(!currentUser)
+            return res.status(404).json({message: 'user not fount'})
+        if (!adminUser)
+          return res.status(401).json({ message: "this action is unauthorized" });
+
+        if (adminUser.role == "admin") {
+          const newUser = new User({
+            _id: currentUser?.id,
+            email: currentUser?.email,
+            password: currentUser?.password,
+            role: currentUser?.role,
+            phone: currentUser?.phone,
+            pays: currentUser?.pays,
+            remain:
+              currentUser?.remain > new Date()
+                ? currentUser.remain.setDate(currentUser.remain.getDate() + 15)
+                : new Date(new Date().getTime() + 15 * 24 * 60 * 60 * 1000),
+          });
+
+          const result = await User.findByIdAndUpdate(
+            currentUser?.id,
+            newUser,
+            {
+              new: true, // Retourne l'utilisateur mis à jour
+            }
+          );
+          res.status(201).json(`account active success ${result}`);
+        }
+        else{
+          return res
+            .status(401)
+            .json({ message: "this action is unauthorized" });
+        }
+    }
+
+    catch(error){
+      console.log(error.message)
+    }
+  }
+
+
+
 
 const initPaypalPayment = async (req, res) => {
   try {
@@ -524,5 +576,6 @@ module.exports = {
     completePayments,
     initCardPayment,
     initPaypalPayment,
-    activeAccount
+    activeAccount,
+    activeUserAccount
 }

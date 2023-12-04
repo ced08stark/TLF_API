@@ -3,7 +3,7 @@ const router = express.Router();
 const userController = require("../../controllers/userController");
 const verifyJWT = require("../../middlewares/verifyJWT");
 const path = require("path");
-
+const paymentController = require("../../controllers/paymentController");
 /**
  * @swagger
  * components:
@@ -189,6 +189,38 @@ const path = require("path");
 
 /**
  * @swagger
+ * /api/user/users/{id}:
+ *   patch:
+ *      tags:
+ *        - Users
+ *      summary: delete user by id
+ *      description: delete user whose id specify
+ *      parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The user id
+ *      requestBody:
+ *        require: true
+ *        content:
+ *            application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/User'
+ *      responses:
+ *       201:
+ *         description: The user was update
+ *       404:
+ *         description: The user was not found
+ *      security:
+ *          - bearerAuth: []
+ *        
+ */
+
+
+/**
+ * @swagger
  * /api/user/check-subscrire:
  *   get:
  *      tags:
@@ -205,6 +237,40 @@ const path = require("path");
  *        
  */
 
+/**
+ * @swagger
+ * /api/user/users/activeAccount:
+ *   post:
+ *      tags:
+ *        - Users
+ *      summary: active account
+ *      description: connect user from the application
+ *      requestBody:
+ *        require: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              properties:
+ *                userEmail:
+ *                  type: string
+ *                AdminEmail:
+ *                  type: string
+ *      responses:
+ *       200:
+ *         description: account actived success
+ *       404:
+ *         description: account actived failed
+ *      
+ *        
+ */
+
+
+
+
+
+router
+  .route("/users/aciveAccount")
+  .post(paymentController.activeUserAccount);
 router.route("/check-subscrire").get(verifyJWT, userController.checkRemain);
 router.route("/users/user-info").get(verifyJWT, userController.getCurrentUser);
 router.route("/users").get(verifyJWT, userController.getUsers);

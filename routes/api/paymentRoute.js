@@ -271,11 +271,15 @@ const verifyJWT = require("../../middlewares/verifyJWT");
  *        
  */
 
+
+
 const paymentController = require("../../controllers/paymentController");
 
 router
   .route("/payments/initialize")
   .post(verifyJWT, paymentController.initPayments);
+
+
 
 
 router.route("/payments/webhooks").post(paymentController.activeAccount);

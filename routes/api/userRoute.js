@@ -271,11 +271,11 @@ router.route("/check-subscrire").get(verifyJWT, userController.checkRemain);
 router.route("/users/user-info").get(verifyJWT, userController.getCurrentUser);
 router.route("/users").get(verifyJWT, userController.getUsers);
 router.route("/users/:id").get(verifyJWT, userController.getUser);
-router.route("/users/:id").delete(verifyJWT, userController.deleteUser);
-router.route("/users/:id").patch(verifyJWT, userController.updateUser);
+
 router
   .route("/users/activeAccount")
   .post(verifyJWT, paymentController.activeUserAccount);
-
+router.route("/users/:id").delete(verifyJWT, userController.deleteUser);
+router.route("/users/:id").patch(verifyJWT, userController.updateUser);
 
 module.exports = router;

@@ -326,6 +326,7 @@ const activeAccount = async (req, res) => {
 
 
 const activeUserAccount = async (req, res) => {
+  const dayNumber = parseInt(req.body.days);
   try {
 
         const currentAuth = await User.findOne({
@@ -354,8 +355,12 @@ const activeUserAccount = async (req, res) => {
             pays: currentUser?.pays,
             remain:
               currentUser?.remain > new Date()
-                ? currentUser.remain.setDate(currentUser.remain.getDate() + 15)
-                : new Date(new Date().getTime() + 15 * 24 * 60 * 60 * 1000),
+                ? currentUser.remain.setDate(
+                    currentUser.remain.getDate() + dayNumber
+                  )
+                : new Date(
+                    new Date().getTime() + dayNumber * 24 * 60 * 60 * 1000
+                  ),
           });
 
           const result = await User.findByIdAndUpdate(

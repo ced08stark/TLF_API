@@ -253,6 +253,8 @@ const paymentController = require("../../controllers/paymentController");
  *              properties:
  *                userEmail:
  *                  type: string
+ *                days:
+ *                  type: number
  *      responses:
  *       200:
  *         description: account actived success

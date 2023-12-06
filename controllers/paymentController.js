@@ -20,13 +20,13 @@ const initPayments = async(req, res) =>{
         return res.status(400).json({ message: "Invalide User ID" });
       const params = {
         email: currentUser.email,
-        amount: parseInt(req.body.amount),
+        amount: 200/*parseInt(req.body.amount)*/,
         currency: req.body.currency,
         description: req.body.description,
         reference: req.body.reference,
         phone: req.body.phone,
       };
-      if(parseInt(req.body.amount) == 5000 || parseInt(req.body.amount) == 8000 || parseInt(req.body.amount) == 14950 || parseInt(req.body.amount) == 24950){
+      if(parseInt(req.body.amount) == 200 || parseInt(req.body.amount) == 5000 || parseInt(req.body.amount) == 8000 || parseInt(req.body.amount) == 14950 || parseInt(req.body.amount) == 24950){
           const response = await axios.post(
             "https://api.notchpay.co/payments/initialize",
             params,
@@ -187,7 +187,7 @@ const initPayments = async(req, res) =>{
 
 function getDaysToAdd(amount) {
   switch (amount) {
-    case 5000:
+    case 200:
       return 8;
     case 8000:
       return 16;
@@ -222,7 +222,7 @@ const activeAccount = async (req, res) => {
   // console.log(req.headers);
   //console.log("1699334110555633 1699334110544543 822318cda69105e2-IAD");
   //console.log("54.87.122.170 54.87.122.170");
-
+  console.log(req.body.data);
   try {
     if (
       (req.headers["x-notch-signature"] != undefined &&
@@ -248,10 +248,10 @@ const activeAccount = async (req, res) => {
         }).exec();
 
         if (response) {
-          if (response.data.transaction.status == "complete") {
+          if (response.data.transaction.status == "OK") {
             const paiement = new Paiement({
               user: currentUser._id,
-              montant: parseInt(req.body.data.amount),
+              montant: 200 /*parseInt(req.body.data.amount)*/,
             });
             let daysToAdd = getDaysToAdd(parseInt(req.body.data.amount));
             const responseFinish = await Paiement.create(paiement);
@@ -263,36 +263,43 @@ const activeAccount = async (req, res) => {
                 role: currentUser?.role,
                 phone: currentUser?.phone,
                 pays: currentUser?.pays,
-                remain: currentUser?.remain > new Date() ? currentUser.remain.setDate(currentUser.remain.getDate() + daysToAdd) : new Date(new Date().getTime() + daysToAdd * 24 * 60 * 60 * 1000)
-                  // currentUser?.remain > new Date()
-                  //   ? parseInt(req.body.data.amount) == 5000
-                  //     ? currentUser.remain.setDate(
-                  //         currentUser.remain.getDate() + 8
-                  //       )
-                  //     : parseInt(req.body.data.amount) == 8000 ||
-                  //       parseInt(paiement.montant) == 200
-                  //     ? currentUser.remain.setDate(
-                  //         currentUser.remain.getDate() + 16
-                  //       )
-                  //     : parseInt(req.body.data.amount) == 14950
-                  //     ? currentUser.remain.setDate(
-                  //         currentUser.remain.getDate() + 31
-                  //       )
-                  //     : parseInt(req.body.data.amount) == 24950
-                  //     ? currentUser.remain.setDate(
-                  //         currentUser.remain.getDate() + 61
-                  //       )
-                  //     : null
-                  //   : parseInt(req.body.data.amount) == 5000
-                  //   ? new Date(new Date().getTime() + 8 * 24 * 60 * 60 * 1000)
-                  //   : parseInt(req.body.data.amount) == 8000 ||
-                  //     parseInt(paiement.montant) == 200
-                  //   ? new Date(new Date().getTime() + 16 * 24 * 60 * 60 * 1000)
-                  //   : parseInt(req.body.data.amount) == 14950
-                  //   ? new Date(new Date().getTime() + 31 * 24 * 60 * 60 * 1000)
-                  //   : parseInt(req.body.data.amount) == 24950
-                  //   ? new Date(new Date().getTime() + 61 * 24 * 60 * 60 * 1000)
-                  //   : null,
+                remain:
+                  currentUser?.remain > new Date()
+                    ? currentUser.remain.setDate(
+                        currentUser.remain.getDate() + daysToAdd
+                      )
+                    : new Date(
+                        new Date().getTime() + daysToAdd * 24 * 60 * 60 * 1000
+                      ),
+                // currentUser?.remain > new Date()
+                //   ? parseInt(req.body.data.amount) == 5000
+                //     ? currentUser.remain.setDate(
+                //         currentUser.remain.getDate() + 8
+                //       )
+                //     : parseInt(req.body.data.amount) == 8000 ||
+                //       parseInt(paiement.montant) == 200
+                //     ? currentUser.remain.setDate(
+                //         currentUser.remain.getDate() + 16
+                //       )
+                //     : parseInt(req.body.data.amount) == 14950
+                //     ? currentUser.remain.setDate(
+                //         currentUser.remain.getDate() + 31
+                //       )
+                //     : parseInt(req.body.data.amount) == 24950
+                //     ? currentUser.remain.setDate(
+                //         currentUser.remain.getDate() + 61
+                //       )
+                //     : null
+                //   : parseInt(req.body.data.amount) == 5000
+                //   ? new Date(new Date().getTime() + 8 * 24 * 60 * 60 * 1000)
+                //   : parseInt(req.body.data.amount) == 8000 ||
+                //     parseInt(paiement.montant) == 200
+                //   ? new Date(new Date().getTime() + 16 * 24 * 60 * 60 * 1000)
+                //   : parseInt(req.body.data.amount) == 14950
+                //   ? new Date(new Date().getTime() + 31 * 24 * 60 * 60 * 1000)
+                //   : parseInt(req.body.data.amount) == 24950
+                //   ? new Date(new Date().getTime() + 61 * 24 * 60 * 60 * 1000)
+                //   : null,
               });
 
               const result = await User.findByIdAndUpdate(

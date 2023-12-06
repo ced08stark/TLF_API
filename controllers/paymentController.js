@@ -222,7 +222,7 @@ const activeAccount = async (req, res) => {
   // console.log(req.headers);
   //console.log("1699334110555633 1699334110544543 822318cda69105e2-IAD");
   //console.log("54.87.122.170 54.87.122.170");
-  console.log(req.body.data);
+
   try {
     if (
       (req.headers["x-notch-signature"] != undefined &&
@@ -248,7 +248,7 @@ const activeAccount = async (req, res) => {
         }).exec();
 
         if (response) {
-          if (response.data.transaction.status == "OK") {
+          if (response.data.transaction.status == "pending") {
             const paiement = new Paiement({
               user: currentUser._id,
               montant: 200 /*parseInt(req.body.data.amount)*/,

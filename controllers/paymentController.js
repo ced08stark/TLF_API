@@ -230,7 +230,7 @@ const activeAccount = async (req, res) => {
         req.headers["cf-ipcountry"]) == "US" &&
       req.headers["true-client-ip"] == process.env.NOTCH_IP
     ) {
-      // Retrieve the request's body
+      // Retrieve the request's bod
 
       if (req.body.event == "payment.complete") {
         const response = await axios.get(

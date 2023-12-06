@@ -224,7 +224,6 @@ const activeAccount = async (req, res) => {
   //console.log("54.87.122.170 54.87.122.170");
 
   try {
-    console.log(req);
     if (
       (req.headers["x-notch-signature"] != undefined &&
         req.headers["user-agent"] != undefined &&
@@ -249,7 +248,7 @@ const activeAccount = async (req, res) => {
         }).exec();
 
         if (response) {
-          if (response.data.transaction.status == "pending") {
+          if (response.data.transaction.status == "complete") {
             const paiement = new Paiement({
               user: currentUser._id,
               montant: 200 /*parseInt(req.body.data.amount)*/,

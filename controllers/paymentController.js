@@ -224,6 +224,7 @@ const activeAccount = async (req, res) => {
   //console.log("54.87.122.170 54.87.122.170");
 
   try {
+    console.log(req);
     if (
       (req.headers["x-notch-signature"] != undefined &&
         req.headers["user-agent"] != undefined &&

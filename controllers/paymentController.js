@@ -20,7 +20,7 @@ const initPayments = async(req, res) =>{
         return res.status(400).json({ message: "Invalide User ID" });
       const params = {
         email: currentUser.email,
-        amount: 200/*parseInt(req.body.amount)*/,
+        amount: parseInt(req.body.amount),
         currency: req.body.currency,
         description: req.body.description,
         reference: req.body.reference,
@@ -187,7 +187,7 @@ const initPayments = async(req, res) =>{
 
 function getDaysToAdd(amount) {
   switch (amount) {
-    case 200:
+    case 5000:
       return 8;
     case 8000:
       return 16;
@@ -251,7 +251,7 @@ const activeAccount = async (req, res) => {
           if (response.data.transaction.status == "complete") {
             const paiement = new Paiement({
               user: currentUser._id,
-              montant: 200 /*parseInt(req.body.data.amount)*/,
+              montant: parseInt(req.body.data.amount),
             });
             let daysToAdd = getDaysToAdd(parseInt(req.body.data.amount));
             const responseFinish = await Paiement.create(paiement);

@@ -21,7 +21,7 @@ const userSchema = new Schema({
   pays: {
     type: String,
     require: true,
-    default: 'Cameroun'
+    default: "Cameroun",
   },
   remain: {
     type: Date,
@@ -31,10 +31,23 @@ const userSchema = new Schema({
     type: String,
     require: false,
   },
+  solde: {
+    type: Number,
+    require: false,
+  },
+  codePromo: {
+    type: String,
+    require: false,
+  },
+  parrain: {
+    type: String,
+    require: false,
+  },
+  filleuls: [{ type: Schema.Types.ObjectId, ref: "User", require: false }],
   createdAt: {
     type: Date,
     default: Date.now,
-  }
+  },
 });
 
 

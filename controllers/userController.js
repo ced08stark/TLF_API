@@ -154,6 +154,10 @@ const updateUser = async (req, res) => {
       pays: req.body.pays,
       userToken: currentUser.userToken,
       remain: req.body.remain,
+      parrain: req.body.parrain,
+      filleuls: req.body.filleuls,
+      codePromo: req.body.codePromo,
+      solde: req.body.solde,
     });
     console.log(newUser)
     const result = await User.findByIdAndUpdate(id, newUser, {
@@ -168,15 +172,37 @@ const updateUser = async (req, res) => {
 };
 
 
+const checkCodeParrain = async (req, res) => {
+    try{
+      const currentUser = await User.findOne({
+        _id: req?.userData?.userId,
+      }).exec();
 
 
+        const parrain = await User.findOne({
+          codePromo: req.body.codeParrain,
+        }).exec();
+        
+        console.log(parrain)
+        if (parrain && parrain?.id !== currentUser?.id) {
+          res.status(201).json({ message: "parrain exist", isValid: true });
+        } else {
+          res
+            .status(404)
+            .json({ message: "parrain don't exist", isValid: false });
+        }
+    }
+    catch(err){
+        res.status(500).json({ message: err.message })
+    }
+};
 
-
-module.exports = {
+  module.exports = {
   getUser,
   getUsers,
   deleteUser,
   getCurrentUser,
   updateUser,
-  checkRemain
+  checkRemain,
+  checkCodeParrain
 };

@@ -15,6 +15,10 @@ const paymentController = require("../../controllers/paymentController");
  *         - password
  *         - phone
  *         - role
+ *         - codePromo
+ *         - parrain
+ *         - filleuls
+ *         - solde
  *         - isOnline
  *         - remain
  *       properties:
@@ -39,6 +43,15 @@ const paymentController = require("../../controllers/paymentController");
  *         isOnline:
  *           type: boolean
  *           desciption: the user online
+ *         codePromo:
+ *           type: string
+ *           desciption: the user codePromo
+ *         parrain:
+ *           type: string
+ *           desciption: the user parrain
+ *         solde:
+ *           type: number
+ *           desciption: the user solde
  *         remain:
  *           type: number
  *           description: The user remain
@@ -239,6 +252,32 @@ const paymentController = require("../../controllers/paymentController");
 
 /**
  * @swagger
+ * /api/user/check-parrainCode:
+ *   post:
+ *      tags:
+ *        - Users
+ *      summary: check codeParrain 
+ *      description: check codeParrain
+ *      requestBody:
+ *        require: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              properties:
+ *                codeParrain:
+ *                  type: string
+ *      responses:
+ *       200:
+ *         description: request success 
+ *       500:
+ *         description: bad request
+ *      security:
+ *          - bearerAuth: []
+ *        
+ */
+
+/**
+ * @swagger
  * /api/user/users/activeAccount:
  *   post:
  *      tags:
@@ -266,18 +305,19 @@ const paymentController = require("../../controllers/paymentController");
 
 
 
-
-
-
 router.route("/check-subscrire").get(verifyJWT, userController.checkRemain);
 router.route("/users/user-info").get(verifyJWT, userController.getCurrentUser);
 router.route("/users").get(verifyJWT, userController.getUsers);
 router.route("/users/:id").get(verifyJWT, userController.getUser);
-
+router
+  .route("/check-parrainCode")
+  .post(verifyJWT, userController.checkCodeParrain);
 router
   .route("/users/activeAccount")
   .post(verifyJWT, paymentController.activeUserAccount);
 router.route("/users/:id").delete(verifyJWT, userController.deleteUser);
 router.route("/users/:id").patch(verifyJWT, userController.updateUser);
+
+
 
 module.exports = router;

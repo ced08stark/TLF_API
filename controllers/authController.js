@@ -283,15 +283,19 @@ const handleLogin = async (req, res)=>{
                           {expiresIn: '1d'},
                         async function (error, token) {
                             const newUser = new User({
-                            _id: foundUser.id,
-                            email: foundUser.email,
-                            password: foundUser.password,
-                            role: foundUser.role,
-                            phone: foundUser.phone,
-                            pays: foundUser.pays,
-                            userToken: token,
-                            remain: foundUser.remain
-                          });
+                              _id: foundUser.id,
+                              email: foundUser.email,
+                              password: foundUser.password,
+                              role: foundUser.role,
+                              phone: foundUser.phone,
+                              pays: foundUser.pays,
+                              userToken: token,
+                              remain: foundUser.remain,
+                              parrain: foundUser.parrain,
+                              filleuls: foundUser.filleuls,
+                              codePromo: foundUser.codePromo,
+                              solde: foundUser.solde,
+                            });
                           console.log(newUser)
                           const result = await User.findByIdAndUpdate(foundUser.id, newUser, {
                             new: true, // Retourne l'utilisateur mis à jour
@@ -362,9 +366,41 @@ const handleRegister = async (req, res) => {
       role: req.body.role,
       phone: req.body.phone,
       pays: req.body.pays,
+      parrain: req.body.parrain,
+      filleuls: null,
+      codePromo: null,
+      solde: null,
       remain: null,
     });
+    
     const result = await User.create(newUser);
+
+    if (result?.parrain) {
+      const parrain = await User.findOne({
+        codePromo: result?.parrain,
+      });
+
+      if (parrain) {
+        const newUser = new User({
+          _id: parrain?.id,
+          email: parrain?.email,
+          password: parrain?.password,
+          role: parrain?.role,
+          phone: parrain?.phone,
+          pays: parrain?.pays,
+          parrain: parrain?.parrain,
+          filleuls: parrain?.filleuls.push(result.id),
+          codePromo: parrain?.codePromo,
+          userToken: result?.userToken,
+          solde: parrain?.solde,
+          remain: parrain?.remain,
+        });
+
+        const result = await User.findByIdAndUpdate(parrain?.id, newUser, {
+          new: true, // Retourne le parrain mis à jour
+        });
+      }
+    }
     res
       .status(201)
       .json({ Success: `new user ${email} created success`, result });

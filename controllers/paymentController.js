@@ -201,6 +201,8 @@ function getDaysToAdd(amount) {
 }
 
 
+
+
 const activeAccount = async (req, res) => {
   //console.log("webhook");
   // const hash = crypto
@@ -256,51 +258,115 @@ const activeAccount = async (req, res) => {
             let daysToAdd = getDaysToAdd(parseInt(req.body.data.amount));
             const responseFinish = await Paiement.create(paiement);
             if (responseFinish) {
-              const newUser = new User({
-                _id: currentUser?.id,
-                email: currentUser?.email,
-                password: currentUser?.password,
-                role: currentUser?.role,
-                phone: currentUser?.phone,
-                pays: currentUser?.pays,
-                remain:
-                  currentUser?.remain > new Date()
-                    ? currentUser.remain.setDate(
-                        currentUser.remain.getDate() + daysToAdd
-                      )
-                    : new Date(
-                        new Date().getTime() + daysToAdd * 24 * 60 * 60 * 1000
-                      ),
-                // currentUser?.remain > new Date()
-                //   ? parseInt(req.body.data.amount) == 5000
-                //     ? currentUser.remain.setDate(
-                //         currentUser.remain.getDate() + 8
-                //       )
-                //     : parseInt(req.body.data.amount) == 8000 ||
-                //       parseInt(paiement.montant) == 200
-                //     ? currentUser.remain.setDate(
-                //         currentUser.remain.getDate() + 16
-                //       )
-                //     : parseInt(req.body.data.amount) == 14950
-                //     ? currentUser.remain.setDate(
-                //         currentUser.remain.getDate() + 31
-                //       )
-                //     : parseInt(req.body.data.amount) == 24950
-                //     ? currentUser.remain.setDate(
-                //         currentUser.remain.getDate() + 61
-                //       )
-                //     : null
-                //   : parseInt(req.body.data.amount) == 5000
-                //   ? new Date(new Date().getTime() + 8 * 24 * 60 * 60 * 1000)
-                //   : parseInt(req.body.data.amount) == 8000 ||
-                //     parseInt(paiement.montant) == 200
-                //   ? new Date(new Date().getTime() + 16 * 24 * 60 * 60 * 1000)
-                //   : parseInt(req.body.data.amount) == 14950
-                //   ? new Date(new Date().getTime() + 31 * 24 * 60 * 60 * 1000)
-                //   : parseInt(req.body.data.amount) == 24950
-                //   ? new Date(new Date().getTime() + 61 * 24 * 60 * 60 * 1000)
-                //   : null,
-              });
+              if(currentUser?.parrain){
+                   const newUser = new User({
+                     _id: currentUser?.id,
+                     email: currentUser?.email,
+                     password: currentUser?.password,
+                     role: currentUser?.role,
+                     phone: currentUser?.phone,
+                     pays: currentUser?.pays,
+                     parrain: currentUser?.parrain,
+                     filleuls: currentUser?.filleuls,
+                     codePromo: currentUser?.codePromo,
+                     userToken: currentUser?.userToken,
+                     solde: currentUser?.solde,
+                     remain:
+                       currentUser?.remain > new Date()
+                         ? currentUser.remain.setDate(
+                             currentUser.remain.getDate() + (daysToAdd + 4)
+                           )
+                         : new Date(
+                             new Date().getTime() +
+                               (daysToAdd + 4) * 24 * 60 * 60 * 1000
+                           ),
+
+                     // currentUser?.remain > new Date()
+                     //   ? parseInt(req.body.data.amount) == 5000
+                     //     ? currentUser.remain.setDate(
+                     //         currentUser.remain.getDate() + 8
+                     //       )
+                     //     : parseInt(req.body.data.amount) == 8000 ||
+                     //       parseInt(paiement.montant) == 200
+                     //     ? currentUser.remain.setDate(
+                     //         currentUser.remain.getDate() + 16
+                     //       )
+                     //     : parseInt(req.body.data.amount) == 14950
+                     //     ? currentUser.remain.setDate(
+                     //         currentUser.remain.getDate() + 31
+                     //       )
+                     //     : parseInt(req.body.data.amount) == 24950
+                     //     ? currentUser.remain.setDate(
+                     //         currentUser.remain.getDate() + 61
+                     //       )
+                     //     : null
+                     //   : parseInt(req.body.data.amount) == 5000
+                     //   ? new Date(new Date().getTime() + 8 * 24 * 60 * 60 * 1000)
+                     //   : parseInt(req.body.data.amount) == 8000 ||
+                     //     parseInt(paiement.montant) == 200
+                     //   ? new Date(new Date().getTime() + 16 * 24 * 60 * 60 * 1000)
+                     //   : parseInt(req.body.data.amount) == 14950
+                     //   ? new Date(new Date().getTime() + 31 * 24 * 60 * 60 * 1000)
+                     //   : parseInt(req.body.data.amount) == 24950
+                     //   ? new Date(new Date().getTime() + 61 * 24 * 60 * 60 * 1000)
+                     //   : null,
+                   });
+              }
+              else{
+                 const newUser = new User({
+                   _id: currentUser?.id,
+                   email: currentUser?.email,
+                   password: currentUser?.password,
+                   role: currentUser?.role,
+                   phone: currentUser?.phone,
+                   pays: currentUser?.pays,
+                   parrain: currentUser?.parrain,
+                   filleuls: currentUser?.filleuls,
+                   codePromo: currentUser?.codePromo,
+                   userToken: currentUser?.userToken,
+                   solde: currentUser?.solde,
+                   remain:
+                     currentUser?.remain > new Date()
+                       ? currentUser.remain.setDate(
+                           currentUser.remain.getDate() + daysToAdd
+                         )
+                       : new Date(
+                           new Date().getTime() +
+                             daysToAdd * 24 * 60 * 60 * 1000
+                         ),
+
+                   // currentUser?.remain > new Date()
+                   //   ? parseInt(req.body.data.amount) == 5000
+                   //     ? currentUser.remain.setDate(
+                   //         currentUser.remain.getDate() + 8
+                   //       )
+                   //     : parseInt(req.body.data.amount) == 8000 ||
+                   //       parseInt(paiement.montant) == 200
+                   //     ? currentUser.remain.setDate(
+                   //         currentUser.remain.getDate() + 16
+                   //       )
+                   //     : parseInt(req.body.data.amount) == 14950
+                   //     ? currentUser.remain.setDate(
+                   //         currentUser.remain.getDate() + 31
+                   //       )
+                   //     : parseInt(req.body.data.amount) == 24950
+                   //     ? currentUser.remain.setDate(
+                   //         currentUser.remain.getDate() + 61
+                   //       )
+                   //     : null
+                   //   : parseInt(req.body.data.amount) == 5000
+                   //   ? new Date(new Date().getTime() + 8 * 24 * 60 * 60 * 1000)
+                   //   : parseInt(req.body.data.amount) == 8000 ||
+                   //     parseInt(paiement.montant) == 200
+                   //   ? new Date(new Date().getTime() + 16 * 24 * 60 * 60 * 1000)
+                   //   : parseInt(req.body.data.amount) == 14950
+                   //   ? new Date(new Date().getTime() + 31 * 24 * 60 * 60 * 1000)
+                   //   : parseInt(req.body.data.amount) == 24950
+                   //   ? new Date(new Date().getTime() + 61 * 24 * 60 * 60 * 1000)
+                   //   : null,
+                 });
+              }
+             
 
               const result = await User.findByIdAndUpdate(
                 currentUser?.id,
@@ -309,6 +375,39 @@ const activeAccount = async (req, res) => {
                   new: true, // Retourne l'utilisateur mis à jour
                 }
               );
+
+              if (currentUser?.parrain){
+              const parrain = await User.findOne({
+                codePromo: currentUser?.parrain,
+              });
+
+              if(parrain){
+                  const newUser = new User({
+                    _id: parrain?.id,
+                    email: parrain?.email,
+                    password: parrain?.password,
+                    role: parrain?.role,
+                    phone: parrain?.phone,
+                    pays: parrain?.pays,
+                    parrain: parrain?.parrain,
+                    filleuls: parrain?.filleuls,
+                    codePromo: parrain?.codePromo,
+                    userToken: currentUser?.userToken,
+                    solde: parrain?.solde
+                      ? parseInt(req.body.data.amount) * 0.1
+                      : parrain?.solde + parseInt(req.body.data.amount) * 0.1,
+                    remain: parrain?.remain,
+                  });
+
+                  const result = await User.findByIdAndUpdate(
+                    parrain?.id,
+                    newUser,
+                    {
+                      new: true, // Retourne le parrain mis à jour
+                    }
+                  );
+              }
+            }
               console.log(`utilisateur ${result}`);
             }
           }
@@ -330,6 +429,8 @@ const activeAccount = async (req, res) => {
     res.status(500).json({ message: "An error occurred" });
   }
 };
+
+
 
 
 const activeUserAccount = async (req, res) => {
@@ -360,6 +461,11 @@ const activeUserAccount = async (req, res) => {
             role: currentUser?.role,
             phone: currentUser?.phone,
             pays: currentUser?.pays,
+            parrain: currentUser?.parrain,
+            filleuls: currentUser?.filleuls,
+            codePromo: currentUser?.codePromo,
+            solde: currentUser?.solde,
+            userToken: currentUser?.userToken,
             remain:
               currentUser?.remain > new Date()
                 ? currentUser.remain.setDate(
@@ -377,6 +483,8 @@ const activeUserAccount = async (req, res) => {
               new: true, // Retourne l'utilisateur mis à jour
             }
           );
+
+     
           res.status(201).json(`account active success ${result}`);
         } else {
           return res

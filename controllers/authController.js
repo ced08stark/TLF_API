@@ -368,7 +368,7 @@ const handleRegister = async (req, res) => {
       pays: req.body.pays,
       parrain: req.body.parrain,
       filleuls: null,
-      codePromo: null,
+      codePromo: req.body.codePromo,
       solde: null,
       remain: null,
     });

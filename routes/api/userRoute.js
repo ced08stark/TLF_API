@@ -302,14 +302,12 @@ const paymentController = require("../../controllers/paymentController");
  */
 
 
-
+router.route("/check-parrainCode").post(userController.checkCodeParrain);
 router.route("/check-subscrire").get(verifyJWT, userController.checkRemain);
 router.route("/users/user-info").get(verifyJWT, userController.getCurrentUser);
 router.route("/users").get(verifyJWT, userController.getUsers);
 router.route("/users/:id").get(verifyJWT, userController.getUser);
-router
-  .route("/check-parrainCode")
-  .post(userController.checkCodeParrain);
+
 router
   .route("/users/activeAccount")
   .post(verifyJWT, paymentController.activeUserAccount);

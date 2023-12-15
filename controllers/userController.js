@@ -200,5 +200,6 @@ const checkCodeParrain = async (req, res) => {
   deleteUser,
   getCurrentUser,
   updateUser,
-  checkRemain
+  checkRemain,
+  checkCodeParrain
 };

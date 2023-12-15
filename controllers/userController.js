@@ -174,16 +174,13 @@ const updateUser = async (req, res) => {
 
 const checkCodeParrain = async (req, res) => {
     try{
-      const currentUser = await User.findOne({
-        _id: req?.userData?.userId,
-      }).exec();
+      
 
 
         const parrain = await User.findOne({
           codePromo: req.body.codeParrain,
         }).exec();
         
-        console.log(parrain)
         if (parrain && parrain?.id !== currentUser?.id) {
           res.status(201).json({ message: "parrain exist", isValid: true });
         } else {
@@ -203,6 +200,5 @@ const checkCodeParrain = async (req, res) => {
   deleteUser,
   getCurrentUser,
   updateUser,
-  checkRemain,
-  checkCodeParrain
+  checkRemain
 };

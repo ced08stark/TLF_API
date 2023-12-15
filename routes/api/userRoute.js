@@ -271,8 +271,6 @@ const paymentController = require("../../controllers/paymentController");
  *         description: request success 
  *       500:
  *         description: bad request
- *      security:
- *          - bearerAuth: []
  *        
  */
 
@@ -311,7 +309,7 @@ router.route("/users").get(verifyJWT, userController.getUsers);
 router.route("/users/:id").get(verifyJWT, userController.getUser);
 router
   .route("/check-parrainCode")
-  .post(verifyJWT, userController.checkCodeParrain);
+  .post(userController.checkCodeParrain);
 router
   .route("/users/activeAccount")
   .post(verifyJWT, paymentController.activeUserAccount);

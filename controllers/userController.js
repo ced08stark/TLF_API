@@ -182,10 +182,10 @@ const checkCodeParrain = async (req, res) => {
         }).exec();
         
         if (parrain && parrain?.id !== currentUser?.id) {
-          res.status(201).json({ message: "parrain exist", isValid: true });
+          res.status(200).json({ message: "parrain exist", isValid: true });
         } else {
           res
-            .status(404)
+            .status(201)
             .json({ message: "parrain don't exist", isValid: false });
         }
     }

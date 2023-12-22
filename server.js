@@ -87,6 +87,7 @@ app.use("/api/otp", require("./routes/api/otpRoute"));
 
 
 //app.use(verifyJWT);
+app.use("/api/ads", require("./routes/api/adsRoute"));
 app.use("/api/user", require("./routes/api/userRoute"));
 app.use("/api/discipline", require("./routes/api/disciplineRoute"));
 app.use("/api/question", require("./routes/api/questionRoute"));
@@ -96,7 +97,7 @@ app.use("/api/eeQuestion", require("./routes/api/questionEERoute"));
 app.use("/api/eoQuestion", require("./routes/api/questionEORoute"));
 app.use("/api/eeTest", require("./routes/api/testEERoute"));
 app.use("/api/eoTest", require("./routes/api/testEORoute"));
-app.use("/api", require("./routes/api/paymentRoute"))
+app.use("/api", require("./routes/api/paymentRoute"));
 
 app.all("/*", (req, res) => {
   res.status(404);

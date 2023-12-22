@@ -181,7 +181,7 @@ const checkCodeParrain = async (req, res) => {
           codePromo: req.body.codeParrain,
         }).exec();
         
-        if (parrain && parrain?.id !== currentUser?.id) {
+        if (parrain) {
           res.status(200).json({ message: "parrain exist", isValid: true });
         } else {
           res

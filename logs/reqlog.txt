@@ -2539,3 +2539,17 @@
 20231212	15:08:14	b8b6f16c-7972-4ea0-88cf-34a9d9f4d2f1	POST	http://localhost:3500	/api/user/check-parrainCode
 20231212	15:09:14	8bda1af8-9905-4bc3-bc94-6bffe8af0078	POST	http://localhost:3500	/api/user/check-parrainCode
 20231212	15:10:13	57e53b70-7613-4a20-9bb9-b203baf0d342	POST	http://localhost:3500	/api/user/check-parrainCode
+20231221	15:19:06	f41cbb22-4f6b-480e-a157-ef0fb06722bb	GET	undefined	/api-docs/
+20231221	15:19:06	c7da0440-e16f-4777-8370-b000d5d8300a	GET	undefined	/api-docs/swagger-ui-init.js
+20231221	15:19:06	56abd296-f4d0-4060-8a78-d48877ef46b9	GET	undefined	/api-docs/swagger-ui.css
+20231221	15:19:06	9e882a7a-8b39-43f3-87b6-7cd5b4c696e9	GET	undefined	/api-docs/swagger-ui-bundle.js
+20231221	15:19:06	ebec7233-cdae-4925-ac58-70c511d9bd14	GET	undefined	/api-docs/swagger-ui-standalone-preset.js
+20231221	15:19:07	64deecdd-a9a5-4f12-b480-3e6f0a097816	GET	undefined	/api-docs/favicon-16x16.png
+20231221	15:20:08	20deacea-6142-4b02-a7b7-8244f6aa02bd	POST	http://localhost:3500	/api/auth/login
+20231221	15:20:28	3984bffa-0b32-453c-ae78-4739960eb3a8	GET	undefined	/api/ads/all
+20231221	15:22:38	26752b89-8994-4469-a5c8-781cb3b46a84	GET	undefined	/api-docs/
+20231221	15:22:38	e36b98ed-3caa-4af3-add9-ffbc6454893e	GET	undefined	/api-docs/swagger-ui-bundle.js
+20231221	15:22:38	0d0e7579-23de-4322-8b6d-1a7470cfd9f0	GET	undefined	/api-docs/swagger-ui-standalone-preset.js
+20231221	15:22:38	5a35f755-0317-4713-b1b9-7030fa183577	GET	undefined	/api-docs/swagger-ui-init.js
+20231221	15:22:38	74b0a349-c6ec-4f26-a2fc-5428b19473ce	GET	undefined	/api-docs/swagger-ui.css
+20231221	15:22:50	710fc117-a3ac-434a-b04d-67882312cd37	GET	undefined	/api/ads/ads

@@ -10,7 +10,7 @@ const getAllAds = async (req, res) => {
 
     const ads = await Ads.find().exec();
     if (ads?.length <= 0)
-      return res.status(201).json({ message: `No ads found` });
+      return res.status(201).json([]);
     res.status(200).json(ads);
   } catch (err) {
     res.status(500).json({ message: err.message });

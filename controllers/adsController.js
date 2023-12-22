@@ -40,7 +40,7 @@ const addAds = async (req, res) => {
     if (!currentUser)
       return res.status(400).json({ message: "Invalide User ID" });
     const newAds = new Ads({
-      nomPrestataire: req?.body?.libelle,
+      nomPrestataire: req?.body?.nomPrestataire,
       startDate: req?.body?.startDate,
       endDate: req?.body?.endDate,
       countClic: 0,
@@ -64,7 +64,7 @@ const updateAds = async (req, res) => {
       return res.status(400).json({ message: "Invalide User ID" });
     const newAds = new Ads({
       _id: id,
-      nomPrestataire: req?.body?.libelle,
+      nomPrestataire: req?.body?.nomPrestataire,
       startDate: req?.body?.startDate,
       endDate: req?.body?.endDate,
       countClic: req?.body?.countClic,
